@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://timoyaj.github.io',
+  site: 'https://yajitim.github.io',
   base: '/',
   output: 'static',
   markdown: {
