@@ -1,0 +1,54 @@
+backend:
+  name: github
+  repo: Yajitim/yajitim.github.io  # GitHub username/repo
+  branch: main
+
+# Enable local backend for offline/local testing
+local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: blog
+    label: Blog Posts & Articles
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Publish Date, name: pubDate, widget: datetime }
+      - label: Category
+        name: category
+        widget: select
+        options: [Tutorial, Opinion, "Case Study", Dev, "Open Source"]
+      - { label: Tags, name: tags, widget: list, default: [] }
+      - { label: Reading Time (mins), name: readingTime, widget: number, required: false }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Draft, name: draft, widget: boolean, default: false }
+      - { label: Cover Image, name: coverImage, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: projects
+    label: Projects & Case Studies
+    folder: src/content/projects
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Category
+        name: category
+        widget: select
+        options: ["Web App", Tool, "Open Source", API, "Design System"]
+      - { label: Tags, name: tags, widget: list, default: [] }
+      - { label: Year, name: year, widget: number }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Sort Order, name: order, widget: number, default: 99 }
+      - { label: Live URL, name: liveUrl, widget: string, required: false }
+      - { label: GitHub URL, name: repoUrl, widget: string, required: false }
+      - { label: Cover Image, name: coverImage, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
