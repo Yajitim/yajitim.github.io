@@ -28,30 +28,51 @@ const techStack = [
   <main>
     <!-- ═══════════════ HERO ═══════════════ -->
     <section class="hero" aria-label="Introduction">
-      <div class="container">
-        <div class="hero-eyebrow">
-          <span class="status-dot" style="color:var(--color-accent-green)">
-            Available for Consultations, Research & Data Roles
-          </span>
+      <div class="container" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:var(--space-12);align-items:center;">
+        <!-- Left side: Text -->
+        <div>
+          <div class="hero-eyebrow" style="margin-bottom:var(--space-4);">
+            <span class="status-dot" style="color:var(--color-accent-green);font-weight:600;letter-spacing:0.05em;">
+              Available for Consultations, Research & Data Roles
+            </span>
+          </div>
+
+          <h1 class="hero-title font-display" style="font-size:clamp(2.5rem, 6vw, 4rem);line-height:1.1;margin-bottom:var(--space-6);">
+            Yaji Timothy <span class="gradient-text">Terungwa</span>
+          </h1>
+
+          <h2 class="font-display text-secondary" style="font-size:var(--text-h2);font-weight:700;margin-bottom:var(--space-4);">
+            Turning Complex Data Into Actionable Statistical Insights.
+          </h2>
+
+          <p class="hero-subtitle" style="font-size:var(--text-base);color:var(--color-text-secondary);line-height:var(--leading-relaxed);margin-bottom:var(--space-8);">
+            A Statistician &amp; Data Scientist with 10+ years of experience in statistical modeling, spatial data collection (GIS), process automation, and high-stakes data management. Ph.D. Candidate in Statistics.
+          </p>
+
+          <div class="hero-actions">
+            <a href="/work" class="btn btn-primary btn-lg" id="hero-work-btn">
+              View Projects &amp; Work →
+            </a>
+            <a href="/about" class="btn btn-ghost btn-lg" id="hero-about-btn">
+              Read My Full CV 📄
+            </a>
+          </div>
         </div>
 
-        <h1 class="hero-title font-display">
-          Turning Complex<br />
-          Data Into Actionable<br />
-          <span class="gradient-text">Statistical Insights.</span>
-        </h1>
-
-        <p class="hero-subtitle">
-          I'm <strong>Yaji Timothy Terungwa</strong> — a Statistician &amp; Data Scientist with 10+ years of experience in statistical modeling, spatial data collection (GIS), process automation, and high-stakes data management. Ph.D. Candidate in Statistics.
-        </p>
-
-        <div class="hero-actions">
-          <a href="/work" class="btn btn-primary btn-lg" id="hero-work-btn">
-            View Projects &amp; Work →
-          </a>
-          <a href="/about" class="btn btn-ghost btn-lg" id="hero-about-btn">
-            Read My Full CV 📄
-          </a>
+        <!-- Right side: Photo & Profile Summary Card -->
+        <div class="animate-in" style="position:relative;display:flex;justify-content:center;align-items:center;">
+          <!-- Glow effect -->
+          <div style="position:absolute;inset:-10px;border-radius:var(--radius-xl);background:var(--color-gradient-cyan);opacity:0.15;filter:blur(24px);"></div>
+          <!-- Card container -->
+          <div class="card card-inner" style="width:100%;max-width:360px;position:relative;border-color:var(--color-border-glow);display:flex;flex-direction:column;gap:var(--space-4);background:var(--color-gradient-card);">
+            <div style="width:100%;aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-border);">
+              <img src="/images/yaji-photo.jpg" alt="Yaji Timothy Terungwa" style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+            <div>
+              <h3 class="font-display" style="font-size:var(--text-h4);font-weight:700;margin-bottom:2px;">Yaji Timothy Terungwa</h3>
+              <p class="text-xs text-cyan" style="font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">Statistician &amp; Data Scientist</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -59,6 +80,30 @@ const techStack = [
       <div style="position:absolute;bottom:var(--space-8);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:var(--space-2);opacity:0.4;">
         <span style="font-size:var(--text-xs);letter-spacing:0.2em;text-transform:uppercase;color:var(--color-text-secondary)">Scroll</span>
         <div style="width:1px;height:48px;background:linear-gradient(to bottom,var(--color-text-secondary),transparent);"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ STATS BAR ═══════════════ -->
+    <section style="padding-bottom:var(--space-12);" aria-label="Key statistics">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:var(--space-6);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-6) var(--space-8);text-align:center;">
+          <div style="padding:var(--space-2);">
+            <div style="font-size:var(--text-h1);font-family:var(--font-display);font-weight:800;color:var(--color-accent-cyan);">$2.5M</div>
+            <div style="font-size:var(--text-xs);color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-top:var(--space-1);">World Bank Grant Qualified</div>
+          </div>
+          <div style="padding:var(--space-2);border-inline:1px solid var(--color-border);">
+            <div style="font-size:var(--text-h1);font-family:var(--font-display);font-weight:800;color:var(--color-accent-cyan);">10+ Yrs</div>
+            <div style="font-size:var(--text-xs);color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-top:var(--space-1);">Professional Experience</div>
+          </div>
+          <div style="padding:var(--space-2);">
+            <div style="font-size:var(--text-h1);font-family:var(--font-display);font-weight:800;color:var(--color-accent-cyan);">3,000+</div>
+            <div style="font-size:var(--text-xs);color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-top:var(--space-1);">Weekly Records Processed</div>
+          </div>
+          <div style="padding:var(--space-2);border-left:1px solid var(--color-border);">
+            <div style="font-size:var(--text-h1);font-family:var(--font-display);font-weight:800;color:var(--color-accent-cyan);">Ph.D.</div>
+            <div style="font-size:var(--text-xs);color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-top:var(--space-1);">Candidate in Statistics</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -70,10 +115,14 @@ const techStack = [
           <!-- Featured Project — large cell -->
           {featuredProjects[0] && (
             <div class="card bento-cell bento-col-8 bento-row-2 animate-in project-card" id="featured-project-card">
-              <div class="project-card-cover" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0;height:200px;">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1117,#1a2e26);display:flex;align-items:center;justify-content:center;">
-                  <span style="font-size:3rem;">🗺️</span>
-                </div>
+              <div class="project-card-cover" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0;height:200px;overflow:hidden;">
+                {featuredProjects[0].data.coverImage ? (
+                  <img src={featuredProjects[0].data.coverImage} alt={featuredProjects[0].data.title} style="width:100%;height:100%;object-fit:cover;" />
+                ) : (
+                  <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1117,#1a2e26);display:flex;align-items:center;justify-content:center;">
+                    <span style="font-size:3rem;">🗺️</span>
+                  </div>
+                )}
               </div>
               <div class="project-card-body">
                 <div class="project-card-tags">
@@ -151,10 +200,14 @@ const techStack = [
         <div class="grid-3">
           {featuredProjects.map((project, i) => (
             <article class={`card project-card animate-in`} style={`animation-delay:${i * 80}ms`} id={`project-${project.slug}`}>
-              <div class="project-card-cover">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1117,#1a2e26,#0d2a1f);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">
-                  {i === 0 ? '🗺️' : i === 1 ? '🔒' : '🐍'}
-                </div>
+              <div class="project-card-cover" style="overflow:hidden;">
+                {project.data.coverImage ? (
+                  <img src={project.data.coverImage} alt={project.data.title} style="width:100%;height:100%;object-fit:cover;" />
+                ) : (
+                  <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1117,#1a2e26,#0d2a1f);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">
+                    {i === 0 ? '🗺️' : i === 1 ? '🔒' : '🐍'}
+                  </div>
+                )}
               </div>
               <div class="project-card-body">
                 <div class="project-card-tags">

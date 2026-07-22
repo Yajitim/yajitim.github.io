@@ -49,9 +49,15 @@ const categories = ['All', 'Web App', 'Tool', 'API', 'Design System'];
         const p = sortedProjects.filter(proj => proj.data.featured)[0];
         return (
           <div class="card animate-in" style="display:flex;gap:0;margin-bottom:var(--space-6);overflow:hidden;" id="featured-work-card" data-category={p.data.category}>
-            <div style="width:45%;min-height:360px;background:linear-gradient(135deg,#0d1117,#1a2e26,#0a1628);display:flex;align-items:center;justify-content:center;font-size:5rem;flex-shrink:0;">
-              🗺️
-            </div>
+            {p.data.coverImage ? (
+              <div style="width:45%;min-height:360px;overflow:hidden;flex-shrink:0;border-right:1px solid var(--color-border);">
+                <img src={p.data.coverImage} alt={p.data.title} style="width:100%;height:100%;object-fit:cover;" />
+              </div>
+            ) : (
+              <div style="width:45%;min-height:360px;background:linear-gradient(135deg,#0d1117,#1a2e26,#0a1628);display:flex;align-items:center;justify-content:center;font-size:5rem;flex-shrink:0;">
+                🗺️
+              </div>
+            )}
             <div style="padding:var(--space-10);display:flex;flex-direction:column;justify-content:center;">
               <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-4);flex-wrap:wrap;">
                 <span class="badge badge-cyan">Featured Case Study</span>
@@ -82,10 +88,14 @@ const categories = ['All', 'Web App', 'Tool', 'API', 'Design System'];
             id={`work-${project.slug}`}
             data-category={project.data.category}
           >
-            <div class="project-card-cover">
-              <div style={`width:100%;height:100%;background:linear-gradient(135deg,${i%3===0?'#0d1117,#1a2e26':i%3===1?'#1a0d2e,#2e1a0d':'#0d2e2e,#1a0d2e'});display:flex;align-items:center;justify-content:center;font-size:2.5rem;`}>
-                {['🗺️', '🔒', '🐍', '📊'][i % 4]}
-              </div>
+            <div class="project-card-cover" style="overflow:hidden;">
+              {project.data.coverImage ? (
+                <img src={project.data.coverImage} alt={project.data.title} style="width:100%;height:100%;object-fit:cover;" />
+              ) : (
+                <div style={`width:100%;height:100%;background:linear-gradient(135deg,${i%3===0?'#0d1117,#1a2e26':i%3===1?'#1a0d2e,#2e1a0d':'#0d2e2e,#1a0d2e'});display:flex;align-items:center;justify-content:center;font-size:2.5rem;`}>
+                  {['🗺️', '🔒', '🐍', '📊'][i % 4]}
+                </div>
+              )}
             </div>
             <div class="project-card-body">
               <div class="project-card-tags">
