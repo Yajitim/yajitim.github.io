@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects', ({ data }) => !data.draft ?? true);
+const featuredProjects = allProjects.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const latestPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 3);
+
+const techStack = [
+  { name: 'Python', emoji: '🐍' },
+  { name: 'R-language', emoji: '📊' },
+  { name: 'SPSS', emoji: '📉' },
+  { name: 'SQL', emoji: '🗄️' },
+  { name: 'QGIS / QFIELD', emoji: '🗺️' },
+  { name: 'Power BI', emoji: '📈' },
+  { name: 'Excel (Power Query)', emoji: '📑' },
+  { name: 'KoboToolbox / ODK', emoji: '📋' },
+];
+---
+
+<BaseLayout title="Home — Statistician, Data Scientist & GIS Specialist">
+  <Navbar />
+
+  <main>
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero" aria-label="Introduction">
+      <div class="container">
+        <div class="hero-eyebrow">
+          <span class="status-dot" style="color:var(--color-accent-green)">
+            Available for Consultations, Research & Data Roles
+          </span>
+        </div>
+
+        <h1 class="hero-title font-display">
+          Turning Complex<br />
+          Data Into Actionable<br />
+          <span class="gradient-text">Statistical Insights.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          I'm <strong>Yaji Timothy Terungwa</strong> — a Statistician &amp; Data Scientist with 10+ years of experience in statistical modeling, spatial data collection (GIS), process automation, and high-stakes data management. Ph.D. Candidate in Statistics.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/work" class="btn btn-primary btn-lg" id="hero-work-btn">
+            View Projects &amp; Work →
+          </a>
+          <a href="/about" class="btn btn-ghost btn-lg" id="hero-about-btn">
+            Read My Full CV 📄
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div style="position:absolute;bottom:var(--space-8);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:var(--space-2);opacity:0.4;">
+        <span style="font-size:var(--text-xs);letter-spacing:0.2em;text-transform:uppercase;color:var(--color-text-secondary)">Scroll</span>
+        <div style="width:1px;height:48px;background:linear-gradient(to bottom,var(--color-text-secondary),transparent);"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BENTO GRID ═══════════════ -->
+    <section class="section-sm" aria-label="Highlights">
+      <div class="container">
+        <div class="bento-grid">
+
+          <!-- Featured Project — large cell -->
+          {featuredProjects[0] && (
+            <div class="card bento-cell bento-col-8 bento-row-2 animate-in project-card" id="featured-project-card">
+              <div class="project-card-cover" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0;height:200px;">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1117,#1a2e26);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:3rem;">🗺️</span>
+                </div>
+              </div>
+              <div class="project-card-body">
+                <div class="project-card-tags">
+                  {featuredProjects[0].data.tags.slice(0,3).map(tag => (
+                    <span class="badge badge-cyan">{tag}</span>
+                  ))}
+                </div>
+                <h2 class="project-card-title font-display">{featuredProjects[0].data.title}</h2>
+                <p class="project-card-desc">{featuredProjects[0].data.description}</p>
+                <a href={`/work/${featuredProjects[0].slug}`} class="project-card-link">
+                  View Case Study →
+                </a>
+              </div>
+            </div>
+          )}
+
+          <!-- Tech Stack card -->
+          <div class="card bento-cell bento-col-4 animate-in card-inner" style="animation-delay:100ms;" id="tech-stack-card">
+            <div class="badge badge-surface" style="margin-bottom:var(--space-4);">Data &amp; Stats Stack</div>
+            <div class="tech-stack">
+              {techStack.map(t => (
+                <span class="tech-pill">{t.emoji} {t.name}</span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Academic & Professional Status card -->
+          <div class="card bento-cell bento-col-4 animate-in card-inner" style="animation-delay:150ms;background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(0,212,255,0.08));border-color:rgba(34,197,94,0.2);" id="availability-card">
+            <div class="status-dot" style="color:var(--color-accent-green);margin-bottom:var(--space-3);">
+              Ph.D. Statistics (In View)
+            </div>
+            <p class="text-sm" style="color:var(--color-text-secondary);line-height:var(--leading-relaxed);">
+              Specializing in Multi-Auxiliary Two-Phase Sampling and Multiple Imputation. Member of CISON &amp; GEOSON.
+            </p>
+            <a href="/about" class="btn btn-ghost" style="margin-top:var(--space-4);font-size:var(--text-xs);">
+              View Education &amp; Bio →
+            </a>
+          </div>
+
+          <!-- Latest blog post -->
+          {latestPosts[0] && (
+            <div class="card bento-cell bento-col-4 animate-in card-inner" style="animation-delay:200ms;" id="latest-post-card">
+              <div class="badge badge-violet" style="margin-bottom:var(--space-3);">
+                Featured Research
+              </div>
+              <h3 class="font-display" style="font-size:var(--text-h4);font-weight:700;margin-bottom:var(--space-2);line-height:var(--leading-snug);">
+                {latestPosts[0].data.title}
+              </h3>
+              <p class="text-sm text-secondary" style="margin-bottom:var(--space-4);line-height:var(--leading-relaxed);">
+                {latestPosts[0].data.description.slice(0, 100)}...
+              </p>
+              <a href={`/blog/${latestPosts[0].slug}`} class="project-card-link">
+                Read Article →
+              </a>
+            </div>
+          )}
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SELECTED WORK ═══════════════ -->
+    <section class="section" aria-label="Selected projects">
+      <div class="container">
+        <div class="section-header flex-between" style="flex-wrap:wrap;gap:var(--space-4);">
+          <div>
+            <span class="section-label">Portfolio</span>
+            <h2 class="section-title">
+              Featured <span class="underline-cyan">Projects</span>
+            </h2>
+          </div>
+          <a href="/work" class="btn btn-ghost" id="all-work-btn">View All Projects →</a>
+        </div>
+
+        <div class="grid-3">
+          {featuredProjects.map((project, i) => (
+            <article class={`card project-card animate-in`} style={`animation-delay:${i * 80}ms`} id={`project-${project.slug}`}>
+              <div class="project-card-cover">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1117,#1a2e26,#0d2a1f);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">
+                  {i === 0 ? '🗺️' : i === 1 ? '🔒' : '🐍'}
+                </div>
+              </div>
+              <div class="project-card-body">
+                <div class="project-card-tags">
+                  {project.data.tags.slice(0,3).map(tag => (
+                    <span class="badge badge-surface">{tag}</span>
+                  ))}
+                </div>
+                <h3 class="project-card-title font-display">{project.data.title}</h3>
+                <p class="project-card-desc">{project.data.description.slice(0, 120)}...</p>
+                <a href={`/work/${project.slug}`} class="project-card-link">
+                  View Project Case Study →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BLOG PREVIEW ═══════════════ -->
+    <section class="section" style="padding-top:0;" aria-label="Latest articles and insights">
+      <div class="container">
+        <div class="section-header flex-between" style="flex-wrap:wrap;gap:var(--space-4);">
+          <div>
+            <span class="section-label">Publications &amp; Insights</span>
+            <h2 class="section-title">
+              Articles &amp; <span class="underline-cyan">Research</span>
+            </h2>
+          </div>
+          <a href="/blog" class="btn btn-ghost" id="all-posts-btn">All Articles →</a>
+        </div>
+
+        <div class="grid-3">
+          {latestPosts.map((post, i) => (
+            <article class={`card blog-card animate-in`} style={`animation-delay:${i * 80}ms`} id={`home-post-${post.slug}`}>
+              <div class="blog-card-cover">
+                <div style={`width:100%;height:100%;background:linear-gradient(135deg,${i===0?'#0d1a2e,#1a2e4a':i===1?'#1a0d2e,#2e1a4a':'#0d2e1a,#1a4a2e'});display:flex;align-items:center;justify-content:center;font-size:2rem;`}>
+                  {i === 0 ? '📊' : i === 1 ? '🗺️' : '📈'}
+                </div>
+              </div>
+              <div class="blog-card-body">
+                <div class="blog-card-meta">
+                  <span class={`badge badge-${i===0?'cyan':i===1?'violet':'surface'}`}>{post.data.category}</span>
+                  <span>·</span>
+                  <span>{post.data.readingTime ?? 5} min read</span>
+                </div>
+                <h3 class="blog-card-title font-display">{post.data.title}</h3>
+                <p class="blog-card-excerpt">{post.data.description.slice(0, 100)}...</p>
+                <a href={`/blog/${post.slug}`} class="project-card-link">
+                  Read Article →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CONTACT CTA ═══════════════ -->
+    <section class="section" style="padding-top:0;" aria-label="Contact call to action">
+      <div class="container">
+        <div class="contact-card animate-in" id="contact-cta">
+          <span class="section-label" style="justify-content:center;display:block;margin-bottom:var(--space-4);">
+            Get In Touch
+          </span>
+          <h2 class="font-display" style="font-size:var(--text-h1);font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--space-4);">
+            Need Data Science &amp; Statistical Expertise?
+          </h2>
+          <p class="text-secondary" style="max-width:540px;margin:0 auto var(--space-8);line-height:var(--leading-relaxed);">
+            Whether you need assistance with spatial data collection (QGIS), statistical modeling, automated reporting, or research collaboration — feel free to reach out.
+          </p>
+          <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;">
+            <a href="mailto:tertimothy@gmail.com" class="btn btn-primary btn-lg" id="email-btn">
+              Send an Email →
+            </a>
+            <a href="tel:07062439948" class="btn btn-ghost btn-lg" id="phone-btn">
+              Call: 07062439948
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

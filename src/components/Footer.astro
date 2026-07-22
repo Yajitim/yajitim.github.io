@@ -1,0 +1,45 @@
+---
+const socials = [
+  { href: 'https://github.com/Timoyaj', label: 'GitHub', icon: '⌥' },
+  { href: 'mailto:tertimothy@gmail.com', label: 'Email', icon: '✉' },
+  { href: 'tel:07062439948', label: 'Phone', icon: '📞' },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="/" class="nav-logo" style="font-size:1.1rem;">
+          Yaji<span>.</span>Terungwa
+        </a>
+        <p class="footer-copy" style="margin-top:var(--space-2);">
+          &copy; {new Date().getFullYear()} Yaji Timothy Terungwa — Statistician &amp; Data Professional.<br />
+          Built with <a href="https://astro.build" target="_blank" rel="noopener" style="color:var(--color-accent-cyan);">Astro</a>. 100% Open Source.
+        </p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-4);">
+        <div class="social-links">
+          {socials.map(s => (
+            <a
+              href={s.href}
+              class="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              title={s.label}
+            >
+              {s.icon}
+            </a>
+          ))}
+        </div>
+        <div class="footer-links">
+          <a href="/work" class="footer-link">Projects</a>
+          <a href="/blog" class="footer-link">Articles</a>
+          <a href="/about" class="footer-link">About &amp; CV</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

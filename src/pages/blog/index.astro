@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredPost = sortedPosts.find(p => p.data.featured) || sortedPosts[0];
+const remainingPosts = sortedPosts.filter(p => p.slug !== featuredPost?.slug);
+
+const categories = ['All', 'Tutorial', 'Opinion', 'Case Study', 'Dev', 'Open Source'];
+
+const categoryColors: Record<string, string> = {
+  Tutorial: 'badge-cyan',
+  Opinion: 'badge-violet',
+  'Case Study': 'badge-green',
+  Dev: 'badge-surface',
+  'Open Source': 'badge-surface',
+};
+---
+
+<BaseLayout
+  title="Blog — Writing on the Open Web"
+  description="Articles on full-stack development, open-source software, performance, and the craft of building things for the web."
+>
+  <Navbar />
+
+  <main style="padding-top: var(--nav-height);">
+    <div class="container">
+      <!-- Page Header -->
+      <div class="section" style="padding-bottom: var(--space-6);">
+        <span class="section-label">Writing</span>
+        <h1 class="font-display" style="font-size:var(--text-display);font-weight:800;letter-spacing:-0.03em;line-height:var(--leading-tight);margin-bottom:var(--space-6);">
+          The Blog
+        </h1>
+        <p class="text-secondary" style="max-width:560px;font-size:var(--text-lg);line-height:var(--leading-relaxed);">
+          Thoughts on building fast, accessible, and open web experiences. I write about code, tools, and the occasional opinion.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" style="margin-bottom:var(--space-10);" role="tablist" aria-label="Filter posts by category">
+        {categories.map((cat, i) => (
+          <button
+            class={`filter-tab ${i === 0 ? 'active' : ''}`}
+            data-filter={cat}
+            role="tab"
+            id={`blog-tab-${cat.toLowerCase().replace(' ','-')}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- Featured Post -->
+      {featuredPost && (
+        <article class="card blog-card blog-card-featured animate-in" style="margin-bottom:var(--space-8);" id={`featured-${featuredPost.slug}`} data-category={featuredPost.data.category}>
+          <div class="blog-card-body" style="order:1;padding:var(--space-10);">
+            <div class="blog-card-meta">
+              <span class={`badge ${categoryColors[featuredPost.data.category] || 'badge-surface'}`}>
+                {featuredPost.data.category}
+              </span>
+              <span class="badge badge-cyan">Featured</span>
+              <span>·</span>
+              <time datetime={featuredPost.data.pubDate.toISOString()}>
+                {featuredPost.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </time>
+              <span>·</span>
+              <span>{featuredPost.data.readingTime ?? 5} min read</span>
+            </div>
+            <h2 class="blog-card-title font-display" style="font-size:var(--text-h2);margin-bottom:var(--space-4);">
+              <a href={`/blog/${featuredPost.slug}`} style="transition:color var(--transition-fast);" class="hover-cyan">
+                {featuredPost.data.title}
+              </a>
+            </h2>
+            <p class="blog-card-excerpt" style="font-size:var(--text-base);margin-bottom:var(--space-6);">
+              {featuredPost.data.description}
+            </p>
+            <a href={`/blog/${featuredPost.slug}`} class="btn btn-primary" id={`read-featured-${featuredPost.slug}`}>
+              Read Article →
+            </a>
+          </div>
+          <div class="blog-card-cover" style="order:2;">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1a2e,#1a2e4a,#0d2a3a);display:flex;align-items:center;justify-content:center;font-size:5rem;">
+              ☁️
+            </div>
+          </div>
+        </article>
+      )}
+
+      <!-- Post Grid -->
+      <div class="grid-3" id="blog-grid">
+        {remainingPosts.map((post, i) => (
+          <article
+            class="card blog-card animate-in"
+            style={`animation-delay:${i * 60}ms`}
+            id={`post-${post.slug}`}
+            data-category={post.data.category}
+          >
+            <div class="blog-card-cover">
+              <div style={`width:100%;height:100%;background:linear-gradient(135deg,${i%3===0?'#1a0d2e,#2e1a4a':i%3===1?'#0d2e1a,#1a4a2e':'#2e1a0d,#4a2e1a'});display:flex;align-items:center;justify-content:center;font-size:2.5rem;`}>
+                {['📦', '🎨', '⚡', '🔷', '🛠️', '🌐'][i % 6]}
+              </div>
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class={`badge ${categoryColors[post.data.category] || 'badge-surface'}`}>
+                  {post.data.category}
+                </span>
+                <span>·</span>
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </time>
+                <span>·</span>
+                <span>{post.data.readingTime ?? 5} min</span>
+              </div>
+              <h2 class="blog-card-title font-display">
+                <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+              </h2>
+              <p class="blog-card-excerpt">{post.data.description.slice(0, 120)}...</p>
+              <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-3);">
+                {post.data.tags.slice(0,3).map(tag => (
+                  <span class="badge badge-surface">{tag}</span>
+                ))}
+              </div>
+              <a href={`/blog/${post.slug}`} class="project-card-link" id={`read-${post.slug}`}>Read More →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Empty state -->
+      <div id="empty-state" style="display:none;text-align:center;padding:var(--space-16) 0;">
+        <p class="text-secondary">No posts in this category yet. Check back soon!</p>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hover-cyan:hover { color: var(--color-accent-cyan); }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll('.filter-tab');
+  const cards = document.querySelectorAll('#blog-grid article[data-category], article.blog-card-featured[data-category]');
+  const emptyState = document.getElementById('empty-state');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+
+      const filter = tab.getAttribute('data-filter');
+      let visible = 0;
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const show = filter === 'All' || cat === filter;
+        (card as HTMLElement).style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      if (emptyState) emptyState.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+</script>

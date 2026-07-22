@@ -1,0 +1,314 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const skills = [
+  { category: 'Data Science & Stats', items: ['Python', 'R-programming', 'SPSS', 'SQL', 'Predictive Modeling', 'Data Normalization', 'Multiple Imputation'] },
+  { category: 'MEAL & Spatial (GIS)', items: ['QGIS', 'QFIELD', 'KoboToolbox', 'ODK', 'PDM', 'Baseline & Endline Surveys'] },
+  { category: 'Visualization & BI', items: ['Power BI', 'Tableau', 'Excel Dashboards (Power Query / Power Pivot)', 'Performance Tracking'] },
+  { category: 'Quality & Compliance', items: ['Data Integrity & Ethics', 'Confidentiality Protocols', 'High-Stakes Exam Management', 'Safeguarding'] },
+];
+
+const experience = [
+  {
+    date: 'Dec 2022 – March 2026',
+    title: 'Statistician (Mass Data Capture Unit)',
+    company: 'Benue Geographic Information System (BENGIS)',
+    desc: 'Optimized mass data capture workflows uploading 3,000+ high-value land records weekly with strict data integrity. Enforced data ethics & encryption security protocols. Trained IT personnel on data management software.',
+  },
+  {
+    date: 'Jan 2021 – Dec 2022',
+    title: 'Project Statistician (SFTAS-DLI 11.5 Project)',
+    company: 'World Bank SFTAS Project / BENGIS',
+    desc: 'Engineered spatial datasets for landed properties across Makurdi, Gboko, and Otukpo, directly facilitating Benue State’s qualification for a $2.5 Million World Bank grant. Conducted field data verification and developed interactive KPI monitoring dashboards for World Bank focal teams.',
+  },
+  {
+    date: 'Aug 2020 – Jan 2021',
+    title: 'Data Scientist (Remote Part-Time)',
+    company: 'TrafficCovert.ai, USA',
+    desc: 'Engineered Python-based analytics platforms to automate complex data workflows and analyze user behavioral feedback.',
+  },
+  {
+    date: 'Oct 2013 – June 2020',
+    title: 'HOD Computer Craft Dept. / ICT Data Lead',
+    company: "St. Joseph's Science and Technical College Makurdi",
+    desc: 'Led the ICT Department supervising staff members. Developed automated Excel assessment reporting systems. Coordinated national assessments (NABTEB/NACO) for over 70+ students annually. Applied performance analytics to drive early intervention for at-risk students.',
+  },
+];
+
+const education = [
+  {
+    degree: 'Ph.D. Statistics (In View)',
+    institution: 'University of Agriculture Makurdi',
+    period: '2018 – Present',
+    details: 'Thesis: Estimation of Population Characteristics for Multi-auxiliary Two Phase Sampling in the presence of Multiple Imputation.',
+  },
+  {
+    degree: 'M.Sc. Statistics',
+    institution: 'University of Agriculture Makurdi',
+    period: '2013 – 2016',
+    details: 'Advanced statistical inference, probability theory, and experimental design.',
+  },
+  {
+    degree: 'B.Sc. Statistics / Computer Science (2:1 Second Class Upper)',
+    institution: 'University of Agriculture Makurdi',
+    period: '2006 – 2010',
+    details: 'Joint honors background combining theoretical statistics with computational software systems.',
+  },
+];
+
+const certifications = [
+  { title: 'Data Analyst Nano-Degree', issuer: 'Udacity', date: 'November 2022' },
+  { title: 'Planning for Monitoring and Evaluation', issuer: 'Philanthropy University', date: 'November 2020' },
+  { title: 'The Fundamentals of Digital Marketing', issuer: 'Google Digital Garage', date: 'October 2020' },
+  { title: 'Jobberman Certified Soft Skills', issuer: 'Coursera / Jobberman', date: 'September 2021' },
+];
+
+const affiliations = [
+  'Member, Chartered Institute of Statisticians of Nigeria (CISON, formally NSA)',
+  'Member, Geoinformatics Society of Nigeria (GEOSON)',
+];
+
+const referees = [
+  {
+    name: 'Prof. Ikughur Atsua Jonathan',
+    title: 'Statistics Department (Project Supervisor)',
+    institution: 'University of Agriculture Makurdi, Benue State, Nigeria',
+    email: 'atsua2004@yahoo.com',
+    phone: '07087246135, 08036175962',
+  },
+  {
+    name: 'Dr. Joseph Aondoaver Gbertyo',
+    title: 'Postdoctoral Fellow / Inorganic Materials Research Group',
+    institution: 'University of Hull, United Kingdom',
+    email: 'j.gbertyo@hull.ac.uk',
+    phone: '+447763329335',
+  },
+  {
+    name: 'Mr. Chir Samuel',
+    title: 'Project Manager',
+    institution: 'Benue SFTAS DLI 11.5 World Bank Project',
+    email: 'chirsml@yahoo.com',
+    phone: '08036175962',
+  },
+];
+---
+
+<BaseLayout
+  title="About & Curriculum Vitae — Yaji Timothy Terungwa"
+  description="Curriculum Vitae and professional background of Yaji Timothy Terungwa — Statistician, Data Scientist, and Educational Data Professional."
+>
+  <Navbar />
+
+  <main style="padding-top: var(--nav-height);">
+    <div class="container">
+
+      <!-- ═══════ INTRO ═══════ -->
+      <section class="section">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-16);align-items:center;">
+          <!-- Text -->
+          <div>
+            <span class="section-label">Professional Summary</span>
+            <h1 class="font-display text-h1 animate-in" style="margin-bottom:var(--space-6);letter-spacing:-0.02em;">
+              Yaji Timothy <span class="gradient-text">Terungwa</span>
+            </h1>
+            <p class="text-secondary animate-in" style="font-size:var(--text-lg);line-height:var(--leading-relaxed);margin-bottom:var(--space-5);">
+              Results-driven Statistician and educational data professional with over 10 years of experience in high-precision data modeling, assessment coordination, and process automation.
+            </p>
+            <p class="text-secondary animate-in" style="font-size:var(--text-base);line-height:var(--leading-relaxed);margin-bottom:var(--space-8);">
+              Leveraging a PhD-level foundation in statistical theory, I specialize in standardizing variables, analyzing performance trends, and designing spatial data pipelines (QGIS/QFIELD). Deeply committed to data integrity, confidentiality protocols, and translating complex educational and spatial data into actionable insights for stakeholders.
+            </p>
+            <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+              <a href="mailto:tertimothy@gmail.com" class="btn btn-primary btn-lg animate-in" id="about-contact-btn">
+                Contact Me →
+              </a>
+              <a href="https://github.com/Timoyaj" target="_blank" rel="noopener" class="btn btn-ghost btn-lg animate-in">
+                GitHub Profile ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Avatar / Profile Summary Card -->
+          <div class="animate-in" style="display:flex;justify-content:center;align-items:center;">
+            <div class="card card-inner" style="width:100%;max-width:380px;background:var(--color-gradient-card);border:1px solid var(--color-border-glow);">
+              <div style="display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-4);">
+                <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--color-accent-cyan),var(--color-accent-violet));display:flex;align-items:center;justify-content:center;font-size:2rem;">
+                  📊
+                </div>
+                <div>
+                  <h3 class="font-display" style="font-size:var(--text-h4);font-weight:700;">Yaji T. Terungwa</h3>
+                  <p class="text-xs text-secondary">Statistician &amp; Data Scientist</p>
+                </div>
+              </div>
+              <div style="font-size:var(--text-xs);color:var(--color-text-secondary);display:flex;flex-direction:column;gap:var(--space-2);line-height:var(--leading-relaxed);">
+                <div>📍 <strong>Location:</strong> Makurdi, Benue State, Nigeria</div>
+                <div>✉️ <strong>Email:</strong> tertimothy@gmail.com</div>
+                <div>📞 <strong>Phone:</strong> 07062439948 / 09015966647</div>
+                <div>🎓 <strong>Education:</strong> Ph.D. (In View), M.Sc., B.Sc. (2:1)</div>
+                <div>🏛️ <strong>Affiliation:</strong> CISON &amp; GEOSON Member</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ TECHNICAL SKILLS ═══════ -->
+      <section class="section" style="padding-top:0;">
+        <div class="section-header">
+          <span class="section-label">Core Competencies</span>
+          <h2 class="section-title">Technical <span class="underline-cyan">Skills</span></h2>
+        </div>
+        <div class="grid-2">
+          {skills.map((group, i) => (
+            <div class="card card-inner animate-in" style={`animation-delay:${i*60}ms`} id={`skill-${group.category.toLowerCase().replace(/[^a-z0-9]/g,'-')}`}>
+              <h3 class="font-display" style="font-size:var(--text-h4);font-weight:700;margin-bottom:var(--space-4);color:var(--color-accent-cyan);">{group.category}</h3>
+              <div class="tech-stack">
+                {group.items.map(item => (
+                  <span class="tech-pill">{item}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ═══════ EXPERIENCE ═══════ -->
+      <section class="section" style="padding-top:0;">
+        <div class="section-header">
+          <span class="section-label">Career Path</span>
+          <h2 class="section-title">Professional <span class="underline-cyan">Experience</span></h2>
+        </div>
+        <div style="max-width:800px;">
+          <div class="timeline">
+            {experience.map((exp, i) => (
+              <div class="timeline-item animate-in" style={`animation-delay:${i*80}ms`} id={`exp-${i}`}>
+                <div class="timeline-date">{exp.date}</div>
+                <div class="timeline-title font-display">{exp.title}</div>
+                <div class="timeline-company">{exp.company}</div>
+                <div class="timeline-desc">{exp.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ EDUCATION & ACADEMIC RESEARCH ═══════ -->
+      <section class="section" style="padding-top:0;">
+        <div class="section-header">
+          <span class="section-label">Academic Background</span>
+          <h2 class="section-title">Education &amp; <span class="underline-cyan">Research</span></h2>
+        </div>
+        <div class="grid-3">
+          {education.map((edu, i) => (
+            <div class="card card-inner animate-in" style={`animation-delay:${i*80}ms`} id={`edu-${i}`}>
+              <div class="badge badge-cyan" style="margin-bottom:var(--space-3);">{edu.period}</div>
+              <h3 class="font-display" style="font-size:var(--text-h4);font-weight:700;margin-bottom:var(--space-2);">{edu.degree}</h3>
+              <p class="text-sm" style="color:var(--color-accent-violet);font-weight:600;margin-bottom:var(--space-3);">{edu.institution}</p>
+              <p class="text-xs text-secondary" style="line-height:var(--leading-relaxed);">{edu.details}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ═══════ CERTIFICATIONS & AFFILIATIONS ═══════ -->
+      <section class="section" style="padding-top:0;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);">
+          <!-- Certifications -->
+          <div>
+            <div class="section-header" style="margin-bottom:var(--space-6);">
+              <span class="section-label">Credentials</span>
+              <h2 class="section-title" style="font-size:var(--text-h2);">Certifications</h2>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              {certifications.map((c, i) => (
+                <div class="card card-inner animate-in" style={`padding:var(--space-4);animation-delay:${i*50}ms`}>
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                      <h4 class="font-display" style="font-weight:700;font-size:var(--text-base);">{c.title}</h4>
+                      <p class="text-xs text-secondary">{c.issuer}</p>
+                    </div>
+                    <span class="badge badge-surface">{c.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Affiliations -->
+          <div>
+            <div class="section-header" style="margin-bottom:var(--space-6);">
+              <span class="section-label">Memberships</span>
+              <h2 class="section-title" style="font-size:var(--text-h2);">Professional Affiliations</h2>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              {affiliations.map((aff, i) => (
+                <div class="card card-inner animate-in" style={`padding:var(--space-5);animation-delay:${i*50}ms`}>
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span style="font-size:1.25rem;">🏛️</span>
+                    <p class="text-sm font-display" style="font-weight:600;">{aff}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ REFEREES ═══════ -->
+      <section class="section" style="padding-top:0;">
+        <div class="section-header">
+          <span class="section-label">Endorsements</span>
+          <h2 class="section-title">Referees</h2>
+        </div>
+        <div class="grid-3">
+          {referees.map((ref, i) => (
+            <div class="card card-inner animate-in" style={`animation-delay:${i*80}ms`} id={`referee-${i}`}>
+              <div style="font-size:1.5rem;margin-bottom:var(--space-3);">👨‍🏫</div>
+              <h3 class="font-display" style="font-size:var(--text-h4);font-weight:700;margin-bottom:var(--space-1);">{ref.name}</h3>
+              <p class="text-xs text-cyan" style="margin-bottom:var(--space-1);">{ref.title}</p>
+              <p class="text-xs text-secondary" style="margin-bottom:var(--space-3);">{ref.institution}</p>
+              <div style="font-size:var(--text-xs);color:var(--color-text-muted);display:flex;flex-direction:column;gap:4px;">
+                <div>✉️ {ref.email}</div>
+                <div>📞 {ref.phone}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ═══════ CONTACT ═══════ -->
+      <section class="section" style="padding-top:0;" id="contact">
+        <div class="contact-card animate-in">
+          <span class="section-label" style="display:block;margin-bottom:var(--space-4);">Get in Touch</span>
+          <h2 class="font-display" style="font-size:var(--text-h1);font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--space-4);">
+            Let's Collaborate on Data Projects
+          </h2>
+          <p class="text-secondary" style="max-width:520px;margin:0 auto var(--space-8);line-height:var(--leading-relaxed);">
+            Open to research partnerships, statistical consulting, spatial data analytics (GIS), and full-time or contract data roles.
+          </p>
+          <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;margin-bottom:var(--space-8);">
+            <a href="mailto:tertimothy@gmail.com" class="btn btn-primary btn-lg" id="contact-email-btn">
+              tertimothy@gmail.com →
+            </a>
+          </div>
+          <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;">
+            <a href="https://github.com/Timoyaj" target="_blank" rel="noopener" class="btn btn-ghost" id="contact-github">GitHub (Timoyaj)</a>
+            <a href="tel:07062439948" class="btn btn-ghost" id="contact-phone">Call: 07062439948</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  @media (max-width: 768px) {
+    section > div[style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

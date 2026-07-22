@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
+
+const categories = ['All', 'Web App', 'Tool', 'API', 'Design System'];
+---
+
+<BaseLayout
+  title="Projects & Case Studies — Yaji Timothy Terungwa"
+  description="A selection of statistical data modeling projects, spatial GIS applications (QGIS/QFIELD), and high-stakes data automation systems."
+>
+  <Navbar />
+
+  <main style="padding-top: var(--nav-height);">
+    <div class="container">
+      <!-- Page Header -->
+      <div class="section" style="padding-bottom: var(--space-8);">
+        <span class="section-label">Portfolio</span>
+        <h1 class="font-display" style="font-size:var(--text-display);font-weight:800;letter-spacing:-0.03em;margin-bottom:var(--space-6);">
+          Projects &amp; <span class="gradient-text">Case Studies</span>
+        </h1>
+        <p class="text-secondary" style="max-width:560px;font-size:var(--text-lg);line-height:var(--leading-relaxed);">
+          Selected work in high-precision data modeling, World Bank grant data verification, spatial GIS mapping, and process automation.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" style="margin-bottom: var(--space-12);" role="tablist" aria-label="Filter projects by category">
+        {categories.map((cat, i) => (
+          <button
+            class={`filter-tab ${i === 0 ? 'active' : ''}`}
+            data-filter={cat}
+            role="tab"
+            id={`tab-${cat.toLowerCase().replace(' ','-')}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- Featured Project -->
+      {sortedProjects.filter(p => p.data.featured)[0] && (() => {
+        const p = sortedProjects.filter(proj => proj.data.featured)[0];
+        return (
+          <div class="card animate-in" style="display:flex;gap:0;margin-bottom:var(--space-6);overflow:hidden;" id="featured-work-card" data-category={p.data.category}>
+            <div style="width:45%;min-height:360px;background:linear-gradient(135deg,#0d1117,#1a2e26,#0a1628);display:flex;align-items:center;justify-content:center;font-size:5rem;flex-shrink:0;">
+              🗺️
+            </div>
+            <div style="padding:var(--space-10);display:flex;flex-direction:column;justify-content:center;">
+              <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-4);flex-wrap:wrap;">
+                <span class="badge badge-cyan">Featured Case Study</span>
+                {p.data.tags.slice(0,4).map(tag => (
+                  <span class="badge badge-surface">{tag}</span>
+                ))}
+              </div>
+              <h2 class="font-display" style="font-size:var(--text-h1);font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--space-4);">
+                {p.data.title}
+              </h2>
+              <p class="text-secondary" style="font-size:var(--text-lg);line-height:var(--leading-relaxed);margin-bottom:var(--space-6);">
+                {p.data.description}
+              </p>
+              <div style="display:flex;gap:var(--space-3);">
+                <a href={`/work/${p.slug}`} class="btn btn-primary" id="featured-case-study-btn">View Full Case Study →</a>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      <!-- Project Grid -->
+      <div class="grid-3" id="project-grid">
+        {sortedProjects.map((project, i) => (
+          <article
+            class="card project-card animate-in"
+            style={`animation-delay:${i * 60}ms`}
+            id={`work-${project.slug}`}
+            data-category={project.data.category}
+          >
+            <div class="project-card-cover">
+              <div style={`width:100%;height:100%;background:linear-gradient(135deg,${i%3===0?'#0d1117,#1a2e26':i%3===1?'#1a0d2e,#2e1a0d':'#0d2e2e,#1a0d2e'});display:flex;align-items:center;justify-content:center;font-size:2.5rem;`}>
+                {['🗺️', '🔒', '🐍', '📊'][i % 4]}
+              </div>
+            </div>
+            <div class="project-card-body">
+              <div class="project-card-tags">
+                <span class="badge badge-surface">{project.data.category}</span>
+                <span class="badge badge-surface">{project.data.year}</span>
+              </div>
+              <h3 class="project-card-title font-display">{project.data.title}</h3>
+              <p class="project-card-desc">{project.data.description.slice(0, 120)}...</p>
+              <div style="display:flex;gap:var(--space-3);margin-top:auto;flex-wrap:wrap;">
+                <a href={`/work/${project.slug}`} class="project-card-link">Case Study Details →</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="contact-card animate-in" style="margin-top:var(--space-20);margin-bottom:var(--space-12);" id="work-contact-cta">
+        <h2 class="font-display" style="font-size:var(--text-h2);margin-bottom:var(--space-4);">
+          Have a Data or Statistical Project?
+        </h2>
+        <p class="text-secondary" style="margin-bottom:var(--space-6);">Let me assist you in modeling, spatial collection, and process automation.</p>
+        <a href="mailto:tertimothy@gmail.com" class="btn btn-primary" id="work-email-btn">Get in Touch →</a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  const tabs = document.querySelectorAll('.filter-tab');
+  const cards = document.querySelectorAll('[data-category]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const filter = tab.getAttribute('data-filter');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const show = filter === 'All' || cat === filter;
+        (card as HTMLElement).style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  @media (max-width: 768px) {
+    .card[id="featured-work-card"] { flex-direction: column !important; }
+    .card[id="featured-work-card"] > div:first-child { width: 100% !important; min-height: 200px !important; }
+  }
+</style>

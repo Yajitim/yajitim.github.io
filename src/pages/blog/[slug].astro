@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const related = allPosts
+  .filter(p => p.slug !== post.slug && p.data.category === post.data.category)
+  .slice(0, 3);
+
+const categoryColors: Record<string, string> = {
+  Tutorial: 'badge-cyan',
+  Opinion: 'badge-violet',
+  'Case Study': 'badge-green',
+  Dev: 'badge-surface',
+  'Open Source': 'badge-surface',
+};
+
+const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+>
+  <!-- Reading progress bar -->
+  <div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuemin={0} aria-valuemax={100}></div>
+
+  <Navbar />
+
+  <main style="padding-top: var(--nav-height);">
+    <div class="container">
+      <!-- Back link -->
+      <div style="padding-top:var(--space-10);margin-bottom:var(--space-8);">
+        <a href="/blog" class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:var(--space-2);">
+          ← Back to Blog
+        </a>
+      </div>
+
+      <!-- Post Header -->
+      <header style="max-width:800px;margin:0 auto var(--space-10);">
+        <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-5);">
+          <span class={`badge ${categoryColors[post.data.category] || 'badge-surface'}`}>
+            {post.data.category}
+          </span>
+          {post.data.tags.map(tag => (
+            <span class="badge badge-surface">{tag}</span>
+          ))}
+        </div>
+
+        <h1 class="font-display" style="font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.02em;line-height:var(--leading-tight);margin-bottom:var(--space-5);">
+          {post.data.title}
+        </h1>
+
+        <p class="text-secondary" style="font-size:var(--text-lg);line-height:var(--leading-relaxed);margin-bottom:var(--space-6);">
+          {post.data.description}
+        </p>
+
+        <!-- Meta row -->
+        <div style="display:flex;align-items:center;gap:var(--space-4);font-size:var(--text-sm);color:var(--color-text-muted);flex-wrap:wrap;padding-bottom:var(--space-6);border-bottom:1px solid var(--color-border);">
+          <time datetime={post.data.pubDate.toISOString()}>{formattedDate}</time>
+          <span>·</span>
+          <span>{post.data.readingTime ?? 5} min read</span>
+          {post.data.updatedDate && (
+            <>
+              <span>·</span>
+              <span>Updated {post.data.updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+            </>
+          )}
+        </div>
+      </header>
+
+      <!-- Cover Image -->
+      <div style="width:100%;height:400px;background:linear-gradient(135deg,#0d1a2e,#1a2e4a,#0d2a3a);border-radius:var(--radius-xl);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:var(--space-12);">
+        ☁️
+      </div>
+
+      <!-- Post Body -->
+      <div style="max-width:720px;margin:0 auto;">
+        <article class="prose">
+          <Content />
+        </article>
+
+        <!-- Share row -->
+        <div style="margin-top:var(--space-10);padding-top:var(--space-8);border-top:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);">
+          <div>
+            <p class="text-sm text-muted" style="margin-bottom:var(--space-2);">Share this article</p>
+            <div style="display:flex;gap:var(--space-2);">
+              <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(Astro.url.toString())}`}
+                 target="_blank" rel="noopener" class="btn btn-ghost" style="font-size:var(--text-xs);" id="share-twitter">
+                Twitter/X ↗
+              </a>
+              <button
+                id="copy-link-btn"
+                class="btn btn-ghost"
+                style="font-size:var(--text-xs);"
+                onclick={`navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='Copied!';setTimeout(()=>{this.textContent='Copy Link'},2000)})`}
+              >
+                Copy Link
+              </button>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+            {post.data.tags.map(tag => (
+              <span class="badge badge-surface">{tag}</span>
+            ))}
+          </div>
+        </div>
+
+        <!-- Author card -->
+        <div class="card card-inner" style="margin-top:var(--space-8);display:flex;align-items:center;gap:var(--space-5);">
+          <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--color-accent-cyan),var(--color-accent-violet));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">
+            👤
+          </div>
+          <div>
+            <p class="font-display" style="font-weight:700;margin-bottom:var(--space-1);">Your Name</p>
+            <p class="text-sm text-secondary" style="line-height:var(--leading-relaxed);">Full-Stack Developer &amp; Technical Writer. I build fast, open-source web experiences and write about it here.</p>
+          </div>
+        </div>
+
+        <!-- Giscus Comments -->
+        <div style="margin-top:var(--space-12);">
+          <h2 class="font-display" style="font-size:var(--text-h3);font-weight:700;margin-bottom:var(--space-6);">
+            Discussion
+          </h2>
+          <!-- Replace data-repo, data-repo-id, data-category, data-category-id with your own -->
+          <div id="giscus-container" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-8);text-align:center;color:var(--color-text-muted);">
+            <p>💬 Comments are powered by GitHub Discussions via Giscus.</p>
+            <p class="text-sm" style="margin-top:var(--space-2);">Configure your Giscus settings at <a href="https://giscus.app" target="_blank" rel="noopener" style="color:var(--color-accent-cyan);">giscus.app</a> and replace this placeholder.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Posts -->
+      {related.length > 0 && (
+        <div style="max-width:100%;margin-top:var(--space-16);">
+          <div class="section-header">
+            <span class="section-label">More Reading</span>
+            <h2 class="section-title">Related <span class="underline-cyan">Posts</span></h2>
+          </div>
+          <div class="grid-3">
+            {related.map((rPost, i) => (
+              <article class="card blog-card animate-in" style={`animation-delay:${i*60}ms`} id={`related-${rPost.slug}`}>
+                <div class="blog-card-cover">
+                  <div style={`width:100%;height:100%;background:linear-gradient(135deg,${i===0?'#1a0d2e,#2e1a4a':'#0d2e1a,#1a4a2e'});display:flex;align-items:center;justify-content:center;font-size:2rem;`}>
+                    {['📦','🎨','⚡'][i]}
+                  </div>
+                </div>
+                <div class="blog-card-body">
+                  <div class="blog-card-meta">
+                    <span class={`badge ${categoryColors[rPost.data.category] || 'badge-surface'}`}>{rPost.data.category}</span>
+                    <span>·</span>
+                    <span>{rPost.data.readingTime ?? 5} min</span>
+                  </div>
+                  <h3 class="blog-card-title font-display">{rPost.data.title}</h3>
+                  <a href={`/blog/${rPost.slug}`} class="project-card-link">Read →</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Reading progress bar
+  const progressBar = document.getElementById('reading-progress');
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+      progressBar.style.transform = `scaleX(${progress})`;
+      progressBar.setAttribute('aria-valuenow', String(Math.round(progress * 100)));
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+</script>

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<BaseLayout
+  title={project.data.title}
+  description={project.data.description}
+>
+  <Navbar />
+
+  <main style="padding-top: var(--nav-height);">
+    <div class="container">
+      <!-- Back link -->
+      <div style="padding-top:var(--space-10);margin-bottom:var(--space-8);">
+        <a href="/work" class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:var(--space-2);">
+          ← Back to Work
+        </a>
+      </div>
+
+      <!-- Project Header -->
+      <div style="max-width:800px;margin-bottom:var(--space-10);">
+        <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-4);">
+          <span class="badge badge-cyan">{project.data.category}</span>
+          <span class="badge badge-surface">{project.data.year}</span>
+          {project.data.tags.map(tag => (
+            <span class="badge badge-surface">{tag}</span>
+          ))}
+        </div>
+        <h1 class="font-display" style="font-size:var(--text-h1);font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--space-4);">
+          {project.data.title}
+        </h1>
+        <p class="text-secondary" style="font-size:var(--text-lg);line-height:var(--leading-relaxed);margin-bottom:var(--space-6);">
+          {project.data.description}
+        </p>
+        <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+          {project.data.liveUrl && (
+            <a href={project.data.liveUrl} target="_blank" rel="noopener" class="btn btn-primary">
+              Live Demo ↗
+            </a>
+          )}
+          {project.data.repoUrl && (
+            <a href={project.data.repoUrl} target="_blank" rel="noopener" class="btn btn-ghost">
+              View Source ↗
+            </a>
+          )}
+        </div>
+      </div>
+
+      <!-- Cover -->
+      <div style="width:100%;height:400px;background:linear-gradient(135deg,#0d1117,#1a1f2e,#0a1628);border-radius:var(--radius-xl);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:var(--space-12);">
+        🚀
+      </div>
+
+      <!-- Content -->
+      <div style="max-width:800px;margin:0 auto;">
+        <article class="prose">
+          <Content />
+        </article>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Navigation -->
+      <div style="display:flex;justify-content:center;margin-bottom:var(--space-12);">
+        <a href="/work" class="btn btn-ghost btn-lg">← All Projects</a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

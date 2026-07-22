@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<BaseLayout title="404 — Page Not Found">
+  <Navbar />
+  <main style="padding-top:var(--nav-height);min-height:100vh;display:flex;align-items:center;justify-content:center;">
+    <div style="text-align:center;padding:var(--space-12);">
+      <div style="font-size:6rem;margin-bottom:var(--space-6);">404</div>
+      <h1 class="font-display gradient-text" style="font-size:var(--text-h1);font-weight:800;margin-bottom:var(--space-4);">
+        Lost in the void
+      </h1>
+      <p class="text-secondary" style="margin-bottom:var(--space-8);line-height:var(--leading-relaxed);">
+        This page doesn't exist — or maybe it did once and I deleted it.<br />
+        Either way, let's get you back on track.
+      </p>
+      <div style="display:flex;gap:var(--space-3);justify-content:center;flex-wrap:wrap;">
+        <a href="/" class="btn btn-primary btn-lg">← Go Home</a>
+        <a href="/blog" class="btn btn-ghost btn-lg">Read the Blog</a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
