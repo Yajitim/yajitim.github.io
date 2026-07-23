@@ -50,6 +50,9 @@ const siteName = "Yaji Timothy Terungwa · Statistician & Data Scientist";
   <!-- Google Fonts preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Netlify Identity Widget for CMS Auth & Invite/Recovery Token Redirects -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <slot />
@@ -81,6 +84,19 @@ const siteName = "Yaji Timothy Terungwa · Statistician & Data Scientist";
       };
       window.addEventListener('scroll', handleScroll, { passive: true });
       handleScroll();
+    }
+  </script>
+
+  <!-- Netlify Identity Token & Login Redirect -->
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
     }
   </script>
 </body>
