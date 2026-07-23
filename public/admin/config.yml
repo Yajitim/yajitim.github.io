@@ -1,10 +1,9 @@
 backend:
   name: git-gateway
-  repo: Yajitim/yajitim.github.io  # GitHub username/repo
   branch: main
 
-# Enable local backend for offline/local testing
-local_backend: true
+local_backend:
+  url: http://localhost:8081/api/v1
 
 media_folder: public/uploads
 public_folder: /uploads
