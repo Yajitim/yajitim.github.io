@@ -1,0 +1,1986 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Primary Meta --><title>The Mathematics of P-Values Think Like a Statistician Series — LinkedIn Campaign · Yaji Timothy Terungwa</title><meta name="description" content="---
+
+## HEADLINE &#38; HOOK
+
+**&#34;Your concert just got 50 more attendees this year. Is that statistically significant? Not so fast...&#34; 🎤**
+
+*You think you've cracked the code to concert marketing. But do you understand what your data is actually telling you?*
+
+---
+
+## MAIN CONTENT
+
+### Opening Hook
+
+Imagine you're a concert promoter running an experiment:
+- **Last year:** 500 people attended your summer concert
+- **This year:** 550 people attended (with a new social media campaign)
+- **Your conclusion:** &#34;Our marketing works! We attracted 50 more people!&#34;
+
+But here's the statistician's question: **&#34;How do we know this isn't just random variation?&#34;**
+
+That's where p-values come in. But here's what most people get wrong: *they think a p-value is the probability your result is real.* 
+
+**It's not.**
+
+Let me show you the actual mathematics so you stop misinterpreting your data.
+
+---
+
+## SECTION 1: FORMAL DEFINITION + INTUITION
+
+### The Formal Statistical Definition
+
+A **p-value** is:
+
+$$p = P(\text{Data}_\text{observed} | H_0 \text{ is true})$$
+
+In words: *&#34;The probability of observing data as extreme as (or more extreme than) what we actually observed, assuming the null hypothesis is exactly true.&#34;*
+
+### Breaking Down the Formula
+
+**What does each part mean?**
+
+| Component | Meaning | Example |
+|-----------|---------|---------|
+| $P(\cdot)$ | Probability | &#34;What are the odds?&#34; |
+| $\text{Data}_\text{observed}$ | Your actual results | 550 concert attendees |
+| $\|$ | &#34;Given that&#34; | Under the condition that... |
+| $H_0$ | Null hypothesis | &#34;The marketing had NO effect&#34; |
+| **&#34;as extreme or more extreme&#34;** | Same direction or stronger | 550, 560, 600, or more attendees |
+
+---
+
+### Intuitive Explanation (No Math Yet)
+
+Think of a concert venue as a coin flip experiment:
+
+1. **The Setup:** 
+   - You assume your marketing campaign has NO effect (null hypothesis)
+   - Last year = 500 attendees naturally (your baseline)
+
+   
+2. **The Observation:**
+   - This year = 550 attendees
+   - Difference = +50 people
+
+3. **The Question:**
+   - If your marketing truly had no effect, how likely would it be to see 50+ additional attendees just by random chance?
+
+4. **The P-Value:**
+   - If p = 0.03, it means: &#34;There's only a 3% chance we'd see this result if marketing truly had no effect&#34;
+   - If p = 0.45, it means: &#34;There's a 45% chance we'd see this result even if marketing had no effect&#34;
+
+**Lower p-value = More unusual result (if H₀ is true) = Stronger evidence against H₀**
+
+---
+
+## SECTION 2: THE MATHEMATICS BEHIND THE CONCERT EXAMPLE
+
+### Scenario: Concert Attendance Test
+
+**Setup:**
+- Population parameter: μ₀ = 500 attendees (historical mean)
+- Observed sample: x̄ = 550 attendees
+- Sample size: n = 25 concert dates (in our test period)
+- Sample standard deviation: s = 80 attendees
+
+**Null Hypothesis (H₀):** μ = 500 (Marketing has no effect)
+
+**Alternative Hypothesis (H₁):** μ > 500 (Marketing increases attendance)
+
+### Calculating the Test Statistic (t-test)
+
+The t-statistic measures how many standard errors our sample mean is from the hypothesized population mean:
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+**Plugging in our concert data:**
+
+$$t = \frac{550 - 500}{80/\sqrt{25}} = \frac{50}{80/5} = \frac{50}{16} = 3.125$$
+
+**Interpretation:** Our sample mean is **3.125 standard errors away** from what we'd expect if marketing had no effect.
+
+### Finding the P-Value
+
+With:
+- t-statistic = 3.125
+- Degrees of freedom = n - 1 = 24
+- One-tailed test (we only care about increases)
+
+**From t-table or software:** p ≈ 0.0023
+
+**English translation:** *&#34;If marketing truly has no effect, there's only a 0.23% chance we'd observe attendance of 550+ across our sample.&#34;*
+
+---
+
+## SECTION 3: VISUAL INTERPRETATION
+
+### The P-Value Distribution Diagram
+
+Imagine the sampling distribution of concert attendance under the null hypothesis:
+
+```
+Probability Density
+     |
+     |        ╱╲
+     |       ╱  ╲         We observe 550
+     |      ╱    ╲         attendees here
+     |     ╱      ╲           ↓
+     |    ╱        ╲___   [This shaded area = p-value]
+     |   ╱             ╲  (0.23% probability)
+     |__╱_______________╲____
+        400   500   600  650
+             (μ₀ = 500)
+```
+
+**The shaded tail** = probability of observing data this extreme if H₀ is true
+
+---
+
+## SECTION 4: CRITICAL MATHEMATICAL MISCONCEPTIONS
+
+### ❌ Misconception #1: &#34;P-value = Probability the result is real&#34;
+
+**Wrong Formula People Use:**
+$$p = P(H_0 \text{ is true} | \text{Data})$$
+
+**Correct Formula:**
+$$p = P(\text{Data} | H_0 \text{ is true})$$
+
+**Why it matters for concerts:**
+- **Wrong interpretation:** &#34;0.23% chance our marketing campaign is a coincidence&#34;
+- **Correct interpretation:** &#34;0.23% chance we'd see this attendance boost if marketing didn't work&#34;
+
+These are NOT the same thing mathematically.
+
+### ❌ Misconception #2: &#34;p = 0.05 means 5% chance of error&#34;
+
+**Reality:**
+- p = 0.05 means: &#34;5% chance of seeing data this extreme if H₀ is true&#34;
+- It does NOT tell you the probability you made a Type I error in THIS specific study
+
+**Type I Error Rate (α)** is set before the experiment:
+- You choose α = 0.05 as your threshold
+- This means: &#34;If p < 0.05, I'll reject H₀ (but accept 5% false positive rate in the long run)&#34;
+
+**For our concert:**
+- We set α = 0.05
+- We got p = 0.0023
+- We reject H₀ (conclude marketing works)
+- Long-run error rate = 5% (not this study's error rate)
+
+### ❌ Misconception #3: &#34;Smaller p-values mean larger effects&#34;
+
+**Mathematical reality:**
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{\text{Effect Size}}{\text{Standard Error}}$$
+
+**p-values depend on THREE things:**
+
+1. **Effect size** ($\bar{x} - \mu_0$) — actual difference
+2. **Sample size** (n) — affects standard error
+3. **Variability** (s) — affects standard error
+
+**Concert example showing sample size trap:**
+
+| Scenario | Effect | Sample | StdDev | t-stat | p-value |
+|----------|--------|--------|--------|--------|---------|
+| A (real effect) | +50 attendees | 25 concerts | 80 | 3.125 | 0.0023 |
+| B (same effect) | +50 attendees | 500 concerts | 80 | **22.1** | **< 0.00001** |
+| C (tiny effect) | +5 attendees | 500 concerts | 80 | **2.21** | **0.013** |
+
+**Key insight:** Even a tiny +5 attendee difference becomes &#34;statistically significant&#34; with enough data!
+
+---
+
+## SECTION 5: MATHEMATICAL ASSUMPTIONS (CRITICAL)
+
+All p-value calculations assume:
+
+1. **Random sampling** — Your concerts are randomly selected from the population
+2. **Independence** — One concert's attendance doesn't affect another's
+3. **Normality** — Attendance follows a normal distribution
+4. **Known parameters** (for z-tests) OR **estimate from data** (for t-tests)
+
+**For your concert analysis:**
+- ✅ Concerts sampled independently? 
+- ✅ One concert's crowd doesn't cause the next to have more people?
+- ✅ Attendance roughly bell-shaped distribution?
+
+If ANY assumption fails, your p-value is unreliable.
+
+---
+
+## SECTION 6: ONE-TAILED vs TWO-TAILED TESTS
+
+### One-Tailed Test (What we used)
+
+**Question:** &#34;Does the marketing INCREASE attendance?&#34;
+
+$$H_1: \mu > 500$$
+
+**p-value calculation:**
+- Look at RIGHT tail only
+- p = P(t > 3.125) = 0.0023
+
+**Diagram:**
+```
+         |
+         |        ╱╲
+         |       ╱  ╲
+         |      ╱    ╲___
+         |     ╱    [p-value here]
+         |    ╱           ╲
+    _____|___╱_____________╲____
+       500                650
+```
+
+### Two-Tailed Test (More conservative)
+
+**Question:** &#34;Does the marketing CHANGE attendance (increase OR decrease)?&#34;
+
+$$H_1: \mu \neq 500$$
+
+**p-value calculation:**
+- Look at BOTH tails
+- p = P(|t| > 3.125) = 0.0046 (double the one-tailed value)
+
+**Diagram:**
+```
+         |╱╲          ╱╲
+         |  ╲        ╱  ╲
+         |   ╲___   ╱    ╲___
+         |[p/2]    |    [p/2]
+    _____|__________|__________
+       350        500        650
+```
+
+**For concerts:** One-tailed is okay if you only care about attendance increases. Two-tailed is safer if you want to detect any change.
+
+---
+
+## SECTION 7: EFFECT SIZE COMPARISON (Why p-values alone fail)
+
+### The Core Problem: P-Values Hide Effect Magnitude
+
+Two concert campaigns with identical p-values can have vastly different real-world impact:
+
+**Campaign A:**
+- Attendance: 500 → 550 (+50 people)
+- Cost: $10,000
+- Cost per new attendee: $200/person
+- p-value: 0.023 ✓ Significant
+
+**Campaign B:**
+- Attendance: 500 → 501 (+1 person)
+- Cost: $50
+- Cost per new attendee: $50/person
+- p-value: 0.023 ✓ Significant
+
+**Same p-value. Completely different business outcomes.**
+
+### Cohen's d for Concert Example
+
+$$d = \frac{\bar{x} - \mu_0}{s}$$
+
+**Campaign A:**
+$$d = \frac{550 - 500}{80} = \frac{50}{80} = 0.625$$
+
+**Interpretation:** Medium effect (Cohen's guidelines: 0.2=small, 0.5=medium, 0.8=large)
+
+**Campaign B:**
+$$d = \frac{501 - 500}{80} = \frac{1}{80} = 0.0125$$
+
+**Interpretation:** Negligible effect (practically useless)
+
+---
+
+## SECTION 8: PRACTICAL SIGNIFICANCE GUIDELINES
+
+### When to Care About P-Values
+
+| P-Value | Action | Practical Advice |
+|---------|--------|------------------|
+| p < 0.001 | Strong evidence | Highly convincing |
+| 0.001 ≤ p < 0.01 | Very good evidence | Compelling |
+| 0.01 ≤ p < 0.05 | Good evidence | Report with effect size |
+| 0.05 ≤ p < 0.10 | Weak evidence | Inconclusive; gather more data |
+| p ≥ 0.10 | No evidence | Cannot reject H₀ |
+
+**For your concert decision:**
+- p = 0.0023 ✓ Strong evidence marketing works
+- BUT: Check effect size (d = 0.625) AND practical cost-benefit
+
+---
+
+## SECTION 9: COMMON PITFALLS IN REAL DATA
+
+### The Multiple Testing Problem
+
+If you run 20 independent tests, expecting to see one false positive:
+
+$$\text{Probability of at least one false positive} = 1 - (1-0.05)^{20} = 63.7\%$$
+
+**For concert analysis:**
+If you test 20 different marketing tactics looking for significant results, you WILL find 1-2 &#34;significant&#34; results by chance alone.
+
+**Solution:** Use Bonferroni correction:
+$$\alpha_{\text{adjusted}} = \frac{0.05}{20} = 0.0025$$
+
+Require p < 0.0025 to compensate.
+
+### The Replication Crisis
+
+**Why statistically significant findings often don't replicate:**
+
+1. Small sample sizes → large variability in results
+2. Selective reporting → publish only significant findings
+3. Publication bias → non-significant results stay hidden
+
+**Lesson for your concerts:** 
+- Test once with large sample: n > 50 events minimum
+- Report both significant AND non-significant results
+- Replicate findings before committing budget
+
+---
+
+## SECTION 10: THE STATISTICIAN'S MENTAL MODEL
+
+### Five-Step Framework for P-Value Interpretation
+
+1. **State your hypothesis clearly** (H₀ and H₁)
+2. **Calculate your test statistic** (t, z, F, χ², etc.)
+3. **Determine the p-value** (use software, not tables)
+4. **Compare to your significance level** (α = 0.05 standard)
+5. **Report effect size AND practical significance**
+
+**The statistician NEVER says:** &#34;We got p = 0.03 so the effect is real&#34;
+
+**The statistician ALWAYS says:** &#34;We got p = 0.03 AND d = 0.62, suggesting statistically significant evidence of a medium-sized effect&#34;
+
+---
+
+## CLOSING: WHAT CHANGES NOW
+
+### Before (Old Mindset)
+❌ &#34;p = 0.023 → Our marketing works! Launch it!&#34;
+
+### After (Statistician's Mindset)
+✅ &#34;p = 0.023 AND d = 0.63 AND cost-per-attendee is reasonable AND assumptions are met → Probably worth testing at larger scale&#34;
+
+---
+
+## CALL TO ACTION
+
+**Questions for your concert data:**
+
+1. What assumptions might you be violating in your attendance analysis?
+2. Have you calculated effect sizes for your marketing campaigns?
+3. Are you p-hacking (running multiple tests until something works)?
+
+**Drop a comment:** What's the smallest p-value you've seen that turned out to be practically meaningless? 👇
+
+---
+
+## EXTENDED REFERENCES (For Publication)
+
+- Wasserstein, R. L., &#38; Lazar, N. A. (2016). The ASA statement on p-values: Context, process, and purpose. *The American Statistician*, 70(2), 129–133. https://doi.org/10.1080/00031305.2016.1154108
+
+- Cohen, J. (1992). A power primer. *Psychological Bulletin*, 112(1), 155–159. https://doi.org/10.1037/0033-2909.112.1.155
+
+- Sullivan, G. M., &#38; Feinn, R. (2012). Using effect size—or why the P value is not enough. *Journal of Graduate Medical Education*, 4(3), 279–282. https://doi.org/10.4300/JGME-D-12-00156.1
+
+- Ioannidis, J. P. (2005). Why most published research findings are false. *PLoS Medicine*, 2(8), e124. https://doi.org/10.1371/journal.pmed.0020124
+
+---
+
+**Word count: ~2,200 words**
+
+**Engagement hooks:** 
+- Math tables + formulas
+- Concert example throughout
+- Misconception callouts
+- Visual diagrams
+- Practical comparison scenarios
+
+**LinkedIn engagement strategy:**
+- Pin this post with: &#34;Which misconception have YOU made? (Guilty of #2 over here 🙋‍♂️)&#34;
+- Include the concert scenarios as carousel graphics
+- Ask comment question about their data
+- Respond to all comments with mini-explanations
+"><link rel="canonical" href="https://yajitim.github.io/blog/the-mathematics-of-p-values-think-like-a-statistician-series--linkedin-campaign/"><!-- Open Graph / Social --><meta property="og:type" content="article"><meta property="og:url" content="https://yajitim.github.io/blog/the-mathematics-of-p-values-think-like-a-statistician-series--linkedin-campaign/"><meta property="og:title" content="The Mathematics of P-Values Think Like a Statistician Series — LinkedIn Campaign"><meta property="og:description" content="---
+
+## HEADLINE &#38; HOOK
+
+**&#34;Your concert just got 50 more attendees this year. Is that statistically significant? Not so fast...&#34; 🎤**
+
+*You think you've cracked the code to concert marketing. But do you understand what your data is actually telling you?*
+
+---
+
+## MAIN CONTENT
+
+### Opening Hook
+
+Imagine you're a concert promoter running an experiment:
+- **Last year:** 500 people attended your summer concert
+- **This year:** 550 people attended (with a new social media campaign)
+- **Your conclusion:** &#34;Our marketing works! We attracted 50 more people!&#34;
+
+But here's the statistician's question: **&#34;How do we know this isn't just random variation?&#34;**
+
+That's where p-values come in. But here's what most people get wrong: *they think a p-value is the probability your result is real.* 
+
+**It's not.**
+
+Let me show you the actual mathematics so you stop misinterpreting your data.
+
+---
+
+## SECTION 1: FORMAL DEFINITION + INTUITION
+
+### The Formal Statistical Definition
+
+A **p-value** is:
+
+$$p = P(\text{Data}_\text{observed} | H_0 \text{ is true})$$
+
+In words: *&#34;The probability of observing data as extreme as (or more extreme than) what we actually observed, assuming the null hypothesis is exactly true.&#34;*
+
+### Breaking Down the Formula
+
+**What does each part mean?**
+
+| Component | Meaning | Example |
+|-----------|---------|---------|
+| $P(\cdot)$ | Probability | &#34;What are the odds?&#34; |
+| $\text{Data}_\text{observed}$ | Your actual results | 550 concert attendees |
+| $\|$ | &#34;Given that&#34; | Under the condition that... |
+| $H_0$ | Null hypothesis | &#34;The marketing had NO effect&#34; |
+| **&#34;as extreme or more extreme&#34;** | Same direction or stronger | 550, 560, 600, or more attendees |
+
+---
+
+### Intuitive Explanation (No Math Yet)
+
+Think of a concert venue as a coin flip experiment:
+
+1. **The Setup:** 
+   - You assume your marketing campaign has NO effect (null hypothesis)
+   - Last year = 500 attendees naturally (your baseline)
+
+   
+2. **The Observation:**
+   - This year = 550 attendees
+   - Difference = +50 people
+
+3. **The Question:**
+   - If your marketing truly had no effect, how likely would it be to see 50+ additional attendees just by random chance?
+
+4. **The P-Value:**
+   - If p = 0.03, it means: &#34;There's only a 3% chance we'd see this result if marketing truly had no effect&#34;
+   - If p = 0.45, it means: &#34;There's a 45% chance we'd see this result even if marketing had no effect&#34;
+
+**Lower p-value = More unusual result (if H₀ is true) = Stronger evidence against H₀**
+
+---
+
+## SECTION 2: THE MATHEMATICS BEHIND THE CONCERT EXAMPLE
+
+### Scenario: Concert Attendance Test
+
+**Setup:**
+- Population parameter: μ₀ = 500 attendees (historical mean)
+- Observed sample: x̄ = 550 attendees
+- Sample size: n = 25 concert dates (in our test period)
+- Sample standard deviation: s = 80 attendees
+
+**Null Hypothesis (H₀):** μ = 500 (Marketing has no effect)
+
+**Alternative Hypothesis (H₁):** μ > 500 (Marketing increases attendance)
+
+### Calculating the Test Statistic (t-test)
+
+The t-statistic measures how many standard errors our sample mean is from the hypothesized population mean:
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+**Plugging in our concert data:**
+
+$$t = \frac{550 - 500}{80/\sqrt{25}} = \frac{50}{80/5} = \frac{50}{16} = 3.125$$
+
+**Interpretation:** Our sample mean is **3.125 standard errors away** from what we'd expect if marketing had no effect.
+
+### Finding the P-Value
+
+With:
+- t-statistic = 3.125
+- Degrees of freedom = n - 1 = 24
+- One-tailed test (we only care about increases)
+
+**From t-table or software:** p ≈ 0.0023
+
+**English translation:** *&#34;If marketing truly has no effect, there's only a 0.23% chance we'd observe attendance of 550+ across our sample.&#34;*
+
+---
+
+## SECTION 3: VISUAL INTERPRETATION
+
+### The P-Value Distribution Diagram
+
+Imagine the sampling distribution of concert attendance under the null hypothesis:
+
+```
+Probability Density
+     |
+     |        ╱╲
+     |       ╱  ╲         We observe 550
+     |      ╱    ╲         attendees here
+     |     ╱      ╲           ↓
+     |    ╱        ╲___   [This shaded area = p-value]
+     |   ╱             ╲  (0.23% probability)
+     |__╱_______________╲____
+        400   500   600  650
+             (μ₀ = 500)
+```
+
+**The shaded tail** = probability of observing data this extreme if H₀ is true
+
+---
+
+## SECTION 4: CRITICAL MATHEMATICAL MISCONCEPTIONS
+
+### ❌ Misconception #1: &#34;P-value = Probability the result is real&#34;
+
+**Wrong Formula People Use:**
+$$p = P(H_0 \text{ is true} | \text{Data})$$
+
+**Correct Formula:**
+$$p = P(\text{Data} | H_0 \text{ is true})$$
+
+**Why it matters for concerts:**
+- **Wrong interpretation:** &#34;0.23% chance our marketing campaign is a coincidence&#34;
+- **Correct interpretation:** &#34;0.23% chance we'd see this attendance boost if marketing didn't work&#34;
+
+These are NOT the same thing mathematically.
+
+### ❌ Misconception #2: &#34;p = 0.05 means 5% chance of error&#34;
+
+**Reality:**
+- p = 0.05 means: &#34;5% chance of seeing data this extreme if H₀ is true&#34;
+- It does NOT tell you the probability you made a Type I error in THIS specific study
+
+**Type I Error Rate (α)** is set before the experiment:
+- You choose α = 0.05 as your threshold
+- This means: &#34;If p < 0.05, I'll reject H₀ (but accept 5% false positive rate in the long run)&#34;
+
+**For our concert:**
+- We set α = 0.05
+- We got p = 0.0023
+- We reject H₀ (conclude marketing works)
+- Long-run error rate = 5% (not this study's error rate)
+
+### ❌ Misconception #3: &#34;Smaller p-values mean larger effects&#34;
+
+**Mathematical reality:**
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{\text{Effect Size}}{\text{Standard Error}}$$
+
+**p-values depend on THREE things:**
+
+1. **Effect size** ($\bar{x} - \mu_0$) — actual difference
+2. **Sample size** (n) — affects standard error
+3. **Variability** (s) — affects standard error
+
+**Concert example showing sample size trap:**
+
+| Scenario | Effect | Sample | StdDev | t-stat | p-value |
+|----------|--------|--------|--------|--------|---------|
+| A (real effect) | +50 attendees | 25 concerts | 80 | 3.125 | 0.0023 |
+| B (same effect) | +50 attendees | 500 concerts | 80 | **22.1** | **< 0.00001** |
+| C (tiny effect) | +5 attendees | 500 concerts | 80 | **2.21** | **0.013** |
+
+**Key insight:** Even a tiny +5 attendee difference becomes &#34;statistically significant&#34; with enough data!
+
+---
+
+## SECTION 5: MATHEMATICAL ASSUMPTIONS (CRITICAL)
+
+All p-value calculations assume:
+
+1. **Random sampling** — Your concerts are randomly selected from the population
+2. **Independence** — One concert's attendance doesn't affect another's
+3. **Normality** — Attendance follows a normal distribution
+4. **Known parameters** (for z-tests) OR **estimate from data** (for t-tests)
+
+**For your concert analysis:**
+- ✅ Concerts sampled independently? 
+- ✅ One concert's crowd doesn't cause the next to have more people?
+- ✅ Attendance roughly bell-shaped distribution?
+
+If ANY assumption fails, your p-value is unreliable.
+
+---
+
+## SECTION 6: ONE-TAILED vs TWO-TAILED TESTS
+
+### One-Tailed Test (What we used)
+
+**Question:** &#34;Does the marketing INCREASE attendance?&#34;
+
+$$H_1: \mu > 500$$
+
+**p-value calculation:**
+- Look at RIGHT tail only
+- p = P(t > 3.125) = 0.0023
+
+**Diagram:**
+```
+         |
+         |        ╱╲
+         |       ╱  ╲
+         |      ╱    ╲___
+         |     ╱    [p-value here]
+         |    ╱           ╲
+    _____|___╱_____________╲____
+       500                650
+```
+
+### Two-Tailed Test (More conservative)
+
+**Question:** &#34;Does the marketing CHANGE attendance (increase OR decrease)?&#34;
+
+$$H_1: \mu \neq 500$$
+
+**p-value calculation:**
+- Look at BOTH tails
+- p = P(|t| > 3.125) = 0.0046 (double the one-tailed value)
+
+**Diagram:**
+```
+         |╱╲          ╱╲
+         |  ╲        ╱  ╲
+         |   ╲___   ╱    ╲___
+         |[p/2]    |    [p/2]
+    _____|__________|__________
+       350        500        650
+```
+
+**For concerts:** One-tailed is okay if you only care about attendance increases. Two-tailed is safer if you want to detect any change.
+
+---
+
+## SECTION 7: EFFECT SIZE COMPARISON (Why p-values alone fail)
+
+### The Core Problem: P-Values Hide Effect Magnitude
+
+Two concert campaigns with identical p-values can have vastly different real-world impact:
+
+**Campaign A:**
+- Attendance: 500 → 550 (+50 people)
+- Cost: $10,000
+- Cost per new attendee: $200/person
+- p-value: 0.023 ✓ Significant
+
+**Campaign B:**
+- Attendance: 500 → 501 (+1 person)
+- Cost: $50
+- Cost per new attendee: $50/person
+- p-value: 0.023 ✓ Significant
+
+**Same p-value. Completely different business outcomes.**
+
+### Cohen's d for Concert Example
+
+$$d = \frac{\bar{x} - \mu_0}{s}$$
+
+**Campaign A:**
+$$d = \frac{550 - 500}{80} = \frac{50}{80} = 0.625$$
+
+**Interpretation:** Medium effect (Cohen's guidelines: 0.2=small, 0.5=medium, 0.8=large)
+
+**Campaign B:**
+$$d = \frac{501 - 500}{80} = \frac{1}{80} = 0.0125$$
+
+**Interpretation:** Negligible effect (practically useless)
+
+---
+
+## SECTION 8: PRACTICAL SIGNIFICANCE GUIDELINES
+
+### When to Care About P-Values
+
+| P-Value | Action | Practical Advice |
+|---------|--------|------------------|
+| p < 0.001 | Strong evidence | Highly convincing |
+| 0.001 ≤ p < 0.01 | Very good evidence | Compelling |
+| 0.01 ≤ p < 0.05 | Good evidence | Report with effect size |
+| 0.05 ≤ p < 0.10 | Weak evidence | Inconclusive; gather more data |
+| p ≥ 0.10 | No evidence | Cannot reject H₀ |
+
+**For your concert decision:**
+- p = 0.0023 ✓ Strong evidence marketing works
+- BUT: Check effect size (d = 0.625) AND practical cost-benefit
+
+---
+
+## SECTION 9: COMMON PITFALLS IN REAL DATA
+
+### The Multiple Testing Problem
+
+If you run 20 independent tests, expecting to see one false positive:
+
+$$\text{Probability of at least one false positive} = 1 - (1-0.05)^{20} = 63.7\%$$
+
+**For concert analysis:**
+If you test 20 different marketing tactics looking for significant results, you WILL find 1-2 &#34;significant&#34; results by chance alone.
+
+**Solution:** Use Bonferroni correction:
+$$\alpha_{\text{adjusted}} = \frac{0.05}{20} = 0.0025$$
+
+Require p < 0.0025 to compensate.
+
+### The Replication Crisis
+
+**Why statistically significant findings often don't replicate:**
+
+1. Small sample sizes → large variability in results
+2. Selective reporting → publish only significant findings
+3. Publication bias → non-significant results stay hidden
+
+**Lesson for your concerts:** 
+- Test once with large sample: n > 50 events minimum
+- Report both significant AND non-significant results
+- Replicate findings before committing budget
+
+---
+
+## SECTION 10: THE STATISTICIAN'S MENTAL MODEL
+
+### Five-Step Framework for P-Value Interpretation
+
+1. **State your hypothesis clearly** (H₀ and H₁)
+2. **Calculate your test statistic** (t, z, F, χ², etc.)
+3. **Determine the p-value** (use software, not tables)
+4. **Compare to your significance level** (α = 0.05 standard)
+5. **Report effect size AND practical significance**
+
+**The statistician NEVER says:** &#34;We got p = 0.03 so the effect is real&#34;
+
+**The statistician ALWAYS says:** &#34;We got p = 0.03 AND d = 0.62, suggesting statistically significant evidence of a medium-sized effect&#34;
+
+---
+
+## CLOSING: WHAT CHANGES NOW
+
+### Before (Old Mindset)
+❌ &#34;p = 0.023 → Our marketing works! Launch it!&#34;
+
+### After (Statistician's Mindset)
+✅ &#34;p = 0.023 AND d = 0.63 AND cost-per-attendee is reasonable AND assumptions are met → Probably worth testing at larger scale&#34;
+
+---
+
+## CALL TO ACTION
+
+**Questions for your concert data:**
+
+1. What assumptions might you be violating in your attendance analysis?
+2. Have you calculated effect sizes for your marketing campaigns?
+3. Are you p-hacking (running multiple tests until something works)?
+
+**Drop a comment:** What's the smallest p-value you've seen that turned out to be practically meaningless? 👇
+
+---
+
+## EXTENDED REFERENCES (For Publication)
+
+- Wasserstein, R. L., &#38; Lazar, N. A. (2016). The ASA statement on p-values: Context, process, and purpose. *The American Statistician*, 70(2), 129–133. https://doi.org/10.1080/00031305.2016.1154108
+
+- Cohen, J. (1992). A power primer. *Psychological Bulletin*, 112(1), 155–159. https://doi.org/10.1037/0033-2909.112.1.155
+
+- Sullivan, G. M., &#38; Feinn, R. (2012). Using effect size—or why the P value is not enough. *Journal of Graduate Medical Education*, 4(3), 279–282. https://doi.org/10.4300/JGME-D-12-00156.1
+
+- Ioannidis, J. P. (2005). Why most published research findings are false. *PLoS Medicine*, 2(8), e124. https://doi.org/10.1371/journal.pmed.0020124
+
+---
+
+**Word count: ~2,200 words**
+
+**Engagement hooks:** 
+- Math tables + formulas
+- Concert example throughout
+- Misconception callouts
+- Visual diagrams
+- Practical comparison scenarios
+
+**LinkedIn engagement strategy:**
+- Pin this post with: &#34;Which misconception have YOU made? (Guilty of #2 over here 🙋‍♂️)&#34;
+- Include the concert scenarios as carousel graphics
+- Ask comment question about their data
+- Respond to all comments with mini-explanations
+"><meta property="og:image" content="https://yajitim.github.io/og-image.jpg"><meta property="og:site_name" content="Yaji Timothy Terungwa · Statistician &#38; Data Scientist"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="The Mathematics of P-Values Think Like a Statistician Series — LinkedIn Campaign"><meta name="twitter:description" content="---
+
+## HEADLINE &#38; HOOK
+
+**&#34;Your concert just got 50 more attendees this year. Is that statistically significant? Not so fast...&#34; 🎤**
+
+*You think you've cracked the code to concert marketing. But do you understand what your data is actually telling you?*
+
+---
+
+## MAIN CONTENT
+
+### Opening Hook
+
+Imagine you're a concert promoter running an experiment:
+- **Last year:** 500 people attended your summer concert
+- **This year:** 550 people attended (with a new social media campaign)
+- **Your conclusion:** &#34;Our marketing works! We attracted 50 more people!&#34;
+
+But here's the statistician's question: **&#34;How do we know this isn't just random variation?&#34;**
+
+That's where p-values come in. But here's what most people get wrong: *they think a p-value is the probability your result is real.* 
+
+**It's not.**
+
+Let me show you the actual mathematics so you stop misinterpreting your data.
+
+---
+
+## SECTION 1: FORMAL DEFINITION + INTUITION
+
+### The Formal Statistical Definition
+
+A **p-value** is:
+
+$$p = P(\text{Data}_\text{observed} | H_0 \text{ is true})$$
+
+In words: *&#34;The probability of observing data as extreme as (or more extreme than) what we actually observed, assuming the null hypothesis is exactly true.&#34;*
+
+### Breaking Down the Formula
+
+**What does each part mean?**
+
+| Component | Meaning | Example |
+|-----------|---------|---------|
+| $P(\cdot)$ | Probability | &#34;What are the odds?&#34; |
+| $\text{Data}_\text{observed}$ | Your actual results | 550 concert attendees |
+| $\|$ | &#34;Given that&#34; | Under the condition that... |
+| $H_0$ | Null hypothesis | &#34;The marketing had NO effect&#34; |
+| **&#34;as extreme or more extreme&#34;** | Same direction or stronger | 550, 560, 600, or more attendees |
+
+---
+
+### Intuitive Explanation (No Math Yet)
+
+Think of a concert venue as a coin flip experiment:
+
+1. **The Setup:** 
+   - You assume your marketing campaign has NO effect (null hypothesis)
+   - Last year = 500 attendees naturally (your baseline)
+
+   
+2. **The Observation:**
+   - This year = 550 attendees
+   - Difference = +50 people
+
+3. **The Question:**
+   - If your marketing truly had no effect, how likely would it be to see 50+ additional attendees just by random chance?
+
+4. **The P-Value:**
+   - If p = 0.03, it means: &#34;There's only a 3% chance we'd see this result if marketing truly had no effect&#34;
+   - If p = 0.45, it means: &#34;There's a 45% chance we'd see this result even if marketing had no effect&#34;
+
+**Lower p-value = More unusual result (if H₀ is true) = Stronger evidence against H₀**
+
+---
+
+## SECTION 2: THE MATHEMATICS BEHIND THE CONCERT EXAMPLE
+
+### Scenario: Concert Attendance Test
+
+**Setup:**
+- Population parameter: μ₀ = 500 attendees (historical mean)
+- Observed sample: x̄ = 550 attendees
+- Sample size: n = 25 concert dates (in our test period)
+- Sample standard deviation: s = 80 attendees
+
+**Null Hypothesis (H₀):** μ = 500 (Marketing has no effect)
+
+**Alternative Hypothesis (H₁):** μ > 500 (Marketing increases attendance)
+
+### Calculating the Test Statistic (t-test)
+
+The t-statistic measures how many standard errors our sample mean is from the hypothesized population mean:
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+**Plugging in our concert data:**
+
+$$t = \frac{550 - 500}{80/\sqrt{25}} = \frac{50}{80/5} = \frac{50}{16} = 3.125$$
+
+**Interpretation:** Our sample mean is **3.125 standard errors away** from what we'd expect if marketing had no effect.
+
+### Finding the P-Value
+
+With:
+- t-statistic = 3.125
+- Degrees of freedom = n - 1 = 24
+- One-tailed test (we only care about increases)
+
+**From t-table or software:** p ≈ 0.0023
+
+**English translation:** *&#34;If marketing truly has no effect, there's only a 0.23% chance we'd observe attendance of 550+ across our sample.&#34;*
+
+---
+
+## SECTION 3: VISUAL INTERPRETATION
+
+### The P-Value Distribution Diagram
+
+Imagine the sampling distribution of concert attendance under the null hypothesis:
+
+```
+Probability Density
+     |
+     |        ╱╲
+     |       ╱  ╲         We observe 550
+     |      ╱    ╲         attendees here
+     |     ╱      ╲           ↓
+     |    ╱        ╲___   [This shaded area = p-value]
+     |   ╱             ╲  (0.23% probability)
+     |__╱_______________╲____
+        400   500   600  650
+             (μ₀ = 500)
+```
+
+**The shaded tail** = probability of observing data this extreme if H₀ is true
+
+---
+
+## SECTION 4: CRITICAL MATHEMATICAL MISCONCEPTIONS
+
+### ❌ Misconception #1: &#34;P-value = Probability the result is real&#34;
+
+**Wrong Formula People Use:**
+$$p = P(H_0 \text{ is true} | \text{Data})$$
+
+**Correct Formula:**
+$$p = P(\text{Data} | H_0 \text{ is true})$$
+
+**Why it matters for concerts:**
+- **Wrong interpretation:** &#34;0.23% chance our marketing campaign is a coincidence&#34;
+- **Correct interpretation:** &#34;0.23% chance we'd see this attendance boost if marketing didn't work&#34;
+
+These are NOT the same thing mathematically.
+
+### ❌ Misconception #2: &#34;p = 0.05 means 5% chance of error&#34;
+
+**Reality:**
+- p = 0.05 means: &#34;5% chance of seeing data this extreme if H₀ is true&#34;
+- It does NOT tell you the probability you made a Type I error in THIS specific study
+
+**Type I Error Rate (α)** is set before the experiment:
+- You choose α = 0.05 as your threshold
+- This means: &#34;If p < 0.05, I'll reject H₀ (but accept 5% false positive rate in the long run)&#34;
+
+**For our concert:**
+- We set α = 0.05
+- We got p = 0.0023
+- We reject H₀ (conclude marketing works)
+- Long-run error rate = 5% (not this study's error rate)
+
+### ❌ Misconception #3: &#34;Smaller p-values mean larger effects&#34;
+
+**Mathematical reality:**
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{\text{Effect Size}}{\text{Standard Error}}$$
+
+**p-values depend on THREE things:**
+
+1. **Effect size** ($\bar{x} - \mu_0$) — actual difference
+2. **Sample size** (n) — affects standard error
+3. **Variability** (s) — affects standard error
+
+**Concert example showing sample size trap:**
+
+| Scenario | Effect | Sample | StdDev | t-stat | p-value |
+|----------|--------|--------|--------|--------|---------|
+| A (real effect) | +50 attendees | 25 concerts | 80 | 3.125 | 0.0023 |
+| B (same effect) | +50 attendees | 500 concerts | 80 | **22.1** | **< 0.00001** |
+| C (tiny effect) | +5 attendees | 500 concerts | 80 | **2.21** | **0.013** |
+
+**Key insight:** Even a tiny +5 attendee difference becomes &#34;statistically significant&#34; with enough data!
+
+---
+
+## SECTION 5: MATHEMATICAL ASSUMPTIONS (CRITICAL)
+
+All p-value calculations assume:
+
+1. **Random sampling** — Your concerts are randomly selected from the population
+2. **Independence** — One concert's attendance doesn't affect another's
+3. **Normality** — Attendance follows a normal distribution
+4. **Known parameters** (for z-tests) OR **estimate from data** (for t-tests)
+
+**For your concert analysis:**
+- ✅ Concerts sampled independently? 
+- ✅ One concert's crowd doesn't cause the next to have more people?
+- ✅ Attendance roughly bell-shaped distribution?
+
+If ANY assumption fails, your p-value is unreliable.
+
+---
+
+## SECTION 6: ONE-TAILED vs TWO-TAILED TESTS
+
+### One-Tailed Test (What we used)
+
+**Question:** &#34;Does the marketing INCREASE attendance?&#34;
+
+$$H_1: \mu > 500$$
+
+**p-value calculation:**
+- Look at RIGHT tail only
+- p = P(t > 3.125) = 0.0023
+
+**Diagram:**
+```
+         |
+         |        ╱╲
+         |       ╱  ╲
+         |      ╱    ╲___
+         |     ╱    [p-value here]
+         |    ╱           ╲
+    _____|___╱_____________╲____
+       500                650
+```
+
+### Two-Tailed Test (More conservative)
+
+**Question:** &#34;Does the marketing CHANGE attendance (increase OR decrease)?&#34;
+
+$$H_1: \mu \neq 500$$
+
+**p-value calculation:**
+- Look at BOTH tails
+- p = P(|t| > 3.125) = 0.0046 (double the one-tailed value)
+
+**Diagram:**
+```
+         |╱╲          ╱╲
+         |  ╲        ╱  ╲
+         |   ╲___   ╱    ╲___
+         |[p/2]    |    [p/2]
+    _____|__________|__________
+       350        500        650
+```
+
+**For concerts:** One-tailed is okay if you only care about attendance increases. Two-tailed is safer if you want to detect any change.
+
+---
+
+## SECTION 7: EFFECT SIZE COMPARISON (Why p-values alone fail)
+
+### The Core Problem: P-Values Hide Effect Magnitude
+
+Two concert campaigns with identical p-values can have vastly different real-world impact:
+
+**Campaign A:**
+- Attendance: 500 → 550 (+50 people)
+- Cost: $10,000
+- Cost per new attendee: $200/person
+- p-value: 0.023 ✓ Significant
+
+**Campaign B:**
+- Attendance: 500 → 501 (+1 person)
+- Cost: $50
+- Cost per new attendee: $50/person
+- p-value: 0.023 ✓ Significant
+
+**Same p-value. Completely different business outcomes.**
+
+### Cohen's d for Concert Example
+
+$$d = \frac{\bar{x} - \mu_0}{s}$$
+
+**Campaign A:**
+$$d = \frac{550 - 500}{80} = \frac{50}{80} = 0.625$$
+
+**Interpretation:** Medium effect (Cohen's guidelines: 0.2=small, 0.5=medium, 0.8=large)
+
+**Campaign B:**
+$$d = \frac{501 - 500}{80} = \frac{1}{80} = 0.0125$$
+
+**Interpretation:** Negligible effect (practically useless)
+
+---
+
+## SECTION 8: PRACTICAL SIGNIFICANCE GUIDELINES
+
+### When to Care About P-Values
+
+| P-Value | Action | Practical Advice |
+|---------|--------|------------------|
+| p < 0.001 | Strong evidence | Highly convincing |
+| 0.001 ≤ p < 0.01 | Very good evidence | Compelling |
+| 0.01 ≤ p < 0.05 | Good evidence | Report with effect size |
+| 0.05 ≤ p < 0.10 | Weak evidence | Inconclusive; gather more data |
+| p ≥ 0.10 | No evidence | Cannot reject H₀ |
+
+**For your concert decision:**
+- p = 0.0023 ✓ Strong evidence marketing works
+- BUT: Check effect size (d = 0.625) AND practical cost-benefit
+
+---
+
+## SECTION 9: COMMON PITFALLS IN REAL DATA
+
+### The Multiple Testing Problem
+
+If you run 20 independent tests, expecting to see one false positive:
+
+$$\text{Probability of at least one false positive} = 1 - (1-0.05)^{20} = 63.7\%$$
+
+**For concert analysis:**
+If you test 20 different marketing tactics looking for significant results, you WILL find 1-2 &#34;significant&#34; results by chance alone.
+
+**Solution:** Use Bonferroni correction:
+$$\alpha_{\text{adjusted}} = \frac{0.05}{20} = 0.0025$$
+
+Require p < 0.0025 to compensate.
+
+### The Replication Crisis
+
+**Why statistically significant findings often don't replicate:**
+
+1. Small sample sizes → large variability in results
+2. Selective reporting → publish only significant findings
+3. Publication bias → non-significant results stay hidden
+
+**Lesson for your concerts:** 
+- Test once with large sample: n > 50 events minimum
+- Report both significant AND non-significant results
+- Replicate findings before committing budget
+
+---
+
+## SECTION 10: THE STATISTICIAN'S MENTAL MODEL
+
+### Five-Step Framework for P-Value Interpretation
+
+1. **State your hypothesis clearly** (H₀ and H₁)
+2. **Calculate your test statistic** (t, z, F, χ², etc.)
+3. **Determine the p-value** (use software, not tables)
+4. **Compare to your significance level** (α = 0.05 standard)
+5. **Report effect size AND practical significance**
+
+**The statistician NEVER says:** &#34;We got p = 0.03 so the effect is real&#34;
+
+**The statistician ALWAYS says:** &#34;We got p = 0.03 AND d = 0.62, suggesting statistically significant evidence of a medium-sized effect&#34;
+
+---
+
+## CLOSING: WHAT CHANGES NOW
+
+### Before (Old Mindset)
+❌ &#34;p = 0.023 → Our marketing works! Launch it!&#34;
+
+### After (Statistician's Mindset)
+✅ &#34;p = 0.023 AND d = 0.63 AND cost-per-attendee is reasonable AND assumptions are met → Probably worth testing at larger scale&#34;
+
+---
+
+## CALL TO ACTION
+
+**Questions for your concert data:**
+
+1. What assumptions might you be violating in your attendance analysis?
+2. Have you calculated effect sizes for your marketing campaigns?
+3. Are you p-hacking (running multiple tests until something works)?
+
+**Drop a comment:** What's the smallest p-value you've seen that turned out to be practically meaningless? 👇
+
+---
+
+## EXTENDED REFERENCES (For Publication)
+
+- Wasserstein, R. L., &#38; Lazar, N. A. (2016). The ASA statement on p-values: Context, process, and purpose. *The American Statistician*, 70(2), 129–133. https://doi.org/10.1080/00031305.2016.1154108
+
+- Cohen, J. (1992). A power primer. *Psychological Bulletin*, 112(1), 155–159. https://doi.org/10.1037/0033-2909.112.1.155
+
+- Sullivan, G. M., &#38; Feinn, R. (2012). Using effect size—or why the P value is not enough. *Journal of Graduate Medical Education*, 4(3), 279–282. https://doi.org/10.4300/JGME-D-12-00156.1
+
+- Ioannidis, J. P. (2005). Why most published research findings are false. *PLoS Medicine*, 2(8), e124. https://doi.org/10.1371/journal.pmed.0020124
+
+---
+
+**Word count: ~2,200 words**
+
+**Engagement hooks:** 
+- Math tables + formulas
+- Concert example throughout
+- Misconception callouts
+- Visual diagrams
+- Practical comparison scenarios
+
+**LinkedIn engagement strategy:**
+- Pin this post with: &#34;Which misconception have YOU made? (Guilty of #2 over here 🙋‍♂️)&#34;
+- Include the concert scenarios as carousel graphics
+- Ask comment question about their data
+- Respond to all comments with mini-explanations
+"><meta name="twitter:image" content="https://yajitim.github.io/og-image.jpg"><!-- Favicon --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- Google Fonts preconnect --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/about.N9R3mJDp.css"><script type="module" src="/_astro/hoisted.DrsE6iYk.js"></script></head> <body>   <div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100"></div> <nav class="navbar" id="navbar" aria-label="Main navigation" data-astro-cid-5blmo7yk> <div class="navbar-inner" data-astro-cid-5blmo7yk> <!-- Logo --> <a href="/" class="nav-logo" aria-label="Home" data-astro-cid-5blmo7yk>
+Yaji<span data-astro-cid-5blmo7yk>.</span>Terungwa
+</a> <!-- Desktop Links --> <div class="nav-links" role="list" data-astro-cid-5blmo7yk> <a href="/work" class="nav-link " role="listitem" data-astro-cid-5blmo7yk> Projects &amp; Work </a><a href="/blog" class="nav-link active" aria-current="page" role="listitem" data-astro-cid-5blmo7yk> Articles &amp; Insights </a><a href="/about" class="nav-link " role="listitem" data-astro-cid-5blmo7yk> About &amp; CV </a> <a href="mailto:tertimothy@gmail.com" class="btn btn-primary nav-cta" id="nav-hire-btn" data-astro-cid-5blmo7yk>
+Contact Me ↗
+</a> </div> <!-- Mobile Toggle --> <button class="nav-mobile-toggle" id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false" data-astro-cid-5blmo7yk> <span data-astro-cid-5blmo7yk></span> <span data-astro-cid-5blmo7yk></span> <span data-astro-cid-5blmo7yk></span> </button> </div> <!-- Mobile Drawer --> <div class="mobile-nav" id="mobile-nav" aria-hidden="true" data-astro-cid-5blmo7yk> <div class="mobile-nav-inner" data-astro-cid-5blmo7yk> <a href="/work" class="mobile-nav-link " data-astro-cid-5blmo7yk> Projects &amp; Work </a><a href="/blog" class="mobile-nav-link active" data-astro-cid-5blmo7yk> Articles &amp; Insights </a><a href="/about" class="mobile-nav-link " data-astro-cid-5blmo7yk> About &amp; CV </a> <a href="mailto:tertimothy@gmail.com" class="btn btn-primary" style="width:100%;justify-content:center;" data-astro-cid-5blmo7yk>
+Contact Me ↗
+</a> </div> </div> </nav>   <main style="padding-top: var(--nav-height);"> <div class="container"> <!-- Back link --> <div style="padding-top:var(--space-10);margin-bottom:var(--space-8);"> <a href="/blog" class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:var(--space-2);">
+← Back to Blog
+</a> </div> <!-- Post Header --> <header style="max-width:800px;margin:0 auto var(--space-10);"> <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-5);"> <span class="badge badge-surface"> Open Source </span> <span class="badge badge-surface">statisticsinference</span> </div> <h1 class="font-display" style="font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.02em;line-height:var(--leading-tight);margin-bottom:var(--space-5);"> The Mathematics of P-Values Think Like a Statistician Series — LinkedIn Campaign </h1> <p class="text-secondary" style="font-size:var(--text-lg);line-height:var(--leading-relaxed);margin-bottom:var(--space-6);"> ---
+
+## HEADLINE &amp; HOOK
+
+**&quot;Your concert just got 50 more attendees this year. Is that statistically significant? Not so fast...&quot; 🎤**
+
+*You think you&#39;ve cracked the code to concert marketing. But do you understand what your data is actually telling you?*
+
+---
+
+## MAIN CONTENT
+
+### Opening Hook
+
+Imagine you&#39;re a concert promoter running an experiment:
+- **Last year:** 500 people attended your summer concert
+- **This year:** 550 people attended (with a new social media campaign)
+- **Your conclusion:** &quot;Our marketing works! We attracted 50 more people!&quot;
+
+But here&#39;s the statistician&#39;s question: **&quot;How do we know this isn&#39;t just random variation?&quot;**
+
+That&#39;s where p-values come in. But here&#39;s what most people get wrong: *they think a p-value is the probability your result is real.* 
+
+**It&#39;s not.**
+
+Let me show you the actual mathematics so you stop misinterpreting your data.
+
+---
+
+## SECTION 1: FORMAL DEFINITION + INTUITION
+
+### The Formal Statistical Definition
+
+A **p-value** is:
+
+$$p = P(\text{Data}_\text{observed} | H_0 \text{ is true})$$
+
+In words: *&quot;The probability of observing data as extreme as (or more extreme than) what we actually observed, assuming the null hypothesis is exactly true.&quot;*
+
+### Breaking Down the Formula
+
+**What does each part mean?**
+
+| Component | Meaning | Example |
+|-----------|---------|---------|
+| $P(\cdot)$ | Probability | &quot;What are the odds?&quot; |
+| $\text{Data}_\text{observed}$ | Your actual results | 550 concert attendees |
+| $\|$ | &quot;Given that&quot; | Under the condition that... |
+| $H_0$ | Null hypothesis | &quot;The marketing had NO effect&quot; |
+| **&quot;as extreme or more extreme&quot;** | Same direction or stronger | 550, 560, 600, or more attendees |
+
+---
+
+### Intuitive Explanation (No Math Yet)
+
+Think of a concert venue as a coin flip experiment:
+
+1. **The Setup:** 
+   - You assume your marketing campaign has NO effect (null hypothesis)
+   - Last year = 500 attendees naturally (your baseline)
+
+   
+2. **The Observation:**
+   - This year = 550 attendees
+   - Difference = +50 people
+
+3. **The Question:**
+   - If your marketing truly had no effect, how likely would it be to see 50+ additional attendees just by random chance?
+
+4. **The P-Value:**
+   - If p = 0.03, it means: &quot;There&#39;s only a 3% chance we&#39;d see this result if marketing truly had no effect&quot;
+   - If p = 0.45, it means: &quot;There&#39;s a 45% chance we&#39;d see this result even if marketing had no effect&quot;
+
+**Lower p-value = More unusual result (if H₀ is true) = Stronger evidence against H₀**
+
+---
+
+## SECTION 2: THE MATHEMATICS BEHIND THE CONCERT EXAMPLE
+
+### Scenario: Concert Attendance Test
+
+**Setup:**
+- Population parameter: μ₀ = 500 attendees (historical mean)
+- Observed sample: x̄ = 550 attendees
+- Sample size: n = 25 concert dates (in our test period)
+- Sample standard deviation: s = 80 attendees
+
+**Null Hypothesis (H₀):** μ = 500 (Marketing has no effect)
+
+**Alternative Hypothesis (H₁):** μ &gt; 500 (Marketing increases attendance)
+
+### Calculating the Test Statistic (t-test)
+
+The t-statistic measures how many standard errors our sample mean is from the hypothesized population mean:
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+**Plugging in our concert data:**
+
+$$t = \frac{550 - 500}{80/\sqrt{25}} = \frac{50}{80/5} = \frac{50}{16} = 3.125$$
+
+**Interpretation:** Our sample mean is **3.125 standard errors away** from what we&#39;d expect if marketing had no effect.
+
+### Finding the P-Value
+
+With:
+- t-statistic = 3.125
+- Degrees of freedom = n - 1 = 24
+- One-tailed test (we only care about increases)
+
+**From t-table or software:** p ≈ 0.0023
+
+**English translation:** *&quot;If marketing truly has no effect, there&#39;s only a 0.23% chance we&#39;d observe attendance of 550+ across our sample.&quot;*
+
+---
+
+## SECTION 3: VISUAL INTERPRETATION
+
+### The P-Value Distribution Diagram
+
+Imagine the sampling distribution of concert attendance under the null hypothesis:
+
+```
+Probability Density
+     |
+     |        ╱╲
+     |       ╱  ╲         We observe 550
+     |      ╱    ╲         attendees here
+     |     ╱      ╲           ↓
+     |    ╱        ╲___   [This shaded area = p-value]
+     |   ╱             ╲  (0.23% probability)
+     |__╱_______________╲____
+        400   500   600  650
+             (μ₀ = 500)
+```
+
+**The shaded tail** = probability of observing data this extreme if H₀ is true
+
+---
+
+## SECTION 4: CRITICAL MATHEMATICAL MISCONCEPTIONS
+
+### ❌ Misconception #1: &quot;P-value = Probability the result is real&quot;
+
+**Wrong Formula People Use:**
+$$p = P(H_0 \text{ is true} | \text{Data})$$
+
+**Correct Formula:**
+$$p = P(\text{Data} | H_0 \text{ is true})$$
+
+**Why it matters for concerts:**
+- **Wrong interpretation:** &quot;0.23% chance our marketing campaign is a coincidence&quot;
+- **Correct interpretation:** &quot;0.23% chance we&#39;d see this attendance boost if marketing didn&#39;t work&quot;
+
+These are NOT the same thing mathematically.
+
+### ❌ Misconception #2: &quot;p = 0.05 means 5% chance of error&quot;
+
+**Reality:**
+- p = 0.05 means: &quot;5% chance of seeing data this extreme if H₀ is true&quot;
+- It does NOT tell you the probability you made a Type I error in THIS specific study
+
+**Type I Error Rate (α)** is set before the experiment:
+- You choose α = 0.05 as your threshold
+- This means: &quot;If p &lt; 0.05, I&#39;ll reject H₀ (but accept 5% false positive rate in the long run)&quot;
+
+**For our concert:**
+- We set α = 0.05
+- We got p = 0.0023
+- We reject H₀ (conclude marketing works)
+- Long-run error rate = 5% (not this study&#39;s error rate)
+
+### ❌ Misconception #3: &quot;Smaller p-values mean larger effects&quot;
+
+**Mathematical reality:**
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{\text{Effect Size}}{\text{Standard Error}}$$
+
+**p-values depend on THREE things:**
+
+1. **Effect size** ($\bar{x} - \mu_0$) — actual difference
+2. **Sample size** (n) — affects standard error
+3. **Variability** (s) — affects standard error
+
+**Concert example showing sample size trap:**
+
+| Scenario | Effect | Sample | StdDev | t-stat | p-value |
+|----------|--------|--------|--------|--------|---------|
+| A (real effect) | +50 attendees | 25 concerts | 80 | 3.125 | 0.0023 |
+| B (same effect) | +50 attendees | 500 concerts | 80 | **22.1** | **&lt; 0.00001** |
+| C (tiny effect) | +5 attendees | 500 concerts | 80 | **2.21** | **0.013** |
+
+**Key insight:** Even a tiny +5 attendee difference becomes &quot;statistically significant&quot; with enough data!
+
+---
+
+## SECTION 5: MATHEMATICAL ASSUMPTIONS (CRITICAL)
+
+All p-value calculations assume:
+
+1. **Random sampling** — Your concerts are randomly selected from the population
+2. **Independence** — One concert&#39;s attendance doesn&#39;t affect another&#39;s
+3. **Normality** — Attendance follows a normal distribution
+4. **Known parameters** (for z-tests) OR **estimate from data** (for t-tests)
+
+**For your concert analysis:**
+- ✅ Concerts sampled independently? 
+- ✅ One concert&#39;s crowd doesn&#39;t cause the next to have more people?
+- ✅ Attendance roughly bell-shaped distribution?
+
+If ANY assumption fails, your p-value is unreliable.
+
+---
+
+## SECTION 6: ONE-TAILED vs TWO-TAILED TESTS
+
+### One-Tailed Test (What we used)
+
+**Question:** &quot;Does the marketing INCREASE attendance?&quot;
+
+$$H_1: \mu &gt; 500$$
+
+**p-value calculation:**
+- Look at RIGHT tail only
+- p = P(t &gt; 3.125) = 0.0023
+
+**Diagram:**
+```
+         |
+         |        ╱╲
+         |       ╱  ╲
+         |      ╱    ╲___
+         |     ╱    [p-value here]
+         |    ╱           ╲
+    _____|___╱_____________╲____
+       500                650
+```
+
+### Two-Tailed Test (More conservative)
+
+**Question:** &quot;Does the marketing CHANGE attendance (increase OR decrease)?&quot;
+
+$$H_1: \mu \neq 500$$
+
+**p-value calculation:**
+- Look at BOTH tails
+- p = P(|t| &gt; 3.125) = 0.0046 (double the one-tailed value)
+
+**Diagram:**
+```
+         |╱╲          ╱╲
+         |  ╲        ╱  ╲
+         |   ╲___   ╱    ╲___
+         |[p/2]    |    [p/2]
+    _____|__________|__________
+       350        500        650
+```
+
+**For concerts:** One-tailed is okay if you only care about attendance increases. Two-tailed is safer if you want to detect any change.
+
+---
+
+## SECTION 7: EFFECT SIZE COMPARISON (Why p-values alone fail)
+
+### The Core Problem: P-Values Hide Effect Magnitude
+
+Two concert campaigns with identical p-values can have vastly different real-world impact:
+
+**Campaign A:**
+- Attendance: 500 → 550 (+50 people)
+- Cost: $10,000
+- Cost per new attendee: $200/person
+- p-value: 0.023 ✓ Significant
+
+**Campaign B:**
+- Attendance: 500 → 501 (+1 person)
+- Cost: $50
+- Cost per new attendee: $50/person
+- p-value: 0.023 ✓ Significant
+
+**Same p-value. Completely different business outcomes.**
+
+### Cohen&#39;s d for Concert Example
+
+$$d = \frac{\bar{x} - \mu_0}{s}$$
+
+**Campaign A:**
+$$d = \frac{550 - 500}{80} = \frac{50}{80} = 0.625$$
+
+**Interpretation:** Medium effect (Cohen&#39;s guidelines: 0.2=small, 0.5=medium, 0.8=large)
+
+**Campaign B:**
+$$d = \frac{501 - 500}{80} = \frac{1}{80} = 0.0125$$
+
+**Interpretation:** Negligible effect (practically useless)
+
+---
+
+## SECTION 8: PRACTICAL SIGNIFICANCE GUIDELINES
+
+### When to Care About P-Values
+
+| P-Value | Action | Practical Advice |
+|---------|--------|------------------|
+| p &lt; 0.001 | Strong evidence | Highly convincing |
+| 0.001 ≤ p &lt; 0.01 | Very good evidence | Compelling |
+| 0.01 ≤ p &lt; 0.05 | Good evidence | Report with effect size |
+| 0.05 ≤ p &lt; 0.10 | Weak evidence | Inconclusive; gather more data |
+| p ≥ 0.10 | No evidence | Cannot reject H₀ |
+
+**For your concert decision:**
+- p = 0.0023 ✓ Strong evidence marketing works
+- BUT: Check effect size (d = 0.625) AND practical cost-benefit
+
+---
+
+## SECTION 9: COMMON PITFALLS IN REAL DATA
+
+### The Multiple Testing Problem
+
+If you run 20 independent tests, expecting to see one false positive:
+
+$$\text{Probability of at least one false positive} = 1 - (1-0.05)^{20} = 63.7\%$$
+
+**For concert analysis:**
+If you test 20 different marketing tactics looking for significant results, you WILL find 1-2 &quot;significant&quot; results by chance alone.
+
+**Solution:** Use Bonferroni correction:
+$$\alpha_{\text{adjusted}} = \frac{0.05}{20} = 0.0025$$
+
+Require p &lt; 0.0025 to compensate.
+
+### The Replication Crisis
+
+**Why statistically significant findings often don&#39;t replicate:**
+
+1. Small sample sizes → large variability in results
+2. Selective reporting → publish only significant findings
+3. Publication bias → non-significant results stay hidden
+
+**Lesson for your concerts:** 
+- Test once with large sample: n &gt; 50 events minimum
+- Report both significant AND non-significant results
+- Replicate findings before committing budget
+
+---
+
+## SECTION 10: THE STATISTICIAN&#39;S MENTAL MODEL
+
+### Five-Step Framework for P-Value Interpretation
+
+1. **State your hypothesis clearly** (H₀ and H₁)
+2. **Calculate your test statistic** (t, z, F, χ², etc.)
+3. **Determine the p-value** (use software, not tables)
+4. **Compare to your significance level** (α = 0.05 standard)
+5. **Report effect size AND practical significance**
+
+**The statistician NEVER says:** &quot;We got p = 0.03 so the effect is real&quot;
+
+**The statistician ALWAYS says:** &quot;We got p = 0.03 AND d = 0.62, suggesting statistically significant evidence of a medium-sized effect&quot;
+
+---
+
+## CLOSING: WHAT CHANGES NOW
+
+### Before (Old Mindset)
+❌ &quot;p = 0.023 → Our marketing works! Launch it!&quot;
+
+### After (Statistician&#39;s Mindset)
+✅ &quot;p = 0.023 AND d = 0.63 AND cost-per-attendee is reasonable AND assumptions are met → Probably worth testing at larger scale&quot;
+
+---
+
+## CALL TO ACTION
+
+**Questions for your concert data:**
+
+1. What assumptions might you be violating in your attendance analysis?
+2. Have you calculated effect sizes for your marketing campaigns?
+3. Are you p-hacking (running multiple tests until something works)?
+
+**Drop a comment:** What&#39;s the smallest p-value you&#39;ve seen that turned out to be practically meaningless? 👇
+
+---
+
+## EXTENDED REFERENCES (For Publication)
+
+- Wasserstein, R. L., &amp; Lazar, N. A. (2016). The ASA statement on p-values: Context, process, and purpose. *The American Statistician*, 70(2), 129–133. https://doi.org/10.1080/00031305.2016.1154108
+
+- Cohen, J. (1992). A power primer. *Psychological Bulletin*, 112(1), 155–159. https://doi.org/10.1037/0033-2909.112.1.155
+
+- Sullivan, G. M., &amp; Feinn, R. (2012). Using effect size—or why the P value is not enough. *Journal of Graduate Medical Education*, 4(3), 279–282. https://doi.org/10.4300/JGME-D-12-00156.1
+
+- Ioannidis, J. P. (2005). Why most published research findings are false. *PLoS Medicine*, 2(8), e124. https://doi.org/10.1371/journal.pmed.0020124
+
+---
+
+**Word count: ~2,200 words**
+
+**Engagement hooks:** 
+- Math tables + formulas
+- Concert example throughout
+- Misconception callouts
+- Visual diagrams
+- Practical comparison scenarios
+
+**LinkedIn engagement strategy:**
+- Pin this post with: &quot;Which misconception have YOU made? (Guilty of #2 over here 🙋‍♂️)&quot;
+- Include the concert scenarios as carousel graphics
+- Ask comment question about their data
+- Respond to all comments with mini-explanations
+ </p> <!-- Meta row --> <div style="display:flex;align-items:center;gap:var(--space-4);font-size:var(--text-sm);color:var(--color-text-muted);flex-wrap:wrap;padding-bottom:var(--space-6);border-bottom:1px solid var(--color-border);"> <time datetime="2026-07-23T15:20:38.133Z">July 23, 2026</time> <span>·</span> <span>5 min read</span>  </div> </header> <!-- Cover Image --> <div style="width:100%;height:400px;background:linear-gradient(135deg,#0d1a2e,#1a2e4a,#0d2a3a);border-radius:var(--radius-xl);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:var(--space-12);">
+☁️
+</div> <!-- Post Body --> <div style="max-width:720px;margin:0 auto;"> <article class="prose"> <p>---</p>
+<p>## HEADLINE &#x26; HOOK</p>
+<p>**“Your concert just got 50 more attendees this year. Is that statistically significant? Not so fast…” 🎤**</p>
+<p>*You think you’ve cracked the code to concert marketing. But do you understand what your data is actually telling you?*</p>
+<p>---</p>
+<p>## MAIN CONTENT</p>
+<p>### Opening Hook</p>
+<p>Imagine you’re a concert promoter running an experiment:</p>
+<p>- **Last year:** 500 people attended your summer concert</p>
+<p>- **This year:** 550 people attended (with a new social media campaign)</p>
+<p>- **Your conclusion:** “Our marketing works! We attracted 50 more people!”</p>
+<p>But here’s the statistician’s question: **“How do we know this isn’t just random variation?”**</p>
+<p>That’s where p-values come in. But here’s what most people get wrong: *they think a p-value is the probability your result is real.*</p>
+<p>**It’s not.**</p>
+<p>Let me show you the actual mathematics so you stop misinterpreting your data.</p>
+<p>---</p>
+<p>## SECTION 1: FORMAL DEFINITION + INTUITION</p>
+<p>### The Formal Statistical Definition</p>
+<p>A **p-value** is:</p>
+<p>$$p = P(\text{Data}_\text{observed} | H_0 \text{ is true})$$</p>
+<p>In words: *“The probability of observing data as extreme as (or more extreme than) what we actually observed, assuming the null hypothesis is exactly true.”*</p>
+<p>### Breaking Down the Formula</p>
+<p>**What does each part mean?**</p>
+<p>| Component | Meaning | Example |</p>
+<p>|-----------|---------|---------|</p>
+<p>| $P(\cdot)$ | Probability | “What are the odds?” |</p>
+<p>| $\text{Data}_\text{observed}$ | Your actual results | 550 concert attendees |</p>
+<p>| $|$ | “Given that” | Under the condition that… |</p>
+<p>| $H_0$ | Null hypothesis | “The marketing had NO effect” |</p>
+<p>| **“as extreme or more extreme”** | Same direction or stronger | 550, 560, 600, or more attendees |</p>
+<p>---</p>
+<p>### Intuitive Explanation (No Math Yet)</p>
+<p>Think of a concert venue as a coin flip experiment:</p>
+<ol>
+<li>**The Setup:**</li>
+</ol>
+<p>- You assume your marketing campaign has NO effect (null hypothesis)</p>
+<p>- Last year = 500 attendees naturally (your baseline)</p>
+<ol start="2">
+<li>**The Observation:**</li>
+</ol>
+<p>- This year = 550 attendees</p>
+<p>- Difference = +50 people</p>
+<ol start="3">
+<li>**The Question:**</li>
+</ol>
+<p>- If your marketing truly had no effect, how likely would it be to see 50+ additional attendees just by random chance?</p>
+<ol start="4">
+<li>**The P-Value:**</li>
+</ol>
+<p>- If p = 0.03, it means: “There’s only a 3% chance we’d see this result if marketing truly had no effect”</p>
+<p>- If p = 0.45, it means: “There’s a 45% chance we’d see this result even if marketing had no effect”</p>
+<p>**Lower p-value = More unusual result (if H₀ is true) = Stronger evidence against H₀**</p>
+<p>---</p>
+<p>## SECTION 2: THE MATHEMATICS BEHIND THE CONCERT EXAMPLE</p>
+<p>### Scenario: Concert Attendance Test</p>
+<p>**Setup:**</p>
+<p>- Population parameter: μ₀ = 500 attendees (historical mean)</p>
+<p>- Observed sample: x̄ = 550 attendees</p>
+<p>- Sample size: n = 25 concert dates (in our test period)</p>
+<p>- Sample standard deviation: s = 80 attendees</p>
+<p>**Null Hypothesis (H₀):** μ = 500 (Marketing has no effect)</p>
+<p>**Alternative Hypothesis (H₁):** μ > 500 (Marketing increases attendance)</p>
+<p>### Calculating the Test Statistic (t-test)</p>
+<p>The t-statistic measures how many standard errors our sample mean is from the hypothesized population mean:</p>
+<p>$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$</p>
+<p>**Plugging in our concert data:**</p>
+<p>$$t = \frac{550 - 500}{80/\sqrt{25}} = \frac{50}{80/5} = \frac{50}{16} = 3.125$$</p>
+<p>**Interpretation:** Our sample mean is **3.125 standard errors away** from what we’d expect if marketing had no effect.</p>
+<p>### Finding the P-Value</p>
+<p>With:</p>
+<p>- t-statistic = 3.125</p>
+<p>- Degrees of freedom = n - 1 = 24</p>
+<p>- One-tailed test (we only care about increases)</p>
+<p>**From t-table or software:** p ≈ 0.0023</p>
+<p>**English translation:** *“If marketing truly has no effect, there’s only a 0.23% chance we’d observe attendance of 550+ across our sample.”*</p>
+<p>---</p>
+<p>## SECTION 3: VISUAL INTERPRETATION</p>
+<p>### The P-Value Distribution Diagram</p>
+<p>Imagine the sampling distribution of concert attendance under the null hypothesis:</p>
+<p>```</p>
+<p>Probability Density</p>
+<p>|</p>
+<p>|        ╱╲</p>
+<p>|       ╱  ╲         We observe 550</p>
+<p>|      ╱    ╲         attendees here</p>
+<p>|     ╱      ╲           ↓</p>
+<p>|    ╱        ╲___   [This shaded area = p-value]</p>
+<p>|   ╱             ╲  (0.23% probability)</p>
+<p>|__╱_______________╲____</p>
+<p>\    400   500   600  650</p>
+<p>\    (μ₀ = 500)</p>
+<p>```</p>
+<p>**The shaded tail** = probability of observing data this extreme if H₀ is true</p>
+<p>---</p>
+<p>## SECTION 4: CRITICAL MATHEMATICAL MISCONCEPTIONS</p>
+<p>### ❌ Misconception #1: “P-value = Probability the result is real”</p>
+<p>**Wrong Formula People Use:**</p>
+<p>$$p = P(H_0 \text{ is true} | \text{Data})$$</p>
+<p>**Correct Formula:**</p>
+<p>$$p = P(\text{Data} | H_0 \text{ is true})$$</p>
+<p>**Why it matters for concerts:**</p>
+<p>- **Wrong interpretation:** “0.23% chance our marketing campaign is a coincidence”</p>
+<p>- **Correct interpretation:** “0.23% chance we’d see this attendance boost if marketing didn’t work”</p>
+<p>These are NOT the same thing mathematically.</p>
+<p>### ❌ Misconception #2: “p = 0.05 means 5% chance of error”</p>
+<p>**Reality:**</p>
+<p>- p = 0.05 means: “5% chance of seeing data this extreme if H₀ is true”</p>
+<p>- It does NOT tell you the probability you made a Type I error in THIS specific study</p>
+<p>**Type I Error Rate (α)** is set before the experiment:</p>
+<p>- You choose α = 0.05 as your threshold</p>
+<p>- This means: “If p &#x3C; 0.05, I’ll reject H₀ (but accept 5% false positive rate in the long run)”</p>
+<p>**For our concert:**</p>
+<p>- We set α = 0.05</p>
+<p>- We got p = 0.0023</p>
+<p>- We reject H₀ (conclude marketing works)</p>
+<p>- Long-run error rate = 5% (not this study’s error rate)</p>
+<p>### ❌ Misconception #3: “Smaller p-values mean larger effects”</p>
+<p>**Mathematical reality:**</p>
+<p>$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{\text{Effect Size}}{\text{Standard Error}}$$</p>
+<p>**p-values depend on THREE things:**</p>
+<ol>
+<li>
+<p>**Effect size** ($\bar{x} - \mu_0$) — actual difference</p>
+</li>
+<li>
+<p>**Sample size** (n) — affects standard error</p>
+</li>
+<li>
+<p>**Variability** (s) — affects standard error</p>
+</li>
+</ol>
+<p>**Concert example showing sample size trap:**</p>
+<p>| Scenario | Effect | Sample | StdDev | t-stat | p-value |</p>
+<p>|----------|--------|--------|--------|--------|---------|</p>
+<p>| A (real effect) | +50 attendees | 25 concerts | 80 | 3.125 | 0.0023 |</p>
+<p>| B (same effect) | +50 attendees | 500 concerts | 80 | **22.1** | **&#x3C; 0.00001** |</p>
+<p>| C (tiny effect) | +5 attendees | 500 concerts | 80 | **2.21** | **0.013** |</p>
+<p>**Key insight:** Even a tiny +5 attendee difference becomes “statistically significant” with enough data!</p>
+<p>---</p>
+<p>## SECTION 5: MATHEMATICAL ASSUMPTIONS (CRITICAL)</p>
+<p>All p-value calculations assume:</p>
+<ol>
+<li>
+<p>**Random sampling** — Your concerts are randomly selected from the population</p>
+</li>
+<li>
+<p>**Independence** — One concert’s attendance doesn’t affect another’s</p>
+</li>
+<li>
+<p>**Normality** — Attendance follows a normal distribution</p>
+</li>
+<li>
+<p>**Known parameters** (for z-tests) OR **estimate from data** (for t-tests)</p>
+</li>
+</ol>
+<p>**For your concert analysis:**</p>
+<p>- ✅ Concerts sampled independently?</p>
+<p>- ✅ One concert’s crowd doesn’t cause the next to have more people?</p>
+<p>- ✅ Attendance roughly bell-shaped distribution?</p>
+<p>If ANY assumption fails, your p-value is unreliable.</p>
+<p>---</p>
+<p>## SECTION 6: ONE-TAILED vs TWO-TAILED TESTS</p>
+<p>### One-Tailed Test (What we used)</p>
+<p>**Question:** “Does the marketing INCREASE attendance?”</p>
+<p>$$H_1: \mu > 500$$</p>
+<p>**p-value calculation:**</p>
+<p>- Look at RIGHT tail only</p>
+<p>- p = P(t > 3.125) = 0.0023</p>
+<p>**Diagram:**</p>
+<p>```</p>
+<p>|</p>
+<p>|        ╱╲</p>
+<p>|       ╱  ╲</p>
+<p>|      ╱    ╲___</p>
+<p>|     ╱    [p-value here]</p>
+<p>|    ╱           ╲</p>
+<p>\    _____|___╱_____________╲____</p>
+<p>\    500                650</p>
+<p>```</p>
+<p>### Two-Tailed Test (More conservative)</p>
+<p>**Question:** “Does the marketing CHANGE attendance (increase OR decrease)?”</p>
+<p>$$H_1: \mu \neq 500$$</p>
+<p>**p-value calculation:**</p>
+<p>- Look at BOTH tails</p>
+<p>- p = P(|t| > 3.125) = 0.0046 (double the one-tailed value)</p>
+<p>**Diagram:**</p>
+<p>```</p>
+<p>|╱╲          ╱╲</p>
+<p>|  ╲        ╱  ╲</p>
+<p>|   ╲___   ╱    ╲___</p>
+<p>|[p/2]    |    [p/2]</p>
+<p>\    _____|__________|__________</p>
+<p>\    350        500        650</p>
+<p>```</p>
+<p>**For concerts:** One-tailed is okay if you only care about attendance increases. Two-tailed is safer if you want to detect any change.</p>
+<p>---</p>
+<p>## SECTION 7: EFFECT SIZE COMPARISON (Why p-values alone fail)</p>
+<p>### The Core Problem: P-Values Hide Effect Magnitude</p>
+<p>Two concert campaigns with identical p-values can have vastly different real-world impact:</p>
+<p>**Campaign A:**</p>
+<p>- Attendance: 500 → 550 (+50 people)</p>
+<p>- Cost: $10,000</p>
+<p>- Cost per new attendee: $200/person</p>
+<p>- p-value: 0.023 ✓ Significant</p>
+<p>**Campaign B:**</p>
+<p>- Attendance: 500 → 501 (+1 person)</p>
+<p>- Cost: $50</p>
+<p>- Cost per new attendee: $50/person</p>
+<p>- p-value: 0.023 ✓ Significant</p>
+<p>**Same p-value. Completely different business outcomes.**</p>
+<p>### Cohen’s d for Concert Example</p>
+<p>$$d = \frac{\bar{x} - \mu_0}{s}$$</p>
+<p>**Campaign A:**</p>
+<p>$$d = \frac{550 - 500}{80} = \frac{50}{80} = 0.625$$</p>
+<p>**Interpretation:** Medium effect (Cohen’s guidelines: 0.2=small, 0.5=medium, 0.8=large)</p>
+<p>**Campaign B:**</p>
+<p>$$d = \frac{501 - 500}{80} = \frac{1}{80} = 0.0125$$</p>
+<p>**Interpretation:** Negligible effect (practically useless)</p>
+<p>---</p>
+<p>## SECTION 8: PRACTICAL SIGNIFICANCE GUIDELINES</p>
+<p>### When to Care About P-Values</p>
+<p>| P-Value | Action | Practical Advice |</p>
+<p>|---------|--------|------------------|</p>
+<p>| p &#x3C; 0.001 | Strong evidence | Highly convincing |</p>
+<p>| 0.001 ≤ p &#x3C; 0.01 | Very good evidence | Compelling |</p>
+<p>| 0.01 ≤ p &#x3C; 0.05 | Good evidence | Report with effect size |</p>
+<p>| 0.05 ≤ p &#x3C; 0.10 | Weak evidence | Inconclusive; gather more data |</p>
+<p>| p ≥ 0.10 | No evidence | Cannot reject H₀ |</p>
+<p>**For your concert decision:**</p>
+<p>- p = 0.0023 ✓ Strong evidence marketing works</p>
+<p>- BUT: Check effect size (d = 0.625) AND practical cost-benefit</p>
+<p>---</p>
+<p>## SECTION 9: COMMON PITFALLS IN REAL DATA</p>
+<p>### The Multiple Testing Problem</p>
+<p>If you run 20 independent tests, expecting to see one false positive:</p>
+<p>$$\text{Probability of at least one false positive} = 1 - (1-0.05)^{20} = 63.7%$$</p>
+<p>**For concert analysis:**</p>
+<p>If you test 20 different marketing tactics looking for significant results, you WILL find 1-2 “significant” results by chance alone.</p>
+<p>**Solution:** Use Bonferroni correction:</p>
+<p>$$\alpha_{\text{adjusted}} = \frac{0.05}{20} = 0.0025$$</p>
+<p>Require p &#x3C; 0.0025 to compensate.</p>
+<p>### The Replication Crisis</p>
+<p>**Why statistically significant findings often don’t replicate:**</p>
+<ol>
+<li>
+<p>Small sample sizes → large variability in results</p>
+</li>
+<li>
+<p>Selective reporting → publish only significant findings</p>
+</li>
+<li>
+<p>Publication bias → non-significant results stay hidden</p>
+</li>
+</ol>
+<p>**Lesson for your concerts:**</p>
+<p>- Test once with large sample: n > 50 events minimum</p>
+<p>- Report both significant AND non-significant results</p>
+<p>- Replicate findings before committing budget</p>
+<p>---</p>
+<p>## SECTION 10: THE STATISTICIAN’S MENTAL MODEL</p>
+<p>### Five-Step Framework for P-Value Interpretation</p>
+<ol>
+<li>
+<p>**State your hypothesis clearly** (H₀ and H₁)</p>
+</li>
+<li>
+<p>**Calculate your test statistic** (t, z, F, χ², etc.)</p>
+</li>
+<li>
+<p>**Determine the p-value** (use software, not tables)</p>
+</li>
+<li>
+<p>**Compare to your significance level** (α = 0.05 standard)</p>
+</li>
+<li>
+<p>**Report effect size AND practical significance**</p>
+</li>
+</ol>
+<p>**The statistician NEVER says:** “We got p = 0.03 so the effect is real”</p>
+<p>**The statistician ALWAYS says:** “We got p = 0.03 AND d = 0.62, suggesting statistically significant evidence of a medium-sized effect”</p>
+<p>---</p>
+<p>## CLOSING: WHAT CHANGES NOW</p>
+<p>### Before (Old Mindset)</p>
+<p>❌ “p = 0.023 → Our marketing works! Launch it!”</p>
+<p>### After (Statistician’s Mindset)</p>
+<p>✅ “p = 0.023 AND d = 0.63 AND cost-per-attendee is reasonable AND assumptions are met → Probably worth testing at larger scale”</p>
+<p>---</p>
+<p>## CALL TO ACTION</p>
+<p>**Questions for your concert data:**</p>
+<ol>
+<li>
+<p>What assumptions might you be violating in your attendance analysis?</p>
+</li>
+<li>
+<p>Have you calculated effect sizes for your marketing campaigns?</p>
+</li>
+<li>
+<p>Are you p-hacking (running multiple tests until something works)?</p>
+</li>
+</ol>
+<p><strong>**Drop a comment:** What’s the smallest p-value you’ve seen that turned out to be practically meaning</strong></p>
+<p><strong>EXTENDED REFERENCES (For Publication)</strong></p>
+<p>- Wasserstein, R. L., &#x26; Lazar, N. A. (2016). The ASA statement on p-values: Context, process, and purpose. *The American Statistician*, 70(2), 129–133. <a href="https://doi.org/10.1080/00031305.2016.1154108">https://doi.org/10.1080/00031305.2016.1154108</a></p>
+<p>- Cohen, J. (1992). A power primer. *Psychological Bulletin*, 112(1), 155–159. <a href="https://doi.org/10.1037/0033-2909.112.1.155">https://doi.org/10.1037/0033-2909.112.1.155</a></p>
+<p>- Sullivan, G. M., &#x26; Feinn, R. (2012). Using effect size—or why the P value is not enough. *Journal of Graduate Medical Education*, 4(3), 279–282. <a href="https://doi.org/10.4300/JGME-D-12-00156.1">https://doi.org/10.4300/JGME-D-12-00156.1</a></p>
+<p>- Ioannidis, J. P. (2005). Why most published research findings are false. *PLoS Medicine*, 2(8), e124. <a href="https://doi.org/10.1371/journal.pmed.0020124">https://doi.org/10.1371/journal.pmed.0020124</a></p>
+<p>---</p>
+<p>**Word count: ~2,200 words**</p>
+<p>**Engagement hooks:**</p>
+<p>- Math tables + formulas</p>
+<p>- Concert example throughout</p>
+<p>- Misconception callouts</p>
+<p>- Visual diagrams</p>
+<p>- Practical comparison scenarios</p>
+<p>**LinkedIn engagement strategy:**</p>
+<p>- Pin this post with: “Which misconception have YOU made? (Guilty of #2 over here 🙋‍♂️)”</p>
+<p>- Include the concert scenarios as carousel graphics</p>
+<p>- Ask comment question about their data</p>
+<p>- Respond to all comments with mini-explanations</p> </article> <!-- Share row --> <div style="margin-top:var(--space-10);padding-top:var(--space-8);border-top:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);"> <div> <p class="text-sm text-muted" style="margin-bottom:var(--space-2);">Share this article</p> <div style="display:flex;gap:var(--space-2);"> <a href="https://twitter.com/intent/tweet?text=The%20Mathematics%20of%20P-Values%20Think%20Like%20a%20Statistician%20Series%20%E2%80%94%20LinkedIn%20Campaign&url=https%3A%2F%2Fyajitim.github.io%2Fblog%2Fthe-mathematics-of-p-values-think-like-a-statistician-series--linkedin-campaign%2F" target="_blank" rel="noopener" class="btn btn-ghost" style="font-size:var(--text-xs);" id="share-twitter">
+Twitter/X ↗
+</a> <button id="copy-link-btn" class="btn btn-ghost" style="font-size:var(--text-xs);" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='Copied!';setTimeout(()=>{this.textContent='Copy Link'},2000)})">
+Copy Link
+</button> </div> </div> <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;"> <span class="badge badge-surface">statisticsinference</span> </div> </div> <!-- Author card --> <div class="card card-inner" style="margin-top:var(--space-8);display:flex;align-items:center;gap:var(--space-5);"> <div style="width:60px;height:60px;border-radius:50%;overflow:hidden;border:2px solid var(--color-accent-cyan);display:flex;align-items:center;justify-content:center;flex-shrink:0;"> <img src="/images/yaji-photo.jpg" alt="Yaji Timothy Terungwa" style="width:100%;height:100%;object-fit:cover;"> </div> <div> <p class="font-display" style="font-weight:700;margin-bottom:var(--space-1);">Yaji Timothy Terungwa</p> <p class="text-sm text-secondary" style="line-height:var(--leading-relaxed);">Statistician &amp; Data Scientist. PhD Candidate in Statistics. I write about statistical theory, GIS, and data analytics.</p> </div> </div> <!-- Giscus Comments --> <div style="margin-top:var(--space-12);"> <h2 class="font-display" style="font-size:var(--text-h3);font-weight:700;margin-bottom:var(--space-6);">
+Discussion &amp; Comments
+</h2> <div class="giscus-wrapper animate-in" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-6);"> <script src="https://giscus.app/client.js" data-repo="Yajitim/yajitim.github.io" data-repo-id="R_kgDOTgZ4Jw" data-category="Polls" data-category-id="DIC_kwDOTgZ4J84DBv8R" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="dark" data-lang="en" crossorigin="anonymous" async>
+            </script> </div> </div> </div> <!-- Related Posts -->  </div> </main> <footer class="footer"> <div class="container"> <div class="footer-inner"> <div> <a href="/" class="nav-logo" style="font-size:1.1rem;">
+Yaji<span>.</span>Terungwa
+</a> <p class="footer-copy" style="margin-top:var(--space-2);">
+&copy; 2026 Yaji Timothy Terungwa — Statistician &amp; Data Professional.<br>
+Built with <a href="https://astro.build" target="_blank" rel="noopener" style="color:var(--color-accent-cyan);">Astro</a>. 100% Open Source.
+</p> </div> <div style="display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-4);"> <div class="social-links"> <a href="https://github.com/Yajitim" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"> ⌥ </a><a href="mailto:tertimothy@gmail.com" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Email" title="Email"> ✉ </a><a href="tel:07062439948" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Phone" title="Phone"> 📞 </a> </div> <div class="footer-links"> <a href="/work" class="footer-link">Projects</a> <a href="/blog" class="footer-link">Articles</a> <a href="/about" class="footer-link">About &amp; CV</a> </div> </div> </div> </div> </footer>  <!-- Scroll Animation Observer -->  <!-- Navbar scroll handler -->  </body> </html> 
