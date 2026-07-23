@@ -661,6 +661,58 @@ ul, ol { list-style: none; }
   margin-block: var(--space-10);
 }
 
+/* Markdown Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: var(--space-6);
+  font-size: var(--text-sm);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.prose th {
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.prose tr:hover {
+  background: rgba(0, 212, 255, 0.04);
+}
+
+/* KaTeX Math Display */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: var(--space-4);
+  margin-block: var(--space-6) !important;
+  color: var(--color-text-primary);
+}
+
+.katex {
+  font-size: 1.1em;
+  color: var(--color-text-primary);
+}
+
 /* ============================================================
    READING PROGRESS BAR
    ============================================================ */
