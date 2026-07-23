@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: Yajitim/yajitim.github.io
   branch: main
+  base_url: https://yajitim-github-io.vercel.app
+  auth_endpoint: /api/auth
 
 local_backend:
   url: http://localhost:8081/api/v1
