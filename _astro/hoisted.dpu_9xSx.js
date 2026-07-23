@@ -1,0 +1,1 @@
+import"https://cdn.jsdelivr.net/npm/decap-cms@3.1.2/dist/decap-cms.js";import"https://identity.netlify.com/v1/netlify-identity-widget.js";window.netlifyIdentity&&window.netlifyIdentity.on("init",i=>{i||window.netlifyIdentity.on("login",()=>{document.location.reload()})});
