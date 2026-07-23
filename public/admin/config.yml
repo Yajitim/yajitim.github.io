@@ -1,8 +1,7 @@
 backend:
-  name: github
+  name: git-gateway
   repo: Yajitim/yajitim.github.io  # GitHub username/repo
   branch: main
-  base_url: https://decap-oauth.com
 
 # Enable local backend for offline/local testing
 local_backend: true
