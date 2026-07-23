@@ -1,1 +1,0 @@
-import"./hoisted.O-G-Y0HM.js";const e=document.getElementById("reading-progress");if(e){const t=()=>{const s=window.scrollY,o=document.documentElement.scrollHeight-window.innerHeight,r=o>0?s/o:0;e.style.transform=`scaleX(${r})`,e.setAttribute("aria-valuenow",String(Math.round(r*100)))};window.addEventListener("scroll",t,{passive:!0}),t()}
