@@ -72,6 +72,15 @@ const siteName = "Yaji Timothy Terungwa · Statistician & Data Scientist";
       "https://github.com/yajitim"
     ]
   })} />
+
+  <!-- Google Analytics (GA4) via Partytown Web Worker -->
+  <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-MGNC0FZKR8"></script>
+  <script type="text/partytown">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MGNC0FZKR8');
+  </script>
 </head>
 <body>
   <slot />
