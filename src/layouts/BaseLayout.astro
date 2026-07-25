@@ -53,6 +53,25 @@ const siteName = "Yaji Timothy Terungwa · Statistician & Data Scientist";
 
   <!-- KaTeX CSS for rendering LaTeX Math equations -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" crossorigin="anonymous" />
+
+  <!-- JSON-LD Structured Data (Person Schema) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yaji Timothy Terungwa",
+    "url": "https://yajitim.github.io",
+    "jobTitle": "Statistician, Data Scientist & Educational Data Professional",
+    "knowsAbout": [
+      "Predictive Modeling",
+      "Spatial Analytics (GIS)",
+      "Business Intelligence & Power BI",
+      "Educational Assessment Systems",
+      "Multiple Imputation & Missing Data Algorithms"
+    ],
+    "sameAs": [
+      "https://github.com/yajitim"
+    ]
+  })} />
 </head>
 <body>
   <slot />
