@@ -193,13 +193,28 @@ Making Excel faster with large files requires a transition from "convenience mod
 
 ## References
 
-*   BetterSolutions.com. (2026). *Excel Formulas - Dependency Tree*.
-*   Chandoo.org. (2014). *Handle Volatile Functions like they are dynamite*.
-*   Decision Models. (2026). *How the Excel Smart Recalculation Engine works*.
-*   ElyxAI. (2026). *Spreadsheet Calculation Engine - Excel Glossary*.
-*   How-To Geek. (2026). *Everything You Need to Know About Volatile Functions in Excel* & *Your Excel workbook is slower than it should be*.
-*   Microsoft Community Hub. (2024). *Check Performance in Excel for Windows*.
-*   Microsoft Learn. (2022). *Excel Recalculation* & *Multithreaded recalculation in Excel*.
-*   Microsoft Learn. (2025). *Excel performance - Improving calculation performance* & *Tips for optimizing performance obstructions*.
-*   Reddit. (2024). *Power Query vs excel formulas*.
-*   Vertex42. (2017). *Volatile Functions – What's the Big Deal?*.
+BetterSolutions.com. (2026, July 1). *Excel formulas - Dependency tree*. [https://bettersolutions.com/excel/formulas/calculation-dependency-tree.htm](https://bettersolutions.com/excel/formulas/calculation-dependency-tree.htm)
+
+Chandoo.org. (2014, March 11). *Handle volatile functions like they are dynamite*. [https://chandoo.org/wp/handle-volatile-functions-like-they-are-dynamite/](https://chandoo.org/wp/handle-volatile-functions-like-they-are-dynamite/)
+
+Decision Models. (2026). *How the Excel smart recalculation engine works*. [https://www.decisionmodels.com/calcsecrets.htm](https://www.decisionmodels.com/calcsecrets.htm)
+
+ElyxAI. (2026). *Spreadsheet calculation engine - Excel glossary*. [https://getelyxai.com/en/excel-glossary/spreadsheet-calculation-engine](https://getelyxai.com/en/excel-glossary/spreadsheet-calculation-engine)
+
+How-To Geek. (2024, November 1). *Everything you need to know about volatile functions in Excel*. [https://www.howtogeek.com/volatile-functions-excel/](https://www.howtogeek.com/volatile-functions-excel/)
+
+How-To Geek. (2026, May 23). *Your Excel workbook is slower than it should be—these two hidden settings are usually why*. [https://www.howtogeek.com/microsoft-excel-slow-automatic-multi-threaded-calculations/](https://www.howtogeek.com/microsoft-excel-slow-automatic-multi-threaded-calculations/)
+
+Microsoft Community Hub. (2024, August 25). *Check performance in Excel for Windows*. [https://techcommunity.microsoft.com/blog/microsoft365insiderblog/make-your-workbooks-more-performant-with-check-performance-in-excel-for-windows/4224276](https://techcommunity.microsoft.com/blog/microsoft365insiderblog/make-your-workbooks-more-performant-with-check-performance-in-excel-for-windows/4224276)
+
+Microsoft Learn. (2022, January 24). *Excel recalculation*. [https://learn.microsoft.com/en-us/office/client-developer/excel/excel-recalculation](https://learn.microsoft.com/en-us/office/client-developer/excel/excel-recalculation)
+
+Microsoft Learn. (2022, January 24). *Multithreaded recalculation in Excel*. [https://learn.microsoft.com/en-us/office/client-developer/excel/multithreaded-recalculation-in-excel](https://learn.microsoft.com/en-us/office/client-developer/excel/multithreaded-recalculation-in-excel)
+
+Microsoft Learn. (2024, January 24). *Excel performance: Improving calculation performance*. [https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-improving-calculation-performance](https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-improving-calculation-performance)
+
+Microsoft Learn. (2025, November 11). *Excel performance: Tips for optimizing performance obstructions*. [https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-tips-for-optimizing-performance-obstructions](https://learn.microsoft.com/en-us/office/vba/excel/concepts/excel-performance/excel-tips-for-optimizing-performance-obstructions)
+
+Reddit. (2024). *Power Query vs excel formulas*. [https://www.reddit.com/r/excel/comments/1of0yz3/power_query_vs_excel_formulas/](https://www.reddit.com/r/excel/comments/1of0yz3/power_query_vs_excel_formulas/)
+
+Vertex42. (2017, October 10). *Volatile functions – What's the big deal?* [https://www.vertex42.com/blog/excel-formulas/volatile-functions.html](https://www.vertex42.com/blog/excel-formulas/volatile-functions.html)
