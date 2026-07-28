@@ -5,7 +5,7 @@ pubDate: 2026-07-15
 category: "Case Study"
 tags: ["Statistics", "R-programming", "Python", "Data Science", "Research"]
 readingTime: 9
-featured: true
+featured: false
 coverImage: "/blog/statistical-imputation.jpg"
 ---
 

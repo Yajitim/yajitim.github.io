@@ -5,7 +5,7 @@ pubDate: 2026-07-27
 category: "Tutorial"
 tags: ["Excel", "Performance", "Optimization", "Power Query", "Data Analytics"]
 readingTime: 8
-featured: false
+featured: true
 coverImage: "/blog/excel-performance.jpg"
 ---
 

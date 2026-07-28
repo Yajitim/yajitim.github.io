@@ -6,7 +6,7 @@ pubDate: 2026-07-23T15:20:38.133Z
 category: Open Source
 tags:
   - statisticsinference
-featured: true
+featured: false
 draft: false
 ---
 Imagine you're a concert promoter running an experiment:
