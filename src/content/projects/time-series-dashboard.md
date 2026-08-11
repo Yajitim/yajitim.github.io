@@ -2,7 +2,7 @@
 title: "Time Series Explorer & Forecaster Dashboard"
 description: "A production-grade Streamlit application for time series data exploration, cleaning, and forecasting using ARIMA, Prophet, and LSTM models."
 coverImage: "/projects/time-series-dashboard-desktop.png"
-tags: ["Pandas", "Streamlit", "Python"]
+tags: ["Pandas", "Python", "Streamlit"]
 featured: true
 year: 2026
 category: "Web App"
