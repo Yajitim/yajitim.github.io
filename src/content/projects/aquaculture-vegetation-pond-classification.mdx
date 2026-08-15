@@ -1,0 +1,196 @@
+---
+title: "GeoAI Aquaculture Pond Classification & Satellite Time-Series Modeling"
+description: "High-precision satellite time-series machine learning pipeline combining multi-sensor optical/SAR temporal feature extraction, Random Optical Sampling (ROS) augmentation, Optuna-tuned gradient boosting ensembles, and probability calibration."
+coverImage: "/uploads/aquaculture-pond-classification/model_comparison.png"
+tags: ["GeoAI", "Remote Sensing", "Time-Series ML", "LightGBM", "XGBoost", "CatBoost", "Optuna", "SHAP", "Earth Observation"]
+repoUrl: "https://github.com/Yajitim/vegetation-pond-challenge"
+featured: true
+year: 2026
+category: "Open Source"
+order: 2
+draft: false
+---
+
+import Carousel from '../../components/Carousel.astro';
+
+## Interactive Visuals & Model Insights
+
+Below is an interactive walkthrough of the end-to-end machine learning pipeline, exploratory satellite data analysis, feature attribution, model comparison, and calibration diagnostics:
+
+<Carousel
+  items={[
+    {
+      "src": "/uploads/aquaculture-pond-classification/model_comparison.png",
+      "alt": "Model Comparison Benchmark across Architectures",
+      "badge": "Benchmark",
+      "caption": "Model Comparison — Gradient boosting tree ensembles (LightGBM, XGBoost, CatBoost) achieving perfect discrimination (F1 & ROC-AUC: 1.0) over linear and random forest baselines."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/shap_importance.png",
+      "alt": "SHAP Global Feature Importance and Attribution",
+      "badge": "Interpretability",
+      "caption": "SHAP Feature Attribution — Top 30 features highlighting the discriminative dominance of MNDWI/NDWI temporal minimums and SAR VH/VV backscatter amplitude."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/confusion_matrices.png",
+      "alt": "Out-of-Fold Confusion Matrices across 5 Folds",
+      "badge": "Evaluation",
+      "caption": "5-Fold Cross-Validation Confusion Matrices — Demonstrating zero out-of-fold false positives and robust boundary precision."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/eda_ndwi_temporal.png",
+      "alt": "Multi-Temporal NDWI Dynamics by Class",
+      "badge": "Remote Sensing",
+      "caption": "Temporal Spectral Trajectories — NDWI (Normalized Difference Water Index) profiles over 12 months separating permanent aquaculture waterbodies from seasonal wetlands."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/calibration_curve.png",
+      "alt": "Probability Calibration and Reliability Diagram",
+      "badge": "Calibration",
+      "caption": "Reliability Diagram — Isotonic probability calibration ensuring well-calibrated posterior estimates for the composite ROC-AUC metric."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/eda_missingness.png",
+      "alt": "Cloud Occlusion and Missingness Patterns",
+      "badge": "Data Quality",
+      "caption": "Temporal Missingness Analysis — Characterizing satellite cloud masking and unobserved time steps between train and test distributions."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/eda_distributions.png",
+      "alt": "Optical and SAR Band Distributions",
+      "badge": "EDA",
+      "caption": "Feature Distributions — Statistical density of raw SAR backscatter (VH, VV) and multispectral optical reflections by target class."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/eda_correlation.png",
+      "alt": "Cross-Band Correlation Heatmap",
+      "badge": "Feature Space",
+      "caption": "Multispectral Correlation Matrix — Identifying inter-band collinearity to guide dimensionality reduction and index formulation."
+    },
+    {
+      "src": "/uploads/aquaculture-pond-classification/test_prob_distribution.png",
+      "alt": "Test Set Prediction Probability Distribution",
+      "badge": "Inference",
+      "caption": "Inference Distribution — High-confidence, bimodal probability separation on unseen test samples after test-time augmentation (TTA)."
+    }
+  ]}
+/>
+
+---
+
+## Project Overview
+
+Aquaculture plays a critical role in global food security and sustainable economic development. However, monitoring aquaculture installations at scale is notoriously challenging due to dynamic cloud cover, seasonal inundation, and surrounding wetland vegetation that mimic water signatures in optical satellite imagery.
+
+This project delivers a state-of-the-art **GeoAI machine learning solution** for the **Vegetation Pond Challenge**. The objective is binary classification: distinguishing managed aquaculture ponds (`label = 1`) from natural waterbodies and other land cover types (`label = 0`) using 12-month multi-temporal Sentinel-1 Synthetic Aperture Radar (SAR) and Sentinel-2 optical satellite observations.
+
+```
+Composite Competition Metric:
+Score = (0.6 × F1-Score) + (0.4 × ROC-AUC)
+```
+
+---
+
+## The Core Technical Challenge: Temporal Domain Shift
+
+The fundamental obstacle in this competition is severe temporal masking and observation asymmetry:
+- **Training Set**: 1,821 locations with near-complete 12-month time series.
+- **Test Set**: Unseen evaluation locations where 6 to 8 months of optical satellite data are completely masked (`-9999` placeholder) due to persistent cloud occlusion.
+
+Standard models trained purely on full 12-month data suffer catastrophic performance degradation when evaluated on partially observed test profiles.
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        TEMPORAL DOMAIN SHIFT                           │
+│                                                                        │
+│ Training Profile: [ M1  M2  M3  M4  M5  M6  M7  M8  M9  M10 M11 M12 ] │
+│                     ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲      │
+│                     └───┴───┴─── Full 12-Month Observation ────┴───┘   │
+│                                                                        │
+│ Test Set Profile: [ M1  --  --  M4  --  --  M7  --  --  M10 --  --  ] │
+│                     ▲           ▲           ▲           ▲              │
+│                     └─────────── Only 4–6 Valid Months ─┘              │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Methodological Innovations
+
+### 1. Multi-Sensor Remote Sensing Feature Engineering
+Rather than feeding raw flattened time series (144 raw columns), we built a robust remote sensing feature engine extracting **202 aggregate statistical features**:
+
+#### Domain-Specific Spectral & Radar Indices:
+- **NDWI (Normalized Difference Water Index)**: `(Green − NIR) / (Green + NIR)`
+- **MNDWI (Modified NDWI)**: `(Green − SWIR1) / (Green + SWIR1)` — suppressed built-up and soil noise
+- **NDVI (Normalized Difference Vegetation Index)**: `(NIR − Red) / (NIR + Red)`
+- **EVI (Enhanced Vegetation Index)**: `2.5 × (NIR − Red) / (NIR + 6·Red − 7.5·Blue + 1)`
+- **LSWI (Land Surface Water Index)**: `(NIR − SWIR1) / (NIR + SWIR1)`
+- **NDRE (Normalized Difference Red Edge)**: `(RE1 − Red) / (RE1 + Red)`
+- **SAR Polarization Ratio**: `VH − VV` (in dB space) — surface roughness & volume scattering
+- **SAR Radar Vegetation Index (RVI)**: `4·VH / (VV + VH)`
+
+#### Temporal Aggregation Engine (NaN-Aware):
+For each raw band and computed spectral index across observed valid months, we extracted 10 temporal moments:
+- Mean, Standard Deviation, Minimum, Maximum, Amplitude ($Max - Min$), 25th Percentile ($P_{25}$), 75th Percentile ($P_{75}$), Skewness, Linear Trend Slope, and Valid Observation Counts.
+
+---
+
+### 2. Random Optical Sampling (ROS) Augmentation
+To eliminate the train-test domain discrepancy, we engineered **Random Optical Sampling (ROS)**:
+- During training fold preparation, each training sample generated 3 augmented synthetic profiles.
+- 6 to 8 arbitrary months were randomly masked out to simulate severe cloud cover.
+- Temporal statistics were recalculated over the remaining unmasked slices.
+- **Strict Leakage Prevention**: Augmentation was applied exclusively inside training folds of the 5-fold Stratified CV; validation folds remained unaugmented to guarantee uncorrupted out-of-fold metrics.
+
+---
+
+### 3. Bayesian Hyperparameter Tuning & Multi-Model Diversity
+We trained and benchmarked multiple model families on identical 5-fold stratified cross-validation splits:
+- **Baseline Models**: Logistic Regression with standard scaling (`L2` penalty) and Balanced Random Forest (300 estimators).
+- **Optuna Bayesian Optimization (50 Trials)**:
+  - **LightGBM**: Tuned `learning_rate`, `num_leaves`, `max_depth`, `subsample`, `colsample_bytree`, and `scale_pos_weight`.
+  - **XGBoost**: Tuned `max_depth`, `subsample`, `colsample_bytree`, and `min_child_weight`.
+  - **CatBoost**: Tuned `depth`, `l2_leaf_reg`, and symmetric tree configurations with balanced class weighting.
+
+---
+
+## Quantitative Results & Benchmark
+
+Out-of-fold validation performance demonstrates the clear superiority of tree-based gradient boosting models over classical baselines:
+
+| Model Architecture | F1-Score | ROC-AUC | Average Precision (PR-AUC) | Composite Metric |
+| :--- | :---: | :---: | :---: | :---: |
+| **LightGBM (Optuna Tuned)** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |
+| **CatBoost (Optuna Tuned)** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |
+| **XGBoost (Optuna Tuned)** | **0.9993** | **1.0000** | **1.0000** | **0.9996** |
+| **Random Forest Baseline** | 0.9715 | 0.9940 | 0.9942 | 0.9805 |
+| **Logistic Regression Baseline** | 0.9701 | 0.9944 | 0.9930 | 0.9798 |
+
+---
+
+## Explainable AI & SHAP Interpretability
+
+Using TreeSHAP on the out-of-fold gradient boosting models, we unpacked the physiological satellite mechanisms governing predictions:
+
+1. **MNDWI Temporal Minimum (`MNDWI__min`)**: The single highest-ranked predictor. Managed aquaculture ponds maintain persistent deep-water signatures throughout the year, whereas seasonal wetlands dry out during arid months.
+2. **SAR Backscatter Amplitude (`VH__amp` & `VV__amp`)**: Radar penetrates cloud cover and measures water surface specular reflectance. Ponds exhibit consistent low radar backscatter with minimal seasonal roughness variation compared to agricultural fields.
+3. **Vegetation Dynamics (`NDVI__max` & `EVI__std`)**: Peripheral pond vegetation creates a unique contrast boundary against internal open water.
+
+---
+
+## Inference Pipeline & Calibration
+
+For final competition submission:
+- **Stacking Meta-Learner**: Trained a regularized meta-estimator on out-of-fold probabilities from LightGBM, XGBoost, and CatBoost.
+- **Isotonic Calibration**: Calibrated stacked posterior distributions to guarantee well-aligned probabilities for the continuous `TargetRAUC` evaluation.
+- **Test-Time Augmentation (TTA)**: Evaluated 10 stochastic masking passes per test sample and averaged the calibrated outputs, mitigating localized variance from single-month anomalies.
+
+---
+
+## Technical Stack & Deliverables
+
+- **Languages & Frameworks**: Python 3.11+, Scikit-Learn, LightGBM, XGBoost, CatBoost, Optuna, SHAP.
+- **Remote Sensing & Spatial Modeling**: NumPy, Pandas, SciPy, Polars, Parquet.
+- **Visualizations**: Matplotlib, Seaborn, GeoAI diagnostic plotting.
+- **Codebase Artifacts**: 4 modular Jupyter notebooks (`01_eda.ipynb`, `02_feature_engineering.ipynb`, `03_models.ipynb`, `04_submission.ipynb`) with end-to-end automated pipelines.
