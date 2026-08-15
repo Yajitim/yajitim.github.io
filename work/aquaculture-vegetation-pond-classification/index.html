@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Pre-render Theme to Prevent FOUC --><script>
+    (function () {
+      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><!-- Primary Meta --><title>GeoAI Aquaculture Pond Classification &amp; Satellite Time-Series Modeling · Yaji Timothy Terungwa</title><meta name="description" content="High-precision satellite time-series machine learning pipeline combining multi-sensor optical/SAR temporal feature extraction, Random Optical Sampling (ROS) augmentation, Optuna-tuned gradient boosting ensembles, and probability calibration."><link rel="canonical" href="https://yajitim.github.io/work/aquaculture-vegetation-pond-classification/"><!-- RSS Syndication Feed --><link rel="alternate" type="application/rss+xml" title="Yaji Timothy Terungwa · RSS Feed" href="/rss.xml"><!-- Open Graph / Social --><meta property="og:type" content="website"><meta property="og:url" content="https://yajitim.github.io/work/aquaculture-vegetation-pond-classification/"><meta property="og:title" content="GeoAI Aquaculture Pond Classification &#38; Satellite Time-Series Modeling"><meta property="og:description" content="High-precision satellite time-series machine learning pipeline combining multi-sensor optical/SAR temporal feature extraction, Random Optical Sampling (ROS) augmentation, Optuna-tuned gradient boosting ensembles, and probability calibration."><meta property="og:image" content="https://yajitim.github.io/og-image.jpg"><meta property="og:site_name" content="Yaji Timothy Terungwa · Statistician &#38; Data Scientist"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="GeoAI Aquaculture Pond Classification &#38; Satellite Time-Series Modeling"><meta name="twitter:description" content="High-precision satellite time-series machine learning pipeline combining multi-sensor optical/SAR temporal feature extraction, Random Optical Sampling (ROS) augmentation, Optuna-tuned gradient boosting ensembles, and probability calibration."><meta name="twitter:image" content="https://yajitim.github.io/og-image.jpg"><!-- Favicon --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- Google Fonts preconnect --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!-- KaTeX CSS for rendering LaTeX Math equations --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" crossorigin="anonymous"><!-- JSON-LD Structured Data (Person Schema) --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Yaji Timothy Terungwa","url":"https://yajitim.github.io","jobTitle":"Statistician, Data Scientist & Educational Data Professional","knowsAbout":["Predictive Modeling","Spatial Analytics (GIS)","Business Intelligence & Power BI","Educational Assessment Systems","Multiple Imputation & Missing Data Algorithms"],"sameAs":["https://github.com/yajitim"]}</script><!-- Google Analytics (GA4) via Partytown Web Worker --><script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-MGNC0FZKR8"></script><script type="text/partytown">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MGNC0FZKR8');
+  </script><!-- Astro View Transitions --><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><link rel="stylesheet" href="/_astro/about.BPJQl7Rp.css"><script type="module" src="/_astro/hoisted.QpjiRScB.js"></script>
+<script>!(function(w,p,f,c){if(!window.crossOriginIsolated && !navigator.serviceWorker) return;c=w[p]=Object.assign(w[p]||{},{"lib":"/~partytown/","debug":false});c[f]=(c[f]||[]).concat(["dataLayer.push"])})(window,'partytown','forward');/* Partytown 0.13.2 - MIT QwikDev */
+const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=t]=e;return[n,{...t,...r}]},n=Object.freeze((t=>{const e=new Set;let n=[];do{Object.getOwnPropertyNames(n).forEach((t=>{"function"==typeof n[t]&&e.add(t)}))}while((n=Object.getPrototypeOf(n))!==Object.prototype);return Array.from(e)})());!function(t,r,o,i,a,s,c,l,d,p,u=t,f){function h(){f||(f=1,"/"==(c=(s.lib||"/~partytown/")+(s.debug?"debug/":""))[0]&&(d=r.querySelectorAll('script[type="text/partytown"]'),i!=t?i.dispatchEvent(new CustomEvent("pt1",{detail:t})):(l=setTimeout(v,(null==s?void 0:s.fallbackTimeout)||1e4),r.addEventListener("pt0",w),a?y(1):o.serviceWorker?o.serviceWorker.register(c+(s.swPath||"partytown-sw.js"),{scope:c}).then((function(t){t.active?y():t.installing&&t.installing.addEventListener("statechange",(function(t){"activated"==t.target.state&&y()}))}),console.error):v())))}function y(e){p=r.createElement(e?"script":"iframe"),t._pttab=Date.now(),e||(p.style.display="block",p.style.width="0",p.style.height="0",p.style.border="0",p.style.visibility="hidden",p.setAttribute("aria-hidden",!0)),p.src=c+"partytown-"+(e?"atomics.js?v=0.13.2":"sandbox-sw.html?"+t._pttab),r.querySelector(s.sandboxParent||"body").appendChild(p)}function v(n,o){for(w(),i==t&&(s.forward||[]).map((function(n){const[r]=e(n);delete t[r.split(".")[0]]})),n=0;n<d.length;n++)(o=r.createElement("script")).innerHTML=d[n].innerHTML,o.nonce=s.nonce,r.head.appendChild(o);p&&p.parentNode.removeChild(p)}function w(){clearTimeout(l)}s=t.partytown||{},i==t&&(s.forward||[]).map((function(r){const[o,{preserveBehavior:i}]=e(r);u=t,o.split(".").map((function(e,r,o){var a;u=u[o[r]]=r+1<o.length?u[o[r]]||(a=o[r+1],n.includes(a)?[]:{}):(()=>{let e=null;if(i){const{methodOrProperty:n,thisObject:r}=((t,e)=>{let n=t;for(let t=0;t<e.length-1;t+=1)n=n[e[t]];return{thisObject:n,methodOrProperty:e.length>0?n[e[e.length-1]]:void 0}})(t,o);"function"==typeof n&&(e=(...t)=>n.apply(r,...t))}return function(){let n;return e&&(n=e(arguments)),(t._ptf=t._ptf||[]).push(o,arguments),n}})()}))})),"complete"==r.readyState?h():(t.addEventListener("DOMContentLoaded",h),t.addEventListener("load",h))}(window,document,navigator,top,window.crossOriginIsolated);;(e=>{e.addEventListener("astro:before-swap",e=>{let r=document.body.querySelector("iframe[src*='/~partytown/']");if(r)e.newDocument.body.append(r)})})(document);</script><style>.carousel-container[data-astro-cid-wfe7xcno]{position:relative;width:100%;margin-block:var(--space-8);border-radius:var(--radius-xl);overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border);box-shadow:var(--shadow-md)}.carousel-viewport[data-astro-cid-wfe7xcno]{position:relative;width:100%;overflow:hidden}.carousel-track[data-astro-cid-wfe7xcno]{display:flex;transition:transform .4s cubic-bezier(.16,1,.3,1);width:100%;will-change:transform}.carousel-slide[data-astro-cid-wfe7xcno]{flex:0 0 100%;width:100%;max-width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center}.carousel-image-wrapper[data-astro-cid-wfe7xcno]{position:relative;width:100%;aspect-ratio:16 / 9;background:#090a0f;display:flex;align-items:center;justify-content:center;overflow:hidden}.carousel-image-wrapper[data-astro-cid-wfe7xcno] img[data-astro-cid-wfe7xcno]{width:100%;height:100%;object-fit:cover;display:block}.carousel-badge[data-astro-cid-wfe7xcno]{position:absolute;top:var(--space-3);right:var(--space-3);background:#0d0d0fd9;backdrop-filter:blur(8px);border:1px solid var(--color-border-glow);color:var(--color-accent-cyan);font-size:var(--text-xs);font-weight:700;padding:3px 10px;border-radius:var(--radius-full);letter-spacing:.05em;text-transform:uppercase}.carousel-caption[data-astro-cid-wfe7xcno]{padding:var(--space-3) var(--space-5);font-size:var(--text-xs);color:var(--color-text-secondary);text-align:center;width:100%;background:var(--color-surface-raised);border-top:1px solid var(--color-border-subtle)}.carousel-control[data-astro-cid-wfe7xcno]{position:absolute;top:45%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:#0d0d0fbf;backdrop-filter:blur(8px);border:1px solid var(--color-border);color:var(--color-text-primary);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:all var(--transition-fast)}.carousel-control[data-astro-cid-wfe7xcno]:hover{background:var(--color-accent-cyan-dim);border-color:var(--color-accent-cyan);color:var(--color-accent-cyan)}.carousel-control[data-astro-cid-wfe7xcno].prev{left:var(--space-3)}.carousel-control[data-astro-cid-wfe7xcno].next{right:var(--space-3)}.carousel-indicators[data-astro-cid-wfe7xcno]{position:absolute;bottom:var(--space-10);left:50%;transform:translate(-50%);display:flex;gap:var(--space-2);z-index:10}.carousel-dot[data-astro-cid-wfe7xcno]{width:8px;height:8px;border-radius:50%;background:#ffffff4d;border:none;cursor:pointer;transition:all var(--transition-fast);padding:0}.carousel-dot[data-astro-cid-wfe7xcno].active{width:24px;border-radius:var(--radius-full);background:var(--color-accent-cyan);box-shadow:0 0 10px #00d4ff99}
+</style><script src="/_astro/Carousel.astro_astro_type_script_index_0_lang.DBMybU9Q.js" type="module"></script></head> <body>  <nav class="navbar" id="navbar" aria-label="Main navigation" data-astro-cid-5blmo7yk> <div class="navbar-inner" data-astro-cid-5blmo7yk> <!-- Logo --> <a href="/" class="nav-logo" aria-label="Home" data-astro-cid-5blmo7yk>
+Yaji<span data-astro-cid-5blmo7yk>.</span>Terungwa
+</a> <!-- Desktop Links & Tools --> <div class="nav-links" role="list" data-astro-cid-5blmo7yk> <a href="/work" class="nav-link active" aria-current="page" role="listitem" data-astro-cid-5blmo7yk> Projects &amp; Work </a><a href="/blog" class="nav-link " role="listitem" data-astro-cid-5blmo7yk> Articles &amp; Insights </a><a href="/about" class="nav-link " role="listitem" data-astro-cid-5blmo7yk> About &amp; CV </a> <!-- Search Trigger --> <button class="search-trigger-btn" type="button" aria-label="Search site (Ctrl+K)" data-astro-cid-5blmo7yk> <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24" style="width:14px;height:14px;" data-astro-cid-5blmo7yk> <circle cx="11" cy="11" r="8" data-astro-cid-5blmo7yk></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-5blmo7yk></line> </svg> <span data-astro-cid-5blmo7yk>Search</span> <kbd data-astro-cid-5blmo7yk>Ctrl+K</kbd> </button> <!-- Theme Toggle --> <button class="theme-toggle-btn" id="theme-toggle-btn" type="button" aria-label="Toggle theme" data-astro-cid-5blmo7yk> <span class="theme-icon-dark" data-astro-cid-5blmo7yk>🌙</span> <span class="theme-icon-light" style="display:none;" data-astro-cid-5blmo7yk>☀️</span> </button> <a href="mailto:tertimothy@gmail.com" class="btn btn-primary nav-cta" id="nav-hire-btn" data-astro-cid-5blmo7yk>
+Contact Me ↗
+</a> </div> <!-- Mobile Toggle & Quick Actions --> <div style="display:flex;align-items:center;gap:var(--space-2);" class="mobile-actions" data-astro-cid-5blmo7yk> <button class="search-trigger-btn" type="button" style="padding:0 var(--space-2);height:32px;" aria-label="Search" data-astro-cid-5blmo7yk> <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24" style="width:14px;height:14px;" data-astro-cid-5blmo7yk> <circle cx="11" cy="11" r="8" data-astro-cid-5blmo7yk></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-5blmo7yk></line> </svg> </button> <button class="nav-mobile-toggle" id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false" data-astro-cid-5blmo7yk> <span data-astro-cid-5blmo7yk></span> <span data-astro-cid-5blmo7yk></span> <span data-astro-cid-5blmo7yk></span> </button> </div> </div> <!-- Mobile Drawer --> <div class="mobile-nav" id="mobile-nav" aria-hidden="true" data-astro-cid-5blmo7yk> <div class="mobile-nav-inner" data-astro-cid-5blmo7yk> <a href="/work" class="mobile-nav-link active" data-astro-cid-5blmo7yk> Projects &amp; Work </a><a href="/blog" class="mobile-nav-link " data-astro-cid-5blmo7yk> Articles &amp; Insights </a><a href="/about" class="mobile-nav-link " data-astro-cid-5blmo7yk> About &amp; CV </a> <div style="display:flex;align-items:center;justify-content:space-between;padding-top:var(--space-4);border-top:1px solid var(--color-border);" data-astro-cid-5blmo7yk> <span class="text-sm text-secondary" data-astro-cid-5blmo7yk>Switch Theme</span> <button class="theme-toggle-btn" id="mobile-theme-toggle-btn" type="button" data-astro-cid-5blmo7yk>
+Toggle Theme 🌓
+</button> </div> <a href="mailto:tertimothy@gmail.com" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:var(--space-2);" data-astro-cid-5blmo7yk>
+Contact Me ↗
+</a> </div> </div> </nav>   <main style="padding-top: var(--nav-height);"> <div class="container"> <!-- Back link --> <div style="padding-top:var(--space-10);margin-bottom:var(--space-8);"> <a href="/work" class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:var(--space-2);">
+← Back to Work
+</a> </div> <!-- Project Header --> <div style="max-width:800px;margin-bottom:var(--space-10);"> <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-4);"> <span class="badge badge-cyan">Open Source</span> <span class="badge badge-surface">2026</span> <span class="badge badge-surface">GeoAI</span><span class="badge badge-surface">Remote Sensing</span><span class="badge badge-surface">Time-Series ML</span><span class="badge badge-surface">LightGBM</span><span class="badge badge-surface">XGBoost</span><span class="badge badge-surface">CatBoost</span><span class="badge badge-surface">Optuna</span><span class="badge badge-surface">SHAP</span><span class="badge badge-surface">Earth Observation</span> </div> <h1 class="font-display" style="font-size:var(--text-h1);font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--space-4);"> GeoAI Aquaculture Pond Classification &amp; Satellite Time-Series Modeling </h1> <p class="text-secondary" style="font-size:var(--text-lg);line-height:var(--leading-relaxed);margin-bottom:var(--space-6);"> High-precision satellite time-series machine learning pipeline combining multi-sensor optical/SAR temporal feature extraction, Random Optical Sampling (ROS) augmentation, Optuna-tuned gradient boosting ensembles, and probability calibration. </p> <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">  <a href="https://github.com/Yajitim/vegetation-pond-challenge" target="_blank" rel="noopener" class="btn btn-ghost">
+View Source ↗
+</a> </div> </div> <!-- Cover --> <div style="width:100%;height:400px;background:linear-gradient(135deg,#0d1117,#1a1f2e,#0a1628);border-radius:var(--radius-xl);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:var(--space-12);"> <img src="/uploads/aquaculture-pond-classification/model_comparison.png" alt="GeoAI Aquaculture Pond Classification &#38; Satellite Time-Series Modeling" style="width:100%;height:100%;object-fit:cover;"> </div> <!-- Content --> <div style="max-width:800px;margin:0 auto;"> <article class="prose"> <h2 id="interactive-visuals--model-insights">Interactive Visuals &amp; Model Insights</h2>
+<p>Below is an interactive walkthrough of the end-to-end machine learning pipeline, exploratory satellite data analysis, feature attribution, model comparison, and calibration diagnostics:</p>
+<div class="carousel-container" id="carousel-jofe3nw" data-autoplay="true" data-interval="4000" data-astro-cid-wfe7xcno> <div class="carousel-viewport" data-astro-cid-wfe7xcno> <div class="carousel-track" data-astro-cid-wfe7xcno> <div class="carousel-slide active" data-index="0" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/model_comparison.png" alt="Model Comparison Benchmark across Architectures" loading="eager" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Benchmark</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>Model Comparison — Gradient boosting tree ensembles (LightGBM, XGBoost, CatBoost) achieving perfect discrimination (F1 &amp; ROC-AUC: 1.0) over linear and random forest baselines.</p> </div><div class="carousel-slide " data-index="1" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/shap_importance.png" alt="SHAP Global Feature Importance and Attribution" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Interpretability</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>SHAP Feature Attribution — Top 30 features highlighting the discriminative dominance of MNDWI/NDWI temporal minimums and SAR VH/VV backscatter amplitude.</p> </div><div class="carousel-slide " data-index="2" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/confusion_matrices.png" alt="Out-of-Fold Confusion Matrices across 5 Folds" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Evaluation</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>5-Fold Cross-Validation Confusion Matrices — Demonstrating zero out-of-fold false positives and robust boundary precision.</p> </div><div class="carousel-slide " data-index="3" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/eda_ndwi_temporal.png" alt="Multi-Temporal NDWI Dynamics by Class" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Remote Sensing</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>Temporal Spectral Trajectories — NDWI (Normalized Difference Water Index) profiles over 12 months separating permanent aquaculture waterbodies from seasonal wetlands.</p> </div><div class="carousel-slide " data-index="4" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/calibration_curve.png" alt="Probability Calibration and Reliability Diagram" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Calibration</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>Reliability Diagram — Isotonic probability calibration ensuring well-calibrated posterior estimates for the composite ROC-AUC metric.</p> </div><div class="carousel-slide " data-index="5" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/eda_missingness.png" alt="Cloud Occlusion and Missingness Patterns" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Data Quality</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>Temporal Missingness Analysis — Characterizing satellite cloud masking and unobserved time steps between train and test distributions.</p> </div><div class="carousel-slide " data-index="6" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/eda_distributions.png" alt="Optical and SAR Band Distributions" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>EDA</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>Feature Distributions — Statistical density of raw SAR backscatter (VH, VV) and multispectral optical reflections by target class.</p> </div><div class="carousel-slide " data-index="7" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/eda_correlation.png" alt="Cross-Band Correlation Heatmap" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Feature Space</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>Multispectral Correlation Matrix — Identifying inter-band collinearity to guide dimensionality reduction and index formulation.</p> </div><div class="carousel-slide " data-index="8" data-astro-cid-wfe7xcno> <div class="carousel-image-wrapper" data-astro-cid-wfe7xcno> <img src="/uploads/aquaculture-pond-classification/test_prob_distribution.png" alt="Test Set Prediction Probability Distribution" loading="lazy" data-astro-cid-wfe7xcno> <span class="carousel-badge" data-astro-cid-wfe7xcno>Inference</span> </div> <p class="carousel-caption" data-astro-cid-wfe7xcno>Inference Distribution — High-confidence, bimodal probability separation on unseen test samples after test-time augmentation (TTA).</p> </div> </div> </div>  <button class="carousel-control prev" aria-label="Previous slide" type="button" data-astro-cid-wfe7xcno>
+&#10094;
+</button> <button class="carousel-control next" aria-label="Next slide" type="button" data-astro-cid-wfe7xcno>
+&#10095;
+</button> <div class="carousel-indicators" data-astro-cid-wfe7xcno> <button class="carousel-dot active" data-index="0" aria-label="Go to slide 1" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="1" aria-label="Go to slide 2" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="2" aria-label="Go to slide 3" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="3" aria-label="Go to slide 4" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="4" aria-label="Go to slide 5" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="5" aria-label="Go to slide 6" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="6" aria-label="Go to slide 7" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="7" aria-label="Go to slide 8" type="button" data-astro-cid-wfe7xcno></button><button class="carousel-dot " data-index="8" aria-label="Go to slide 9" type="button" data-astro-cid-wfe7xcno></button> </div>  </div>  
+<hr/>
+<h2 id="project-overview">Project Overview</h2>
+<p>Aquaculture plays a critical role in global food security and sustainable economic development. However, monitoring aquaculture installations at scale is notoriously challenging due to dynamic cloud cover, seasonal inundation, and surrounding wetland vegetation that mimic water signatures in optical satellite imagery.</p>
+<p>This project delivers a state-of-the-art <strong>GeoAI machine learning solution</strong> for the <strong>Vegetation Pond Challenge</strong>. The objective is binary classification: distinguishing managed aquaculture ponds (<code>label = 1</code>) from natural waterbodies and other land cover types (<code>label = 0</code>) using 12-month multi-temporal Sentinel-1 Synthetic Aperture Radar (SAR) and Sentinel-2 optical satellite observations.</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="plaintext"><code><span class="line"><span>Composite Competition Metric:</span></span>
+<span class="line"><span>Score = (0.6 × F1-Score) + (0.4 × ROC-AUC)</span></span>
+<span class="line"><span></span></span></code></pre>
+<hr/>
+<h2 id="the-core-technical-challenge-temporal-domain-shift">The Core Technical Challenge: Temporal Domain Shift</h2>
+<p>The fundamental obstacle in this competition is severe temporal masking and observation asymmetry:</p>
+<ul>
+<li><strong>Training Set</strong>: 1,821 locations with near-complete 12-month time series.</li>
+<li><strong>Test Set</strong>: Unseen evaluation locations where 6 to 8 months of optical satellite data are completely masked (<code>-9999</code> placeholder) due to persistent cloud occlusion.</li>
+</ul>
+<p>Standard models trained purely on full 12-month data suffer catastrophic performance degradation when evaluated on partially observed test profiles.</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌────────────────────────────────────────────────────────────────────────┐</span></span>
+<span class="line"><span>│                        TEMPORAL DOMAIN SHIFT                           │</span></span>
+<span class="line"><span>│                                                                        │</span></span>
+<span class="line"><span>│ Training Profile: [ M1  M2  M3  M4  M5  M6  M7  M8  M9  M10 M11 M12 ] │</span></span>
+<span class="line"><span>│                     ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲   ▲      │</span></span>
+<span class="line"><span>│                     └───┴───┴─── Full 12-Month Observation ────┴───┘   │</span></span>
+<span class="line"><span>│                                                                        │</span></span>
+<span class="line"><span>│ Test Set Profile: [ M1  --  --  M4  --  --  M7  --  --  M10 --  --  ] │</span></span>
+<span class="line"><span>│                     ▲           ▲           ▲           ▲              │</span></span>
+<span class="line"><span>│                     └─────────── Only 4–6 Valid Months ─┘              │</span></span>
+<span class="line"><span>└────────────────────────────────────────────────────────────────────────┘</span></span>
+<span class="line"><span></span></span></code></pre>
+<hr/>
+<h2 id="methodological-innovations">Methodological Innovations</h2>
+<h3 id="1-multi-sensor-remote-sensing-feature-engineering">1. Multi-Sensor Remote Sensing Feature Engineering</h3>
+<p>Rather than feeding raw flattened time series (144 raw columns), we built a robust remote sensing feature engine extracting <strong>202 aggregate statistical features</strong>:</p>
+<h4 id="domain-specific-spectral--radar-indices">Domain-Specific Spectral &amp; Radar Indices:</h4>
+<ul>
+<li><strong>NDWI (Normalized Difference Water Index)</strong>: <code>(Green − NIR) / (Green + NIR)</code></li>
+<li><strong>MNDWI (Modified NDWI)</strong>: <code>(Green − SWIR1) / (Green + SWIR1)</code> — suppressed built-up and soil noise</li>
+<li><strong>NDVI (Normalized Difference Vegetation Index)</strong>: <code>(NIR − Red) / (NIR + Red)</code></li>
+<li><strong>EVI (Enhanced Vegetation Index)</strong>: <code>2.5 × (NIR − Red) / (NIR + 6·Red − 7.5·Blue + 1)</code></li>
+<li><strong>LSWI (Land Surface Water Index)</strong>: <code>(NIR − SWIR1) / (NIR + SWIR1)</code></li>
+<li><strong>NDRE (Normalized Difference Red Edge)</strong>: <code>(RE1 − Red) / (RE1 + Red)</code></li>
+<li><strong>SAR Polarization Ratio</strong>: <code>VH − VV</code> (in dB space) — surface roughness &amp; volume scattering</li>
+<li><strong>SAR Radar Vegetation Index (RVI)</strong>: <code>4·VH / (VV + VH)</code></li>
+</ul>
+<h4 id="temporal-aggregation-engine-nan-aware">Temporal Aggregation Engine (NaN-Aware):</h4>
+<p>For each raw band and computed spectral index across observed valid months, we extracted 10 temporal moments:</p>
+<ul>
+<li>Mean, Standard Deviation, Minimum, Maximum, Amplitude (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>a</mi><mi>x</mi><mo>−</mo><mi>M</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Max - Min</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em"></span><span class="mord mathnormal" style="margin-right:0.109em">M</span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.6833em"></span><span class="mord mathnormal" style="margin-right:0.109em">M</span><span class="mord mathnormal">in</span></span></span></span>), 25th Percentile (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>25</mn></msub></mrow><annotation encoding="application/x-tex">P_{25}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">25</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span>), 75th Percentile (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>75</mn></msub></mrow><annotation encoding="application/x-tex">P_{75}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">75</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span>), Skewness, Linear Trend Slope, and Valid Observation Counts.</li>
+</ul>
+<hr/>
+<h3 id="2-random-optical-sampling-ros-augmentation">2. Random Optical Sampling (ROS) Augmentation</h3>
+<p>To eliminate the train-test domain discrepancy, we engineered <strong>Random Optical Sampling (ROS)</strong>:</p>
+<ul>
+<li>During training fold preparation, each training sample generated 3 augmented synthetic profiles.</li>
+<li>6 to 8 arbitrary months were randomly masked out to simulate severe cloud cover.</li>
+<li>Temporal statistics were recalculated over the remaining unmasked slices.</li>
+<li><strong>Strict Leakage Prevention</strong>: Augmentation was applied exclusively inside training folds of the 5-fold Stratified CV; validation folds remained unaugmented to guarantee uncorrupted out-of-fold metrics.</li>
+</ul>
+<hr/>
+<h3 id="3-bayesian-hyperparameter-tuning--multi-model-diversity">3. Bayesian Hyperparameter Tuning &amp; Multi-Model Diversity</h3>
+<p>We trained and benchmarked multiple model families on identical 5-fold stratified cross-validation splits:</p>
+<ul>
+<li><strong>Baseline Models</strong>: Logistic Regression with standard scaling (<code>L2</code> penalty) and Balanced Random Forest (300 estimators).</li>
+<li><strong>Optuna Bayesian Optimization (50 Trials)</strong>:
+<ul>
+<li><strong>LightGBM</strong>: Tuned <code>learning_rate</code>, <code>num_leaves</code>, <code>max_depth</code>, <code>subsample</code>, <code>colsample_bytree</code>, and <code>scale_pos_weight</code>.</li>
+<li><strong>XGBoost</strong>: Tuned <code>max_depth</code>, <code>subsample</code>, <code>colsample_bytree</code>, and <code>min_child_weight</code>.</li>
+<li><strong>CatBoost</strong>: Tuned <code>depth</code>, <code>l2_leaf_reg</code>, and symmetric tree configurations with balanced class weighting.</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h2 id="quantitative-results--benchmark">Quantitative Results &amp; Benchmark</h2>
+<p>Out-of-fold validation performance demonstrates the clear superiority of tree-based gradient boosting models over classical baselines:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">Model Architecture</th><th style="text-align:center">F1-Score</th><th style="text-align:center">ROC-AUC</th><th style="text-align:center">Average Precision (PR-AUC)</th><th style="text-align:center">Composite Metric</th></tr></thead><tbody><tr><td style="text-align:left"><strong>LightGBM (Optuna Tuned)</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>1.0000</strong></td></tr><tr><td style="text-align:left"><strong>CatBoost (Optuna Tuned)</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>1.0000</strong></td></tr><tr><td style="text-align:left"><strong>XGBoost (Optuna Tuned)</strong></td><td style="text-align:center"><strong>0.9993</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>1.0000</strong></td><td style="text-align:center"><strong>0.9996</strong></td></tr><tr><td style="text-align:left"><strong>Random Forest Baseline</strong></td><td style="text-align:center">0.9715</td><td style="text-align:center">0.9940</td><td style="text-align:center">0.9942</td><td style="text-align:center">0.9805</td></tr><tr><td style="text-align:left"><strong>Logistic Regression Baseline</strong></td><td style="text-align:center">0.9701</td><td style="text-align:center">0.9944</td><td style="text-align:center">0.9930</td><td style="text-align:center">0.9798</td></tr></tbody></table>
+<hr/>
+<h2 id="explainable-ai--shap-interpretability">Explainable AI &amp; SHAP Interpretability</h2>
+<p>Using TreeSHAP on the out-of-fold gradient boosting models, we unpacked the physiological satellite mechanisms governing predictions:</p>
+<ol>
+<li><strong>MNDWI Temporal Minimum (<code>MNDWI__min</code>)</strong>: The single highest-ranked predictor. Managed aquaculture ponds maintain persistent deep-water signatures throughout the year, whereas seasonal wetlands dry out during arid months.</li>
+<li><strong>SAR Backscatter Amplitude (<code>VH__amp</code> &amp; <code>VV__amp</code>)</strong>: Radar penetrates cloud cover and measures water surface specular reflectance. Ponds exhibit consistent low radar backscatter with minimal seasonal roughness variation compared to agricultural fields.</li>
+<li><strong>Vegetation Dynamics (<code>NDVI__max</code> &amp; <code>EVI__std</code>)</strong>: Peripheral pond vegetation creates a unique contrast boundary against internal open water.</li>
+</ol>
+<hr/>
+<h2 id="inference-pipeline--calibration">Inference Pipeline &amp; Calibration</h2>
+<p>For final competition submission:</p>
+<ul>
+<li><strong>Stacking Meta-Learner</strong>: Trained a regularized meta-estimator on out-of-fold probabilities from LightGBM, XGBoost, and CatBoost.</li>
+<li><strong>Isotonic Calibration</strong>: Calibrated stacked posterior distributions to guarantee well-aligned probabilities for the continuous <code>TargetRAUC</code> evaluation.</li>
+<li><strong>Test-Time Augmentation (TTA)</strong>: Evaluated 10 stochastic masking passes per test sample and averaged the calibrated outputs, mitigating localized variance from single-month anomalies.</li>
+</ul>
+<hr/>
+<h2 id="technical-stack--deliverables">Technical Stack &amp; Deliverables</h2>
+<ul>
+<li><strong>Languages &amp; Frameworks</strong>: Python 3.11+, Scikit-Learn, LightGBM, XGBoost, CatBoost, Optuna, SHAP.</li>
+<li><strong>Remote Sensing &amp; Spatial Modeling</strong>: NumPy, Pandas, SciPy, Polars, Parquet.</li>
+<li><strong>Visualizations</strong>: Matplotlib, Seaborn, GeoAI diagnostic plotting.</li>
+<li><strong>Codebase Artifacts</strong>: 4 modular Jupyter notebooks (<code>01_eda.ipynb</code>, <code>02_feature_engineering.ipynb</code>, <code>03_models.ipynb</code>, <code>04_submission.ipynb</code>) with end-to-end automated pipelines.</li>
+</ul> </article> </div> <div class="divider"></div> <!-- Navigation --> <div style="display:flex;justify-content:center;margin-bottom:var(--space-12);"> <a href="/work" class="btn btn-ghost btn-lg">← All Projects</a> </div> </div> </main> <footer class="footer"> <div class="container"> <div class="footer-inner"> <div> <a href="/" class="nav-logo" style="font-size:1.1rem;">
+Yaji<span>.</span>Terungwa
+</a> <p class="footer-copy" style="margin-top:var(--space-2);">
+&copy; 2026 Yaji Timothy Terungwa — Statistician &amp; Data Professional.<br>
+Built with <a href="https://astro.build" target="_blank" rel="noopener" style="color:var(--color-accent-cyan);">Astro</a>. 100% Open Source.
+</p> </div> <div style="display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-4);"> <div class="social-links"> <a href="https://github.com/Timoyaj" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a><a href="https://www.linkedin.com/in/timothy-yaji/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://web.facebook.com/tertimothy" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a><a href="mailto:tertimothy@gmail.com" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Email" title="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a><a href="tel:07062439948" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Phone" title="Phone"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a> </div> <div class="footer-links"> <a href="/work" class="footer-link">Projects</a> <a href="/blog" class="footer-link">Articles</a> <a href="/about" class="footer-link">About &amp; CV</a> </div> </div> </div> </div> </footer>  <!-- Global Search Modal --> <div id="search-modal-backdrop" class="search-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="search-input"> <div class="search-modal" id="search-modal"> <div class="search-input-wrapper"> <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24" style="color:var(--color-accent-cyan);"> <circle cx="11" cy="11" r="8"></circle> <line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> <input type="search" id="site-search-input" class="search-input" placeholder="Search articles, projects, methodologies (e.g. GIS, MICE, Power BI)..." autocomplete="off"> <button id="search-close-btn" class="btn btn-ghost" style="padding:4px 8px;font-size:var(--text-xs);" aria-label="Close search">
+ESC
+</button> </div> <div class="search-results" id="search-results-container"> <div style="padding: var(--space-6); text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);">
+Type above to search across articles and projects...
+</div> </div> </div> </div> <script>(function(){const searchIndex = [{"title":"Building Executive BI Dashboards with Power Query & Power BI","description":"Best practices for transforming messy administrative and educational data into clear, interactive executive dashboards.","url":"/blog/building-interactive-power-bi-dashboards/","category":"Dev","type":"Article","tags":["Power BI","Excel","Power Query","BI","Data Visualization"]},{"title":"How to Make Excel Faster with Large Files: The Complete Performance Optimization Guide","description":"Learn how to make Excel faster with large files using technical strategies from Microsoft engineers. Discover how to optimize formulas, manage recalculation, and use Power Query to eliminate lag.","url":"/blog/make-excel-faster-large-files/","category":"Tutorial","type":"Article","tags":["Excel","Performance","Optimization","Power Query","Data Analytics"]},{"title":"Field-to-Cloud GIS Workflows: Collecting Spatial Data with QGIS & QFIELD","description":"How we collected and verified spatial data for thousands of landed properties in Benue State to meet World Bank project standards.","url":"/blog/spatial-data-qgis-qfield-guide/","category":"Tutorial","type":"Article","tags":["QGIS","QFIELD","Spatial Data","GIS","Field Ops"]},{"title":"The Mathematics of P-Values Think Like a Statistician Series","description":"ou think you've cracked the code to concert marketing. But do you understand what your data is actually telling you","url":"/blog/the-mathematics-of-p-values-think-like-a-statistician-series--linkedin-campaign/","category":"Open Source","type":"Article","tags":["statisticsinference"]},{"title":"Estimation of Population Characteristics in Two-Phase Sampling with Multiple Imputation","description":"A statistical walkthrough on handling missing data in multi-auxiliary sampling designs, using Multiple Imputation algorithms in R and Python.","url":"/blog/two-phase-sampling-multiple-imputation/","category":"Case Study","type":"Article","tags":["Statistics","R-programming","Python","Data Science","Research"]},{"title":"Automated Academic Assessment & Performance Tracking System","description":"Developed automated Excel-based tracking systems and standardized data validation models for national examinations (NABTEB/NACO) serving over 70+ students annually.","url":"/work/academic-assessment-system/","category":"Design System","type":"Project","tags":["Excel Dashboards","Power Query","Statistical Modeling","Education Data"]},{"title":"GeoAI Aquaculture Pond Classification & Satellite Time-Series Modeling","description":"High-precision satellite time-series machine learning pipeline combining multi-sensor optical/SAR temporal feature extraction, Random Optical Sampling (ROS) augmentation, Optuna-tuned gradient boosting ensembles, and probability calibration.","url":"/work/aquaculture-vegetation-pond-classification/","category":"Open Source","type":"Project","tags":["GeoAI","Remote Sensing","Time-Series ML","LightGBM","XGBoost","CatBoost","Optuna","SHAP","Earth Observation"]},{"title":"BENGIS Mass Data Capture & Safeguarding Protocol","description":"Optimized mass data capture workflows uploading 3,000+ high-value land records weekly with strict data integrity, encryption, and privacy compliance.","url":"/work/bengis-mass-data-capture/","category":"Tool","type":"Project","tags":["SQL","Data Ethics","Process Automation","Quality Assurance","Encrypted Storage"]},{"title":"Finance Tracker","description":"A sleek, responsive personal finance dashboard featuring interactive cash flow analytics, dynamic theme switching, and transaction management.","url":"/work/finance-tracker/","category":"Web App","type":"Project","tags":["Python","Flask","SQLite","Chart.js","Vanilla CSS"]},{"title":"Personal Portfolio & Research Hub","description":"High-performance statistical portfolio and technical blog built with Astro, View Transitions, KaTeX math rendering, automated RSS/Sitemap, and instant fuzzy search.","url":"/work/personal-portfolio-site/","category":"Web App","type":"Project","tags":["Astro","TypeScript","Design System","Full Stack","SEO","View Transitions"]},{"title":"Time Series Explorer & Forecaster Dashboard","description":"A production-grade Streamlit application for time series data exploration, cleaning, and forecasting using ARIMA, Prophet, and LSTM models.","url":"/work/time-series-dashboard/","category":"Web App","type":"Project","tags":["Python"]},{"title":"TrafficCovert.ai Behavioral Analytics Platform","description":"Engineered Python-based analytics platforms to automate complex data workflows and analyze user behavioral feedback for remote digital products.","url":"/work/trafficcovert-analytics/","category":"Web App","type":"Project","tags":["Python","Predictive Modeling","Behavioral Analytics","R-programming"]},{"title":"World Bank SFTAS Spatial Data & KPI Dashboard","description":"Engineered spatial datasets for landed properties across Makurdi, Gboko, and Otukpo, directly facilitating Benue State's qualification for a $2.5 Million World Bank grant.","url":"/work/world-bank-sftas/","category":"API","type":"Project","tags":["QGIS","QFIELD","Power BI","Spatial Analytics","Data Verification"]}];
+
+  function initSearch() {
+    const backdrop = document.getElementById('search-modal-backdrop');
+    const input = document.getElementById('site-search-input');
+    const resultsContainer = document.getElementById('search-results-container');
+    const closeBtn = document.getElementById('search-close-btn');
+
+    if (!backdrop || !input || !resultsContainer) return;
+
+    function openSearch() {
+      backdrop.classList.add('open');
+      input.value = '';
+      input.focus();
+      renderResults(searchIndex.slice(0, 5));
+    }
+
+    function closeSearch() {
+      backdrop.classList.remove('open');
+    }
+
+    function renderResults(items) {
+      if (!items.length) {
+        resultsContainer.innerHTML = `
+          <div style="padding: var(--space-6); text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);">
+            No matching results found.
+          </div>
+        `;
+        return;
+      }
+
+      resultsContainer.innerHTML = items
+        .map(
+          (item) => `
+          <a href="${item.url}" class="search-result-item">
+            <div class="search-result-title">
+              <span>${item.title}</span>
+              <span class="badge badge-surface" style="font-size:10px;">${item.type}</span>
+            </div>
+            <p class="search-result-desc">${item.description || ''}</p>
+          </a>
+        `
+        )
+        .join('');
+    }
+
+    input.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        renderResults(searchIndex.slice(0, 5));
+        return;
+      }
+
+      const filtered = searchIndex.filter((item) => {
+        const titleMatch = item.title.toLowerCase().includes(q);
+        const descMatch = item.description.toLowerCase().includes(q);
+        const catMatch = item.category.toLowerCase().includes(q);
+        const tagMatch = item.tags.some((t) => t.toLowerCase().includes(q));
+        return titleMatch || descMatch || catMatch || tagMatch;
+      });
+
+      renderResults(filtered);
+    });
+
+    closeBtn?.addEventListener('click', closeSearch);
+
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeSearch();
+    });
+
+    document.querySelectorAll('.search-trigger-btn').forEach((btn) => {
+      btn.addEventListener('click', openSearch);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        backdrop.classList.contains('open') ? closeSearch() : openSearch();
+      } else if (e.key === 'Escape' && backdrop.classList.contains('open')) {
+        closeSearch();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initSearch);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
+})();</script> <!-- Page Lifecycle Scripts -->  </body> </html>
