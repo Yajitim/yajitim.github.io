@@ -61,8 +61,12 @@ const { Content } = await project.render();
       </div>
 
       <!-- Cover -->
-      <div style="width:100%;height:400px;background:linear-gradient(135deg,#0d1117,#1a1f2e,#0a1628);border-radius:var(--radius-xl);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:var(--space-12);">
-        🚀
+      <div style="width:100%;height:400px;background:linear-gradient(135deg,#0d1117,#1a1f2e,#0a1628);border-radius:var(--radius-xl);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:var(--space-12);">
+        {project.data.coverImage ? (
+          <img src={project.data.coverImage} alt={project.data.title} style="width:100%;height:100%;object-fit:cover;" />
+        ) : (
+          <span style="font-size:5rem;">🚀</span>
+        )}
       </div>
 
       <!-- Content -->
