@@ -15,7 +15,7 @@ const currentPath = Astro.url.pathname;
       Yaji<span>.</span>Terungwa
     </a>
 
-    <!-- Desktop Links -->
+    <!-- Desktop Links & Tools -->
     <div class="nav-links" role="list">
       {navLinks.map(link => (
         <a
@@ -27,6 +27,23 @@ const currentPath = Astro.url.pathname;
           {link.label}
         </a>
       ))}
+
+      <!-- Search Trigger -->
+      <button class="search-trigger-btn" type="button" aria-label="Search site (Ctrl+K)">
+        <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24" style="width:14px;height:14px;">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>Search</span>
+        <kbd>Ctrl+K</kbd>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button class="theme-toggle-btn" id="theme-toggle-btn" type="button" aria-label="Toggle theme">
+        <span class="theme-icon-dark">🌙</span>
+        <span class="theme-icon-light" style="display:none;">☀️</span>
+      </button>
+
       <a
         href="mailto:tertimothy@gmail.com"
         class="btn btn-primary nav-cta"
@@ -36,17 +53,26 @@ const currentPath = Astro.url.pathname;
       </a>
     </div>
 
-    <!-- Mobile Toggle -->
-    <button
-      class="nav-mobile-toggle"
-      id="mobile-menu-btn"
-      aria-label="Toggle mobile menu"
-      aria-expanded="false"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <!-- Mobile Toggle & Quick Actions -->
+    <div style="display:flex;align-items:center;gap:var(--space-2);" class="mobile-actions">
+      <button class="search-trigger-btn" type="button" style="padding:0 var(--space-2);height:32px;" aria-label="Search">
+        <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24" style="width:14px;height:14px;">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+
+      <button
+        class="nav-mobile-toggle"
+        id="mobile-menu-btn"
+        aria-label="Toggle mobile menu"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </div>
 
   <!-- Mobile Drawer -->
@@ -60,7 +86,15 @@ const currentPath = Astro.url.pathname;
           {link.label}
         </a>
       ))}
-      <a href="mailto:tertimothy@gmail.com" class="btn btn-primary" style="width:100%;justify-content:center;">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-top:var(--space-4);border-top:1px solid var(--color-border);">
+        <span class="text-sm text-secondary">Switch Theme</span>
+        <button class="theme-toggle-btn" id="mobile-theme-toggle-btn" type="button">
+          Toggle Theme 🌓
+        </button>
+      </div>
+
+      <a href="mailto:tertimothy@gmail.com" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:var(--space-2);">
         Contact Me ↗
       </a>
     </div>
@@ -68,6 +102,11 @@ const currentPath = Astro.url.pathname;
 </nav>
 
 <style>
+  .mobile-actions { display: none; }
+  @media (max-width: 768px) {
+    .mobile-actions { display: flex; }
+  }
+
   .mobile-nav {
     display: none;
     position: fixed;
@@ -112,22 +151,55 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const nav = document.getElementById('mobile-nav');
+  function setupNavbar() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const nav = document.getElementById('mobile-nav');
 
-  btn?.addEventListener('click', () => {
-    const isOpen = nav?.classList.toggle('open');
-    btn.setAttribute('aria-expanded', String(isOpen));
-    nav?.setAttribute('aria-hidden', String(!isOpen));
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-
-  // Close on link click
-  nav?.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('open');
-      btn?.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+    btn?.addEventListener('click', () => {
+      const isOpen = nav?.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      nav?.setAttribute('aria-hidden', String(!isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-  });
+
+    nav?.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        btn?.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Theme toggle handling
+    function updateThemeUI(theme: string) {
+      const isLight = theme === 'light';
+      document.querySelectorAll('.theme-icon-dark').forEach((el) => {
+        (el as HTMLElement).style.display = isLight ? 'none' : 'inline';
+      });
+      document.querySelectorAll('.theme-icon-light').forEach((el) => {
+        (el as HTMLElement).style.display = isLight ? 'inline' : 'none';
+      });
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeUI(next);
+    }
+
+    document.getElementById('theme-toggle-btn')?.addEventListener('click', toggleTheme);
+    document.getElementById('mobile-theme-toggle-btn')?.addEventListener('click', toggleTheme);
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    updateThemeUI(savedTheme);
+  }
+
+  document.addEventListener('astro:page-load', setupNavbar);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupNavbar);
+  } else {
+    setupNavbar();
+  }
 </script>

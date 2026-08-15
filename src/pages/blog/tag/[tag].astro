@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const tagSet = new Set<string>();
+
+  allPosts.forEach((post) => {
+    (post.data.tags || []).forEach((t) => tagSet.add(t.toLowerCase()));
+  });
+
+  return Array.from(tagSet).map((tag) => {
+    const filteredPosts = allPosts.filter((post) =>
+      (post.data.tags || []).map((t) => t.toLowerCase()).includes(tag)
+    );
+    return {
+      params: { tag },
+      props: {
+        tag,
+        posts: filteredPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+      },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
+
+const categoryColors: Record<string, string> = {
+  Tutorial: 'badge-cyan',
+  Opinion: 'badge-violet',
+  'Case Study': 'badge-green',
+  Dev: 'badge-surface',
+  'Open Source': 'badge-surface',
+};
+---
+
+<BaseLayout
+  title={`Posts tagged #${tag} — Yaji Timothy Terungwa`}
+  description={`Explore all articles and research insights tagged with #${tag}.`}
+>
+  <Navbar />
+
+  <main style="padding-top: var(--nav-height);">
+    <div class="container">
+      <!-- Back link -->
+      <div style="padding-top:var(--space-10);margin-bottom:var(--space-8);">
+        <a href="/blog" class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:var(--space-2);">
+          ← Back to All Articles
+        </a>
+      </div>
+
+      <!-- Page Header -->
+      <div class="section" style="padding-bottom: var(--space-8);">
+        <span class="section-label">Tag Archive</span>
+        <h1 class="font-display" style="font-size:var(--text-display);font-weight:800;letter-spacing:-0.03em;line-height:var(--leading-tight);margin-bottom:var(--space-4);">
+          #{tag}
+        </h1>
+        <p class="text-secondary" style="font-size:var(--text-lg);">
+          Showing {posts.length} {posts.length === 1 ? 'article' : 'articles'} matching this topic.
+        </p>
+      </div>
+
+      <!-- Grid of Posts -->
+      <div class="grid-3">
+        {posts.map((post, i) => (
+          <article
+            class="card blog-card animate-in"
+            style={`animation-delay:${i * 60}ms`}
+            id={`post-${post.slug}`}
+          >
+            <div class="blog-card-cover">
+              {post.data.coverImage ? (
+                <img src={post.data.coverImage} alt={post.data.title} style="width:100%;height:100%;object-fit:cover;" />
+              ) : (
+                <div style={`width:100%;height:100%;background:linear-gradient(135deg,${i%3===0?'#1a0d2e,#2e1a4a':i%3===1?'#0d2e1a,#1a4a2e':'#2e1a0d,#4a2e1a'});display:flex;align-items:center;justify-content:center;font-size:2.5rem;`}>
+                  {['📦', '🎨', '⚡', '🔷', '🛠️', '🌐'][i % 6]}
+                </div>
+              )}
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span class={`badge ${categoryColors[post.data.category] || 'badge-surface'}`}>
+                  {post.data.category}
+                </span>
+                <span>·</span>
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </time>
+                <span>·</span>
+                <span>{post.data.readingTime ?? 5} min</span>
+              </div>
+              <h2 class="blog-card-title font-display">
+                <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+              </h2>
+              <p class="blog-card-excerpt">{post.data.description.slice(0, 120)}...</p>
+              <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-3);">
+                {post.data.tags.map((t) => (
+                  <a
+                    href={`/blog/tag/${encodeURIComponent(t.toLowerCase())}`}
+                    class={`badge ${t.toLowerCase() === tag.toLowerCase() ? 'badge-cyan' : 'badge-surface'}`}
+                    style="text-decoration:none;"
+                  >
+                    #{t}
+                  </a>
+                ))}
+              </div>
+              <a href={`/blog/${post.slug}`} class="project-card-link" id={`read-${post.slug}`}>
+                Read Article →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

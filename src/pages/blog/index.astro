@@ -130,7 +130,9 @@ const categoryColors: Record<string, string> = {
               <p class="blog-card-excerpt">{post.data.description.slice(0, 120)}...</p>
               <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-3);">
                 {post.data.tags.slice(0,3).map(tag => (
-                  <span class="badge badge-surface">{tag}</span>
+                  <a href={`/blog/tag/${encodeURIComponent(tag.toLowerCase())}`} class="badge badge-surface" style="text-decoration:none;">
+                    #{tag}
+                  </a>
                 ))}
               </div>
               <a href={`/blog/${post.slug}`} class="project-card-link" id={`read-${post.slug}`}>Read More →</a>
@@ -154,27 +156,36 @@ const categoryColors: Record<string, string> = {
 </style>
 
 <script>
-  const tabs = document.querySelectorAll('.filter-tab');
-  const cards = document.querySelectorAll('#blog-grid article[data-category], article.blog-card-featured[data-category]');
-  const emptyState = document.getElementById('empty-state');
+  function setupBlogFilter() {
+    const tabs = document.querySelectorAll('.filter-tab');
+    const cards = document.querySelectorAll('#blog-grid article[data-category], article.blog-card-featured[data-category]');
+    const emptyState = document.getElementById('empty-state');
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected','true');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected','true');
 
-      const filter = tab.getAttribute('data-filter');
-      let visible = 0;
+        const filter = tab.getAttribute('data-filter');
+        let visible = 0;
 
-      cards.forEach(card => {
-        const cat = card.getAttribute('data-category');
-        const show = filter === 'All' || cat === filter;
-        (card as HTMLElement).style.display = show ? '' : 'none';
-        if (show) visible++;
+        cards.forEach(card => {
+          const cat = card.getAttribute('data-category');
+          const show = filter === 'All' || cat === filter;
+          (card as HTMLElement).style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        if (emptyState) emptyState.style.display = visible === 0 ? 'block' : 'none';
       });
-
-      if (emptyState) emptyState.style.display = visible === 0 ? 'block' : 'none';
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', setupBlogFilter);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupBlogFilter);
+  } else {
+    setupBlogFilter();
+  }
 </script>

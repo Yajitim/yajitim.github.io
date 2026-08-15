@@ -27,6 +27,7 @@ const projectsCollection = defineCollection({
     repoUrl: z.string().url().optional(),
     featured: z.boolean().default(false),
     year: z.number(),
+    draft: z.boolean().default(false),
     category: z.enum(['Web App', 'Tool', 'Open Source', 'API', 'Design System']),
     order: z.number().default(99),
   }),

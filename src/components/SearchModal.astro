@@ -1,0 +1,143 @@
+---
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
+const projects = await getCollection('projects', ({ data }) => !data.draft);
+
+const searchIndex = [
+  ...blogPosts.map((p) => ({
+    title: p.data.title,
+    description: p.data.description,
+    url: `/blog/${p.slug}/`,
+    category: p.data.category,
+    type: 'Article',
+    tags: p.data.tags || [],
+  })),
+  ...projects.map((pr) => ({
+    title: pr.data.title,
+    description: pr.data.description,
+    url: `/work/${pr.slug}/`,
+    category: pr.data.category,
+    type: 'Project',
+    tags: pr.data.tags || [],
+  })),
+];
+---
+
+<div id="search-modal-backdrop" class="search-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="search-input">
+  <div class="search-modal" id="search-modal">
+    <div class="search-input-wrapper">
+      <svg class="svg-icon svg-icon-sm" viewBox="0 0 24 24" style="color:var(--color-accent-cyan);">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        type="search"
+        id="site-search-input"
+        class="search-input"
+        placeholder="Search articles, projects, methodologies (e.g. GIS, MICE, Power BI)..."
+        autocomplete="off"
+      />
+      <button id="search-close-btn" class="btn btn-ghost" style="padding:4px 8px;font-size:var(--text-xs);" aria-label="Close search">
+        ESC
+      </button>
+    </div>
+
+    <div class="search-results" id="search-results-container">
+      <div style="padding: var(--space-6); text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);">
+        Type above to search across articles and projects...
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ searchIndex }}>
+  function initSearch() {
+    const backdrop = document.getElementById('search-modal-backdrop');
+    const input = document.getElementById('site-search-input');
+    const resultsContainer = document.getElementById('search-results-container');
+    const closeBtn = document.getElementById('search-close-btn');
+
+    if (!backdrop || !input || !resultsContainer) return;
+
+    function openSearch() {
+      backdrop.classList.add('open');
+      input.value = '';
+      input.focus();
+      renderResults(searchIndex.slice(0, 5));
+    }
+
+    function closeSearch() {
+      backdrop.classList.remove('open');
+    }
+
+    function renderResults(items) {
+      if (!items.length) {
+        resultsContainer.innerHTML = `
+          <div style="padding: var(--space-6); text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);">
+            No matching results found.
+          </div>
+        `;
+        return;
+      }
+
+      resultsContainer.innerHTML = items
+        .map(
+          (item) => `
+          <a href="${item.url}" class="search-result-item">
+            <div class="search-result-title">
+              <span>${item.title}</span>
+              <span class="badge badge-surface" style="font-size:10px;">${item.type}</span>
+            </div>
+            <p class="search-result-desc">${item.description || ''}</p>
+          </a>
+        `
+        )
+        .join('');
+    }
+
+    input.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) {
+        renderResults(searchIndex.slice(0, 5));
+        return;
+      }
+
+      const filtered = searchIndex.filter((item) => {
+        const titleMatch = item.title.toLowerCase().includes(q);
+        const descMatch = item.description.toLowerCase().includes(q);
+        const catMatch = item.category.toLowerCase().includes(q);
+        const tagMatch = item.tags.some((t) => t.toLowerCase().includes(q));
+        return titleMatch || descMatch || catMatch || tagMatch;
+      });
+
+      renderResults(filtered);
+    });
+
+    closeBtn?.addEventListener('click', closeSearch);
+
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeSearch();
+    });
+
+    document.querySelectorAll('.search-trigger-btn').forEach((btn) => {
+      btn.addEventListener('click', openSearch);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        backdrop.classList.contains('open') ? closeSearch() : openSearch();
+      } else if (e.key === 'Escape' && backdrop.classList.contains('open')) {
+        closeSearch();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initSearch);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
+</script>

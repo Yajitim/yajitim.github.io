@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
+import SearchModal from '../components/SearchModal.astro';
 
 export interface Props {
   title: string;
@@ -25,10 +27,21 @@ const siteName = "Yaji Timothy Terungwa · Statistician & Data Scientist";
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+  <!-- Pre-render Theme to Prevent FOUC -->
+  <script is:inline>
+    (function () {
+      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
   <!-- Primary Meta -->
   <title>{title} · Yaji Timothy Terungwa</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
+
+  <!-- RSS Syndication Feed -->
+  <link rel="alternate" type="application/rss+xml" title="Yaji Timothy Terungwa · RSS Feed" href="/rss.xml" />
 
   <!-- Open Graph / Social -->
   <meta property="og:type" content={type} />
@@ -81,37 +94,51 @@ const siteName = "Yaji Timothy Terungwa · Statistician & Data Scientist";
     gtag('js', new Date());
     gtag('config', 'G-MGNC0FZKR8');
   </script>
+
+  <!-- Astro View Transitions -->
+  <ViewTransitions />
 </head>
 <body>
   <slot />
 
-  <!-- Scroll Animation Observer -->
-  <script>
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, i) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add('visible');
-            }, i * 60);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll('.animate-in').forEach((el) => observer.observe(el));
-  </script>
+  <!-- Global Search Modal -->
+  <SearchModal />
 
-  <!-- Navbar scroll handler -->
+  <!-- Page Lifecycle Scripts -->
   <script>
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-      const handleScroll = () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 20);
-      };
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
+    function setupGlobalEffects() {
+      // Scroll Animation Observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                entry.target.classList.add('visible');
+              }, i * 60);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.animate-in:not(.visible)').forEach((el) => observer.observe(el));
+
+      // Navbar scroll handler
+      const navbar = document.querySelector('.navbar');
+      if (navbar) {
+        const handleScroll = () => {
+          navbar.classList.toggle('scrolled', window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+      }
+    }
+
+    document.addEventListener('astro:page-load', setupGlobalEffects);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupGlobalEffects);
+    } else {
+      setupGlobalEffects();
     }
   </script>
 </body>
