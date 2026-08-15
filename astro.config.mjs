@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
+import mdx from '@astrojs/mdx';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
@@ -38,6 +39,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes('/admin'),
     }),
+    mdx(),
   ],
   markdown: {
     remarkPlugins: [remarkMath, remarkReadingTime],
