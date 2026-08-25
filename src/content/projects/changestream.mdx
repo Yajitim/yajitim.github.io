@@ -1,0 +1,65 @@
+---
+title: "changestream · Small-Business Data Console"
+description: "Interactive case study and technical breakdown of Changestream."
+coverImage: "/uploads/changestream/changestream-desktop-main.png"
+tags: ["Web App", "Frontend", "Interactive"]
+category: "Web App"
+repoUrl: "https://github.com/Timoyaj/test_app"
+year: 2026
+featured: true
+draft: false
+order: 10
+---
+
+import Carousel from '../../components/Carousel.astro';
+
+## Interactive Interface & Responsive Previews
+
+Explore the responsive layouts and visual design across devices below:
+
+<Carousel
+  items={[
+    {
+        "src": "/uploads/changestream/changestream-desktop-main.png",
+        "alt": "changestream \u00b7 Small-Business Data Console - Desktop View",
+        "badge": "Desktop",
+        "caption": "Desktop View"
+    },
+    {
+        "src": "/uploads/changestream/changestream-tablet-main.png",
+        "alt": "changestream \u00b7 Small-Business Data Console - Tablet View",
+        "badge": "Tablet",
+        "caption": "Tablet View"
+    },
+    {
+        "src": "/uploads/changestream/changestream-mobile-main.png",
+        "alt": "changestream \u00b7 Small-Business Data Console - Mobile View",
+        "badge": "Mobile",
+        "caption": "Mobile View"
+    }
+]}
+/>
+
+## Project Overview
+
+Interactive case study and technical breakdown of Changestream.
+
+### Architecture & Key Features
+- **Responsive Design**: Fluid layouts optimized for desktop, tablet, and mobile displays.
+- **Modern Performance**: Zero-CLS image presentation, fast hydration, and clean UI components.
+
+## Technical Details
+
+# changestream · Small-Business Data Console
+
+**changestream** is a browser-based, privacy-first data analysis and business intelligence console designed for small businesses, freelancers, and operators. Drop in spreadsheets (`.xlsx`, `.xls`, `.csv`) to instantly explore data, profile columns, visualize trends, monitor KPIs, and collaborate with a built-in AI analyst.
+
+---
+
+## ✨ Key Features
+
+### 📁 1. Client-Side Spreadsheet Ingestion
+- **Formats Supported**: `.xlsx`, `.xls`, and `.csv`.
+- **Multi-Sheet Support**: Automatically detects and switches between multiple worksheets.
+- **Privacy-First Processing**: All parsing happens locally in your browser using SheetJS. Raw spreadsheet rows never leave your machine — only compact summary profiles are sent to the AI analyst when requested.
+- **
